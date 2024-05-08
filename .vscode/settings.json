@@ -52,5 +52,6 @@
         "Temp/": true
     },
     "dotnet.preferCSharpExtension": true,
-    "dotnet.defaultSolution": "unity-cacaberhitung.sln"
+    "dotnet.defaultSolution": "unity-cacaberhitung.sln",
+    "git.ignoreLimitWarning": true
 }

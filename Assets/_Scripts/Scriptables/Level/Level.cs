@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelType
 {
-    public enum LevelTypes { Counting, Aritmathic, Fraction }
+    public enum LevelTypes { Counting, Aritmathic, Geometry }
 }
 
 [System.Serializable]

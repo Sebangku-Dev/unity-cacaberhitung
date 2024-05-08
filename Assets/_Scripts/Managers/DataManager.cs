@@ -2,14 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DataUserManager : MonoBehaviour
+public class DataManager : MonoBehaviour
 {
     void Start()
     {
-        if (BaseSystem.Instance.userData != null) { }
+        if (DataSystem.Instance.user != null) { }
     }
-
-    
 
     public void SaveGame()
     {
