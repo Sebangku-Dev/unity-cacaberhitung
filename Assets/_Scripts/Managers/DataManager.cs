@@ -6,7 +6,7 @@ public class DataManager : MonoBehaviour
 {
     void Start()
     {
-        if (DataSystem.Instance.user != null) { }
+        if (DataSystem.Instance.User != null) { }
     }
 
     public void SaveGame()
