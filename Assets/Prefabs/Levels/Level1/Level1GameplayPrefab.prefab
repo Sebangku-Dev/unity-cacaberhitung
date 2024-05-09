@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1918486196120820408}
   - component: {fileID: -7660392726374359896}
   m_Layer: 0
-  m_Name: Level1Prefab
+  m_Name: Level1GameplayPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebf90fc8a64d984394d1e335f569d3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  test: {fileID: 100000, guid: 3d80b6ccf651fe943a1988f60b388549, type: 3}
+  stateText: {fileID: 5956699283107838924, guid: 426fc9d74a3406d41b81acca69d78c82, type: 3}

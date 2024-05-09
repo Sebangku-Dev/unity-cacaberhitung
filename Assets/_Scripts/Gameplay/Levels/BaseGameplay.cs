@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -10,13 +11,13 @@ public class BaseGameplay : Singleton<BaseGameplay>
 
     public enum LevelState
     {
-        Prepare = 0,
-        UserInteraction = 1,
-        Passed = 2,
-        Fail = 3,
-        Ended = 4
+        Prepare,
+        UserInteraction,
+        Passed,
+        Fail,
+        Ended
     }
-    public LevelState CurrentLevelState;
+    public LevelState CurrentLevelState { get; private set; }
 
     public void ChangeState(LevelState newState)
     {
@@ -46,26 +47,47 @@ public class BaseGameplay : Singleton<BaseGameplay>
         OnStateChanged?.Invoke(newState);
     }
 
+    protected override void Awake()
+    {
+        base.Awake();
+        // Implemented on child class
+    }
+
+    /// <summary>
+    /// Invoked on very end state
+    /// </summary>
     protected virtual void HandleEnded()
     {
         // Implemented on child class
     }
 
+    /// <summary>
+    /// Invoked if user give wrong answer
+    /// </summary>
     protected virtual void HandleFail()
     {
         // Implemented on child class
     }
 
+    /// <summary>
+    /// Invoked if user give correct answer
+    /// </summary>
     protected virtual void HandlePassed()
     {
         // Implemented on child class
     }
 
+    /// <summary>
+    /// Invoked after HandlePrepare()
+    /// </summary>
     protected virtual void HandleUserInteraction()
     {
         // Implemented on child class
     }
 
+    /// <summary>
+    /// Invoked on first level load and after passed or fail state
+    /// </summary>
     protected virtual void HandlePrepare()
     {
         // Implemented on child class

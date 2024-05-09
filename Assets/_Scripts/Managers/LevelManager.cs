@@ -2,12 +2,9 @@ using UnityEngine;
 
 public class LevelManager : Singleton<LevelManager>
 {
-    [SerializeField] private Level currentLevel;
+    // [SerializeField]
+    private Level currentLevel;
 
-    private void Start()
-    {
-        ExecuteCurrentLevel();
-    }
     public void ExecuteCurrentLevel()
     {
         if (transform.childCount == 0)
