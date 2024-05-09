@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using TMPro;
 using UnityEngine;
 
@@ -9,17 +10,21 @@ public class ExampleLevelGameplay : BaseGameplay
     [SerializeField] private Level level;
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private TextMeshProUGUI stateText;
+    [SerializeField] private int maxTimeDuration;
 
-    #region MonoBehaviour 
+    #region MonoBehaviour
     protected override void Awake()
     {
         base.Awake();
         BaseGameplay.OnStateChanged += OnLevelStateChanged;
     }
-
     private void Start()
     {
         ChangeState(LevelState.Prepare);
+    }
+    private void Update()
+    {
+        Timer();
     }
 
     private void OnDestroy()
@@ -34,6 +39,7 @@ public class ExampleLevelGameplay : BaseGameplay
         base.HandlePrepare();
 
         GenerateQuestion();
+        StartTimer();
     }
 
     protected override void HandleUserInteraction()
@@ -61,6 +67,7 @@ public class ExampleLevelGameplay : BaseGameplay
         base.HandleFail();
 
         Debug.Log("Belajar lagi ya");
+        mistake++;
 
         // Reanswer the question
         if (currentQuestionIndex < questions.Count() - 1)
@@ -73,8 +80,23 @@ public class ExampleLevelGameplay : BaseGameplay
     protected override void HandleEnded()
     {
         base.HandleEnded();
+
+        StopTimer();
+
+        // Booleans check
         level.isSolved = true;
 
+        if (mistake > 0)
+        {
+            level.isNoMistake = false;
+        }
+        else level.isNoMistake = true;
+
+        if (currentTime <= maxTimeDuration)
+        {
+            level.isRightInTime = true;
+        }
+        else level.isRightInTime = false;
     }
 
     private void OnLevelStateChanged(LevelState changedState)
@@ -110,7 +132,9 @@ public class ExampleLevelGameplay : BaseGameplay
     };
 
     private List<string> currentQuestion;
-    private int currentQuestionIndex = 0;
+    private int currentQuestionIndex, mistake = 0;
+    private float currentTime = 0;
+    private bool isTimerActive = false;
 
     private void GenerateQuestion()
     {
@@ -118,9 +142,15 @@ public class ExampleLevelGameplay : BaseGameplay
         questionText.text = $"{currentQuestion[0]} {currentQuestion[2]} {currentQuestion[1]} = ?";
     }
 
-    private bool IsAnswerCorrect(string answer, string opt, string valid)
+    private bool IsAnswerCorrect(string answer, string opt, string valid) => (opt == valid && answer == "Benar") || (opt != valid && answer == "Salah");
+    private void StartTimer() => isTimerActive = true;
+    private void StopTimer() => isTimerActive = false;
+    private void Timer()
     {
-        return (opt == valid && answer == "Benar") || (opt != valid && answer == "Salah");
+        if (isTimerActive)
+            currentTime += Time.deltaTime;
+
+        stateText.text = Mathf.RoundToInt(currentTime).ToString();
     }
     #endregion
 }

@@ -1272,6 +1272,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1861259151}
     - target: {fileID: 6742009786796692527, guid: 31ce84bc314b87147bf03b6c0260e533, type: 3}
+      propertyPath: maxTimeDuration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6742009786796692527, guid: 31ce84bc314b87147bf03b6c0260e533, type: 3}
       propertyPath: levelInformation
       value: 
       objectReference: {fileID: 11400000, guid: cf8c05cde3d49d1439872037162a8eb0, type: 2}

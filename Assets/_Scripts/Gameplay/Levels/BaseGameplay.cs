@@ -57,6 +57,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected virtual void HandleEnded()
     {
         // Implemented on child class
+
     }
 
     /// <summary>

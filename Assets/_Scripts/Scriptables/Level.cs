@@ -25,9 +25,9 @@ public class Level : ScriptableObject
 
     [Header("Used in menu or main")]
     public string description;
-    public bool isSolved;
-    public bool isRightInTime;
-    public bool isNoMistake;
+    public bool isSolved = false;
+    public bool isRightInTime = false;
+    public bool isNoMistake = false;
 
     public Sprite levelSprite;
     public Mesh levelMesh;
