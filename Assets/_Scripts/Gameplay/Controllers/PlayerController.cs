@@ -33,11 +33,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float joystickHorizontalInput = Input.GetAxis("Horizontal");
-        float joystickVerticalInput = Input.GetAxis("Vertical");
+        // float joystickHorizontalInput = Input.GetAxis("Horizontal");
+        // float joystickVerticalInput = Input.GetAxis("Vertical");
 
-        // float joystickHorizontalInput = joystick != null ? joystick.Horizontal : 0f;
-        // float joystickVerticalInput = joystick != null ? joystick.Vertical : 0f;
+        float joystickHorizontalInput = joystick != null ? joystick.Horizontal : 0f;
+        float joystickVerticalInput = joystick != null ? joystick.Vertical : 0f;
 
         if (!isJumping)
         {
