@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -19547,20 +19547,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 973841571a4587f49bc753371847e24f, type: 3}
   m_PrefabInstance: {fileID: 1071849177}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1071849179
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1071849178}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!54 &1071849180
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -19599,6 +19585,19 @@ MonoBehaviour:
   animator: {fileID: 0}
   joystick: {fileID: 0}
   cameraTransform: {fileID: 0}
+--- !u!65 &1071849183
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071849178}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 0.8252373, z: 0.99372864}
+  m_Center: {x: 0, y: 0.45131207, z: -0.0031356812}
 --- !u!1001 &1075150742
 PrefabInstance:
   m_ObjectHideFlags: 0
