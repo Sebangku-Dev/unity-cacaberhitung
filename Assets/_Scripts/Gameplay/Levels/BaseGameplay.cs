@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class BaseGameplay : MonoBehaviour
+public class BaseGameplay : Singleton<BaseGameplay>
 {
 
 }

@@ -29,6 +29,5 @@ public class Level : ScriptableObject
     public bool isSolved;
 
     [Header("Used in game")]
-    public List<QuestionAnswer> questionAnswers;
     public BaseGameplay gameplayLevelPrefab;
 }
