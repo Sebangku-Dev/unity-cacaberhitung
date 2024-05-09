@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4051698064936793487}
   m_Layer: 0
   m_Name: rpgpp_lt_bird_house_01
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,5 +95,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7454354, y: 2.5634563, z: 0.6609601}
-  m_Center: {x: 0.00063711405, y: 1.2818903, z: 0.00694789}
+  m_Size: {x: 0.46815538, y: 2.5634563, z: 0.35678864}
+  m_Center: {x: -0.052770972, y: 1.2818903, z: -0.02670288}
