@@ -40,11 +40,10 @@ public class BaseGameplay : Singleton<BaseGameplay>
             case LevelState.Ended:
                 HandleEnded();
                 break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(newState), newState, null);
         }
 
         OnStateChanged?.Invoke(newState);
+        Debug.Log("invoked");
     }
 
     protected override void Awake()
