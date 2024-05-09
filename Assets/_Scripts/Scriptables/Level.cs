@@ -23,10 +23,14 @@ public class Level : ScriptableObject
     public string title;
     public LevelType.LevelTypes type;
 
-    [Header("Used in menu")]
+    [Header("Used in menu or main")]
     public string description;
-    public Sprite levelSprite;
     public bool isSolved;
+    public bool isRightInTime;
+    public bool isNoMistake;
+
+    public Sprite levelSprite;
+    public Mesh levelMesh;
 
     [Header("Used in game")]
     public BaseGameplay gameplayLevelPrefab;
