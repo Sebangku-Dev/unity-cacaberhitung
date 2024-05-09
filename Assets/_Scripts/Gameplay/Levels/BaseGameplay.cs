@@ -43,7 +43,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
         }
 
         OnStateChanged?.Invoke(newState);
-        Debug.Log("invoked");
     }
 
     protected override void Awake()
@@ -58,6 +57,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected virtual void HandleEnded()
     {
         // Implemented on child class
+
     }
 
     /// <summary>
