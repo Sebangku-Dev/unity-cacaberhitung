@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Level1
   m_EditorClassIdentifier: 
   id: 0
-  title: 
+  title: Selamat Ulang Tahun!
   type: 0
-  listActivity:
-  - activityName: 
+  description: Caca berulang tahun yang ke-x tahun
+  levelSprite: {fileID: 0}
+  isSolved: 0
+  questionAnswers: []
+  gameplayLevelPrefab: {fileID: -7660392726374359896, guid: f3a4902b85073bf468c4474d811cc4e3, type: 3}

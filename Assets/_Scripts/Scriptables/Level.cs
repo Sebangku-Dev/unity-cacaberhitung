@@ -8,16 +8,27 @@ public class LevelType
 }
 
 [System.Serializable]
-public class LevelActivity
+public class QuestionAnswer
 {
-    public string activityName;
+    public string question;
+    public string answer;
+
 }
 
 [CreateAssetMenu(fileName = "Level", menuName = "Scriptable/Level")]
 public class Level : ScriptableObject
 {
+    [Header("Base information")]
     public int id;
     public string title;
     public LevelType.LevelTypes type;
-    public List<LevelActivity> listActivity;
+
+    [Header("Used in menu")]
+    public string description;
+    public Sprite levelSprite;
+    public bool isSolved;
+
+    [Header("Used in game")]
+    public List<QuestionAnswer> questionAnswers;
+    public BaseGameplay gameplayLevelPrefab;
 }
