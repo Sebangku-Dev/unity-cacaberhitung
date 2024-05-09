@@ -43,7 +43,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
         }
 
         OnStateChanged?.Invoke(newState);
-        Debug.Log("invoked");
     }
 
     protected override void Awake()

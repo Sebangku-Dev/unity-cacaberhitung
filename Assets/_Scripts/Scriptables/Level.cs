@@ -32,6 +32,6 @@ public class Level : ScriptableObject
     public Sprite levelSprite;
     public Mesh levelMesh;
 
-    [Header("Used in game")]
-    public BaseGameplay gameplayLevelPrefab;
+    // [Header("Used in game")]
+    // public BaseGameplay gameplayLevelPrefab;
 }

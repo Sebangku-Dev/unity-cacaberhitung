@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class ExampleLevelGameplay : BaseGameplay
 {
+    [SerializeField] private Level level;
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private TextMeshProUGUI stateText;
 
@@ -67,6 +68,13 @@ public class ExampleLevelGameplay : BaseGameplay
             ChangeState(LevelState.UserInteraction);
         }
         else ChangeState(LevelState.Ended);
+    }
+
+    protected override void HandleEnded()
+    {
+        base.HandleEnded();
+        level.isSolved = true;
+
     }
 
     private void OnLevelStateChanged(LevelState changedState)
