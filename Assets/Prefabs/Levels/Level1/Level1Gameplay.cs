@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Level1Gameplay : BaseGameplay
 {
-    // Entire gameplay codebase here
-    [SerializeField] private GameObject test;
+    protected override void HandlePrepare()
+    {
+        
+    }
 }
