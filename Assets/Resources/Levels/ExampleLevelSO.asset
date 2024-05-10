@@ -21,3 +21,4 @@ MonoBehaviour:
   isNoMistake: 0
   levelSprite: {fileID: 0}
   levelMesh: {fileID: 0}
+  levelSceneName: ExampleLevel
