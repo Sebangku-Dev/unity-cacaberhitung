@@ -11,6 +11,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
 
     public enum LevelState
     {
+        Cutscene,
         Prepare,
         UserInteraction,
         Passed,
@@ -25,6 +26,9 @@ public class BaseGameplay : Singleton<BaseGameplay>
 
         switch (newState)
         {
+            case LevelState.Cutscene:
+                HandleCutscene();
+                break;
             case LevelState.Prepare:
                 HandlePrepare();
                 break;
@@ -45,10 +49,19 @@ public class BaseGameplay : Singleton<BaseGameplay>
         OnStateChanged?.Invoke(newState);
     }
 
+
     protected override void Awake()
     {
         base.Awake();
         // Implemented on child class
+    }
+
+    /// <summary>
+    /// Invoked on start to play cutscene
+    /// </summary>
+    protected virtual void HandleCutscene()
+    {
+
     }
 
     /// <summary>

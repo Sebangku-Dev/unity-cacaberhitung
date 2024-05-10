@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelType
 {
@@ -32,6 +33,6 @@ public class Level : ScriptableObject
     public Sprite levelSprite;
     public Mesh levelMesh;
 
-    // [Header("Used in game")]
-    // public BaseGameplay gameplayLevelPrefab;
+    [Header("Used in game")]
+    public string levelSceneName;
 }

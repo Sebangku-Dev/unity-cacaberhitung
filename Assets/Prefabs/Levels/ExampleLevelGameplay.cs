@@ -1,14 +1,15 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
 public class ExampleLevelGameplay : BaseGameplay
 {
-    [SerializeField] private Level level;
+    [SerializeField] private Level levelData;
     [SerializeField] private TextMeshProUGUI questionText;
+    [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI stateText;
     [SerializeField] private int maxTimeDuration;
 
@@ -20,7 +21,7 @@ public class ExampleLevelGameplay : BaseGameplay
     }
     private void Start()
     {
-        ChangeState(LevelState.Prepare);
+        ChangeState(LevelState.Cutscene);
     }
     private void Update()
     {
@@ -34,6 +35,13 @@ public class ExampleLevelGameplay : BaseGameplay
     #endregion
 
     #region Level State
+    protected override void HandleCutscene()
+    {
+        base.HandleCutscene();
+        StopTimer();
+        StartCoroutine(PlayCutscene());
+    }
+
     protected override void HandlePrepare()
     {
         base.HandlePrepare();
@@ -84,24 +92,25 @@ public class ExampleLevelGameplay : BaseGameplay
         StopTimer();
 
         // Booleans check
-        level.isSolved = true;
+        levelData.isSolved = true;
 
         if (mistake > 0)
         {
-            level.isNoMistake = false;
+            levelData.isNoMistake = false;
         }
-        else level.isNoMistake = true;
+        else levelData.isNoMistake = true;
 
         if (currentTime <= maxTimeDuration)
         {
-            level.isRightInTime = true;
+            levelData.isRightInTime = true;
         }
-        else level.isRightInTime = false;
+        else levelData.isRightInTime = false;
     }
 
     private void OnLevelStateChanged(LevelState changedState)
     {
         // Do in every state changes
+        stateText.text = CurrentLevelState.ToString();
     }
     #endregion
 
@@ -150,7 +159,16 @@ public class ExampleLevelGameplay : BaseGameplay
         if (isTimerActive)
             currentTime += Time.deltaTime;
 
-        stateText.text = Mathf.RoundToInt(currentTime).ToString();
+        timerText.text = Mathf.RoundToInt(currentTime).ToString();
+    }
+
+    private IEnumerator PlayCutscene()
+    {
+        stateText.text = "This is cutscene";
+
+        yield return new WaitForSeconds(5); // put your video here
+
+        ChangeState(LevelState.Prepare);
     }
     #endregion
 }
