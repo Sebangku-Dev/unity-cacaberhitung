@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
         {
             // Play animation
             bool isWalking = !Mathf.Approximately(joystickVerticalInput, 0) || !Mathf.Approximately(joystickHorizontalInput, 0);
-            if(animator!=null)animator.SetBool("isWalking", isWalking);
+            if (animator != null) animator.SetBool("isWalking", isWalking);
 
             // Move and rotate player based on input
             MovePlayerFree(joystickHorizontalInput, joystickVerticalInput);
@@ -53,19 +53,22 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayerFree(float hInput, float vInput)
     {
-        Vector3 movementDirection = new Vector3(hInput, 0, vInput);
-        float magnitude = Mathf.Clamp01(movementDirection.magnitude) * moveSpeed;
-        movementDirection.Normalize();
-
-        // // Use this if you want free look camera instead
-        // movementDirection = Quaternion.AngleAxis(cameraTransform.transform.eulerAngles.y, Vector3.up) * movementDirection;
-
-        transform.Translate(movementDirection * Time.fixedDeltaTime * magnitude * Time.fixedDeltaTime, Space.World);
-
-        if (movementDirection != Vector3.zero)
+        // Mengatur arah rotasi berdasarkan input horizontal
+        Vector3 rotationDirection = new Vector3(0, hInput, 0);
+        if (rotationDirection.y != 0)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+            Quaternion targetRotation = Quaternion.Euler(0, rotationDirection.y, 0) * transform.rotation;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+        }
+
+        // Mengatur gerakan maju atau mundur berdasarkan input vertikal
+        if (vInput != 0)
+        {
+            Vector3 moveDirection = transform.forward * vInput;
+            float magnitude = Mathf.Clamp01(moveDirection.magnitude) * moveSpeed;
+            moveDirection.Normalize();
+
+            transform.Translate(moveDirection * magnitude * Time.fixedDeltaTime, Space.World);
         }
     }
 
