@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10f; // Kecepatan gerakan karakter
     public float rotationSpeed = 500f; // Kecepatan rotasi karakter
 
-    private Rigidbody rb;
+    public Rigidbody rb;
 
     Vector3 movement;
     public Animator animator;
@@ -17,6 +17,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
 
     private bool isJumping = false;
+
+    public LayerMask groundLayer;
+    Collider ground;
+    Bounds bounds;
+    Vector3 positionBeforeFalling;
+    public float checkDistance = 0.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,6 +60,15 @@ public class PlayerController : MonoBehaviour
 
     private void MovePlayerFree(float hInput, float vInput)
     {
+        if (!IsGrounded())
+        {
+            rb.velocity = Vector3.zero;
+            transform.position = positionBeforeFalling;
+        }
+        else{
+            GetGroundCollider();
+            positionBeforeFalling = transform.position;
+        }
         // Mengatur arah rotasi berdasarkan input horizontal
         Vector3 rotationDirection = new Vector3(0, hInput, 0);
         if (rotationDirection.y != 0)
@@ -78,6 +94,26 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
         }
+    }
 
+    bool IsGrounded()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, checkDistance, groundLayer))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    void GetGroundCollider()
+    {
+        RaycastHit hit;
+        // Raycast ke bawah dari posisi player
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, checkDistance, groundLayer))
+        {
+            ground = hit.collider; // Mengembalikan collider yang terkena raycast
+        }
+        // bounds = null; // Tidak ada ground di bawah player
     }
 }
