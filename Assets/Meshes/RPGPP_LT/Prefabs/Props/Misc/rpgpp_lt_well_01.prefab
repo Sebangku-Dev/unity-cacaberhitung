@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 4792142742180158}
   - component: {fileID: 33435424869549302}
   - component: {fileID: 23950719770064322}
+  - component: {fileID: 3456588350659493951}
   m_Layer: 0
   m_Name: rpgpp_lt_well_01
-  m_TagString: Untagged
+  m_TagString: Object
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3456588350659493951
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649361158825916}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.1529987, y: 3.705351, z: 1.239109}
+  m_Center: {x: -0.076244235, y: 1.8448812, z: 0.035248637}
