@@ -3,7 +3,42 @@ guid: 973841571a4587f49bc753371847e24f
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EYE-MATERIAL-BLACK.001
+    second: {fileID: 2100000, guid: 14529a09351c4dc418243fe19a75f3ed, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EYE-MATERIAL-WHITE.001
+    second: {fileID: 2100000, guid: 0bad58b5431cc72448ff29f819932813, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material Badan.001
+    second: {fileID: 2100000, guid: e578495fe8daa524c8c9126bf529c0f4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Telinga.003
+    second: {fileID: 2100000, guid: 0a411e800c4cf1b47a7016d2338b206d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Telinga.004
+    second: {fileID: 2100000, guid: 2c4c5846283420a4fa6ea5d0653819cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Texture Tangan dan Kaki.001
+    second: {fileID: 2100000, guid: 777deb66ac27983458cca15f84546e73, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: kirb_face 1.001
+    second: {fileID: 2100000, guid: 48728df5213eacb45bec03e61be04243, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
