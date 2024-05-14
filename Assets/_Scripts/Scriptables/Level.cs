@@ -1,19 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelType
 {
     public enum LevelTypes { Counting, Aritmathic, Geometry }
-}
-
-[System.Serializable]
-public class QuestionAnswer
-{
-    public string question;
-    public string answer;
-
 }
 
 [CreateAssetMenu(fileName = "Level", menuName = "Scriptable/Level")]
@@ -29,6 +18,8 @@ public class Level : ScriptableObject
     public bool isSolved = false;
     public bool isRightInTime = false;
     public bool isNoMistake = false;
+
+    public int maxTimeDuration = 30;
 
     public Sprite levelSprite;
     public Mesh levelMesh;
