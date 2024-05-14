@@ -14,7 +14,10 @@ public class Level : ScriptableObject
     public LevelType.LevelTypes type;
 
     [Header("Used in menu or main")]
+    [TextArea]
     public string description;
+    [TextArea]
+    public string hint;
     public bool isSolved = false;
     public bool isRightInTime = false;
     public bool isNoMistake = false;

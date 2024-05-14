@@ -15,8 +15,13 @@ MonoBehaviour:
   id: 0
   title: Selamat Ulang Tahun!
   type: 0
-  description: Caca berulang tahun yang ke-x tahun
-  levelSprite: {fileID: 0}
+  description: Caca berulang tahun yang ke-x tahun. Ayo bantu Caca menulis umurnya
+    di kue!
+  hint: Lihatlah meja di rumahmu. Ada kejutan yang lezat untukmu!
   isSolved: 0
-  questionAnswers: []
-  gameplayLevelPrefab: {fileID: -7660392726374359896, guid: f3a4902b85073bf468c4474d811cc4e3, type: 3}
+  isRightInTime: 0
+  isNoMistake: 0
+  maxTimeDuration: 30
+  levelSprite: {fileID: 0}
+  levelMesh: {fileID: 0}
+  levelSceneName: 

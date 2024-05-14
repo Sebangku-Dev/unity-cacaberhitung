@@ -5,7 +5,8 @@ using UnityEngine;
 public class MarkerController : MonoBehaviour
 {
     public static bool isOnMarkerArea;
-    [SerializeField] Level levelToPlay;
+    [SerializeField] public Level levelToPlay;
+    [SerializeField] public GameObject BarrierToUnlock;
     // [SerializeField] NavigationSystem nav;
 
     [SerializeField] TextMeshProUGUI TextTitle, TextDetail;

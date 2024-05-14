@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
     {
         if (!IsGrounded())
         {
+            Debug.Log("is not grounded");
             rb.velocity = Vector3.zero;
             transform.position = positionBeforeFalling;
         }
