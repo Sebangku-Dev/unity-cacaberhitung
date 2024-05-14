@@ -15,7 +15,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
 
         var scene = SceneManager.LoadSceneAsync(targetScene);
         scene.allowSceneActivation = false; // prevent screen for immediate load
-        MenuManager.Instance.ActivateLoaderCanvas();
+        MenuManager.Instance?.ActivateLoaderCanvas();
 
         /*
             you can implement progress method here
@@ -26,7 +26,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
         scene.allowSceneActivation = true;
 
         // Disable this for better UX
-        // MenuManager.Instance.DeactivateLoaderCanvas();
+        // MenuManager.Instance?.DeactivateLoaderCanvas();
     }
 
     public void Back()

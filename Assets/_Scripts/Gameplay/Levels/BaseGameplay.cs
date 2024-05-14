@@ -14,6 +14,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
         Cutscene,
         Prepare,
         UserInteraction,
+        Paused,
         Passed,
         Fail,
         Ended
@@ -35,6 +36,9 @@ public class BaseGameplay : Singleton<BaseGameplay>
             case LevelState.UserInteraction:
                 HandleUserInteraction();
                 break;
+            case LevelState.Paused:
+                HandlePaused();
+                break;
             case LevelState.Passed:
                 HandlePassed();
                 break;
@@ -49,10 +53,14 @@ public class BaseGameplay : Singleton<BaseGameplay>
         OnStateChanged?.Invoke(newState);
     }
 
-
     protected override void Awake()
     {
         base.Awake();
+        // Implemented on child class
+    }
+
+    protected virtual void HandlePaused()
+    {
         // Implemented on child class
     }
 
@@ -61,7 +69,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// </summary>
     protected virtual void HandleCutscene()
     {
-
+        // Implemented on child class
     }
 
     /// <summary>
@@ -70,7 +78,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected virtual void HandleEnded()
     {
         // Implemented on child class
-
     }
 
     /// <summary>
