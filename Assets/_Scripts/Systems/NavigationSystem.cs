@@ -10,6 +10,9 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
     private static int lastScene;
 
     [SerializeField] GameObject[] panels;
+    [SerializeField] private Loading loaderCanvas;
+    private void ActivateLoaderCanvas() => loaderCanvas.gameObject.SetActive(true);
+    private void DeactivateLoaderCanvas() => loaderCanvas.gameObject.SetActive(false);
 
     public async void LoadScene(string targetScene)
     {
@@ -17,7 +20,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
 
         var scene = SceneManager.LoadSceneAsync(targetScene);
         scene.allowSceneActivation = false; // prevent screen for immediate load
-        MenuManager.Instance?.ActivateLoaderCanvas();
+        ActivateLoaderCanvas();
 
         /*
             you can implement progress method here
@@ -28,7 +31,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
         scene.allowSceneActivation = true;
 
         // Disable this for better UX
-        // MenuManager.Instance?.DeactivateLoaderCanvas();
+        // DeactivateLoaderCanvas();
     }
 
     public void Back()
