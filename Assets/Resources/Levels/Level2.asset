@@ -17,9 +17,11 @@ MonoBehaviour:
   type: 0
   description: Di hari ulang tahunnya, Caca mendapat banyak sekali hadiah. Bantu
     Caca untuk membuka kotak hadiah!
-  isSolved: 0
-  isRightInTime: 0
+  hint: 
+  isSolved: 1
+  isRightInTime: 1
   isNoMistake: 0
+  playCount: 0
   maxTimeDuration: 30
   levelSprite: {fileID: 21300000, guid: 5afb4b01c6884ae4998497de1239395a, type: 3}
   levelMesh: {fileID: 0}

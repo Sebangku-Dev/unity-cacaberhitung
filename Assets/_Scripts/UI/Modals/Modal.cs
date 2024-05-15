@@ -5,13 +5,13 @@ public class Modal : MonoBehaviour
     [SerializeField] private string modalName;
     [SerializeField] Overlay relatedOverlay;
 
-    public void ActivateThis()
+    public virtual void ActivateModal()
     {
         gameObject.SetActive(true);
         relatedOverlay.gameObject.SetActive(true);
     }
-
-    public void DeactivateThis()
+    
+    public virtual void DeactivateModal()
     {
         gameObject.SetActive(false);
         relatedOverlay.gameObject.SetActive(false);

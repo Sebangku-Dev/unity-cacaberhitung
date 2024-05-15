@@ -21,6 +21,7 @@ public class Level : ScriptableObject
     public bool isSolved = false;
     public bool isRightInTime = false;
     public bool isNoMistake = false;
+    public int playCount = 0;
 
     public int maxTimeDuration = 30;
 

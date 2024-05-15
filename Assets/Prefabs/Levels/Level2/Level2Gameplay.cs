@@ -35,7 +35,7 @@ public class Level2Gameplay : BaseGameplay
     [SerializeField] private GameObject[] failedSprites;
     [Header("Ended")]
     [SerializeField] private GameObject[] endedSprites;
-    [SerializeField] private Modal modalEnded;
+    [SerializeField] private LevelEndedModal modalEnded;
 
     private float cutsceneDuration = 2f;
     private float animationDuration = 0.5f;
@@ -48,6 +48,7 @@ public class Level2Gameplay : BaseGameplay
     }
     private void Start()
     {
+        CheckIsFirstPlay();
         ChangeState(LevelState.Cutscene);
     }
     private void Update()
@@ -77,6 +78,7 @@ public class Level2Gameplay : BaseGameplay
         ShowQuestionSprites();
         ShowQuestionUI();
         StartTimer();
+        ChangeState(LevelState.UserInteraction);
     }
 
     protected override void HandleUserInteraction()
@@ -89,15 +91,16 @@ public class Level2Gameplay : BaseGameplay
         base.HandlePassed();
 
         await ShowSprites(passedSprites);
-        HideQuestionSprite();
 
         // Next question
         if (currentQuestionIndex < questions.Count() - 1)
         {
             currentQuestionIndex++;
+            HideQuestionSprite();
             ChangeState(LevelState.Prepare);
         }
-        else ChangeState(LevelState.Ended);
+        else
+            ChangeState(LevelState.Ended);
 
     }
     protected override async void HandleFail()
@@ -106,13 +109,10 @@ public class Level2Gameplay : BaseGameplay
 
         await ShowSprites(failedSprites);
         mistake++;
+        levelData.isNoMistake = false;
 
-        // Reanswer the question
-        if (currentQuestionIndex < questions.Count() - 1)
-        {
-            ChangeState(LevelState.UserInteraction);
-        }
-        else ChangeState(LevelState.Ended);
+        // Reanswer user interaction
+        ChangeState(LevelState.UserInteraction);
     }
 
     protected override async void HandleEnded()
@@ -121,11 +121,9 @@ public class Level2Gameplay : BaseGameplay
 
         await ShowSprites(endedSprites, 3f);
         await ShowModal();
-        // HideQuestionSprite();
-        // HideQuestionUI();
         StopTimer();
 
-        // Booleans check
+        // Booleans re-check
         levelData.isSolved = true;
 
         if (mistake > 0)
@@ -164,11 +162,6 @@ public class Level2Gameplay : BaseGameplay
 
         questionText.transform.parent.gameObject.SetActive(true);
         answerOptionText.transform.parent.parent.gameObject.SetActive(true);
-    }
-    private void HideQuestionUI()
-    {
-        questionText.transform.parent.gameObject.SetActive(false);
-        answerOptionText.transform.parent.parent.gameObject.SetActive(false);
     }
 
     private void ChangeButtonColor()
@@ -246,7 +239,7 @@ public class Level2Gameplay : BaseGameplay
 
     private async Task ShowModal()
     {
-        modalEnded.ActivateThis();
+        modalEnded.ActivateEndedModal(levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake);
         await Task.Yield();
     }
 
@@ -308,6 +301,16 @@ public class Level2Gameplay : BaseGameplay
 
         cutsceneImage.gameObject.SetActive(false);
         ChangeState(LevelState.Prepare);
+    }
+
+    private void CheckIsFirstPlay()
+    {
+        if (levelData.playCount < 1)
+        {
+            levelData.isSolved = true;
+            levelData.isRightInTime = true;
+            levelData.isNoMistake = true;
+        }
     }
     #endregion
 }
