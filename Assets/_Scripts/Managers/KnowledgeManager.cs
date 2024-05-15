@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PauseManager : MonoBehaviour
+public class KnowledgeManager : MonoBehaviour
 {
+    [SerializeField] GameObject KnowledgeMarker;
     // Start is called before the first frame update
     void Start()
     {

@@ -15,6 +15,8 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 
     protected void OnApplicationQuit()
     {
+        PlayerPrefs.DeleteAll();
+        
         Instance = null;
         Destroy(gameObject);
     }

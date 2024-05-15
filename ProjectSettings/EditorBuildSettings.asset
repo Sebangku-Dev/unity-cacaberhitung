@@ -12,6 +12,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Main.unity
     guid: 6f17ce7b1037725449a969af1f197a9a
   - enabled: 1
+    path: Assets/Scenes/Knowledge/MenuKnowledge.unity
+    guid: f2b2ca596d176df429984b3d84f21671
+  - enabled: 1
+    path: Assets/Scenes/Minigames/MenuLevel.unity
+    guid: d8c6def3e0c496b449bdfe219db308fe
+  - enabled: 1
+    path: Assets/Scenes/Poin/MenuPoin.unity
+    guid: c7c081d6cf30fb741a27edc14855fa15
+  - enabled: 1
     path: Assets/Scenes/Levels/ExampleLevel.unity
     guid: daf329f41aaea344b92a74e7bd3987b2
   m_configObjects: {}

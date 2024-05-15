@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 436ab88e54e3dba4d9fa92bf7347b023, type: 3}
+  m_Name: Knowledge0
+  m_EditorClassIdentifier: 
+  id: 0
+  type: 0
+  title: Asal-usul Angka Nol
+  explanation: Konsep angka nol pertama kali digunakan oleh bangsa Babylon kuno,
+    tetapi matematikawan India Brahmagupta adalah orang pertama yang mendeskripsikannya
+    sebagai sebuah angka pada tahun 628 M.
+  image: {fileID: 0}
+  explanationVoice: {fileID: 0}
+  question:
+    question: Siapa matematikawan yang pertama kali mendeskripsikan nol sebagai sebuah
+      angka
+    option:
+    - Brahmagupta
+    - Thomas Alfa Edison
+    answer: Brahmagupta

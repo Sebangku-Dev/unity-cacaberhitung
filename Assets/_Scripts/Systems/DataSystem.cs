@@ -11,6 +11,7 @@ public class DataSystem : SingletonPersistent<DataSystem>
 
     public List<Level> Levels { get; private set; }
     public List<Achievement> Achievements { get; private set; }
+    public List<Knowledge> Knowledge { get; private set; }
     protected override void Awake()
     {
         base.Awake();
@@ -20,5 +21,6 @@ public class DataSystem : SingletonPersistent<DataSystem>
     private void AssembleResources()
     {
         Levels = Resources.LoadAll<Level>("Levels").ToList();
+        Knowledge = Resources.LoadAll<Knowledge>("Knowledges").ToList();
     }
 }
