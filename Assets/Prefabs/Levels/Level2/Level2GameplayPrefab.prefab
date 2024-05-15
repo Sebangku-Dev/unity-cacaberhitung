@@ -44,8 +44,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475e1301fb1345a4881008bb05c80fa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelData: {fileID: 0}
+  levelData: {fileID: 11400000, guid: 5c097b9c057cf994a920473ba42f51a6, type: 2}
+  cutsceneImage: {fileID: 0}
+  questions:
+  - questionString: Mana yang lebih banyak?;Merah;Biru;Merah
+    questionSprite: {fileID: 0}
+  - questionString: Apakah biru lebih banyak?;Benar;Salah;Benar
+    questionSprite: {fileID: 0}
+  - questionString: Merah > Biru?;Benar;Salah;Salah
+    questionSprite: {fileID: 0}
+  - questionString: Mana yang lebih sedikit?;Merah;Biru;Biru;5 apel;2 pir
+    questionSprite: {fileID: 0}
+  - questionString: Merah < Biru?;Benar;Salah;Salah;11 boneka;10 kelereng
+    questionSprite: {fileID: 0}
+  - questionString: Mana yang lebih sedikit?;Merah;Biru;Merah;8;7+3
+    questionSprite: {fileID: 0}
+  - questionString: Merah > Biru?;Benar;Salah;Benar;8+2;4+5
+    questionSprite: {fileID: 0}
   questionText: {fileID: 0}
+  clueText: {fileID: 0}
+  clue2Text: {fileID: 0}
   answerOptionText: {fileID: 0}
   answer2OptionText: {fileID: 0}
   timerText: {fileID: 0}
+  passedSprites:
+  - {fileID: 0}
+  failedSprites:
+  - {fileID: 0}
+  endedSprites:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
