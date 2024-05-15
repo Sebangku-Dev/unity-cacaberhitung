@@ -66,7 +66,8 @@ public class PlayerController : MonoBehaviour
             rb.velocity = Vector3.zero;
             transform.position = positionBeforeFalling;
         }
-        else{
+        else
+        {
             GetGroundCollider();
             positionBeforeFalling = transform.position;
         }
@@ -116,5 +117,13 @@ public class PlayerController : MonoBehaviour
             ground = hit.collider; // Mengembalikan collider yang terkena raycast
         }
         // bounds = null; // Tidak ada ground di bawah player
+    }
+
+    public void SavePosition()
+    {
+        PlayerPrefs.SetFloat("PlayerX", transform.position.x);
+        PlayerPrefs.SetFloat("PlayerY", transform.position.y);
+        PlayerPrefs.SetFloat("PlayerZ", transform.position.z);
+        PlayerPrefs.Save();
     }
 }
