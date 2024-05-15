@@ -137,6 +137,9 @@ public class Level2Gameplay : BaseGameplay
             levelData.isRightInTime = true;
         }
         else levelData.isRightInTime = false;
+
+        // Increase play count
+        levelData.playCount++;
     }
 
     private void OnLevelStateChanged(LevelState changedState)
