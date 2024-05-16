@@ -1,9 +1,18 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuManager : Singleton<MenuManager>
+public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private GameObject loaderCanvas;
+    // Start is called before the first frame update
+    void Start()
+    {
+        
+    }
 
-    public void ActivateLoaderCanvas() => loaderCanvas?.SetActive(true);
-    public void DeactivateLoaderCanvas() => loaderCanvas?.SetActive(false);
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 }
