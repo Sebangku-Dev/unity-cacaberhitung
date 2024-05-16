@@ -11,6 +11,8 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
 
     [SerializeField] GameObject[] panels;
 
+    [SerializeField] GameObject Notification;
+
     public async void LoadScene(string targetScene)
     {
         lastScene = SceneManager.GetActiveScene().buildIndex;
@@ -58,5 +60,10 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
                 i++;
             }
         }
+    }
+
+    public void ToggleNotification()
+    {
+
     }
 }

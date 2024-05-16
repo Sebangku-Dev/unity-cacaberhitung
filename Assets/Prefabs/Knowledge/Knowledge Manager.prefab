@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6105639986263274018}
   - component: {fileID: 6525210712820736776}
   m_Layer: 0
-  m_Name: KnowledgeGenerator
+  m_Name: Knowledge Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,3 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49473c9de2eab5949b9f519bcebb0a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  KnowledgeMarker: {fileID: 6353753187461594393, guid: d967018b1b10ed2488834d1afb097673, type: 3}
