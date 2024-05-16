@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class BaseGameplay : Singleton<BaseGameplay>
 {
+    [Header("Base")]
+    [SerializeField] public Level levelData;
+
     public static event Action<LevelState> OnStateChanged;
 
     public enum LevelState
@@ -56,59 +59,45 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected override void Awake()
     {
         base.Awake();
-        // Implemented on child class
     }
 
-    protected virtual void HandlePaused()
-    {
-        // Implemented on child class
-    }
+    #region Level State
+    /// <summary>
+    /// Invoked when paused
+    /// </summary>
+    protected virtual void HandlePaused() { }
 
     /// <summary>
     /// Invoked on start to play cutscene
     /// </summary>
-    protected virtual void HandleCutscene()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandleCutscene() { }
 
     /// <summary>
     /// Invoked on very end state
     /// </summary>
-    protected virtual void HandleEnded()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandleEnded() { }
 
     /// <summary>
     /// Invoked if user give wrong answer
     /// </summary>
-    protected virtual void HandleFail()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandleFail() { }
 
     /// <summary>
     /// Invoked if user give correct answer
     /// </summary>
-    protected virtual void HandlePassed()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandlePassed() { }
 
     /// <summary>
     /// Invoked after HandlePrepare()
     /// </summary>
-    protected virtual void HandleUserInteraction()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandleUserInteraction() { }
 
     /// <summary>
     /// Invoked on first level load and after passed or fail state
     /// </summary>
-    protected virtual void HandlePrepare()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandlePrepare() { }
+    #endregion
+
+    #region Utilities
+    #endregion
 }

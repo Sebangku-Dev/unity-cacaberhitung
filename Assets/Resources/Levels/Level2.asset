@@ -19,9 +19,9 @@ MonoBehaviour:
     Caca untuk membuka kotak hadiah!
   hint: 
   isSolved: 1
-  isRightInTime: 1
+  isRightInTime: 0
   isNoMistake: 0
-  playCount: 0
+  playCount: 1
   maxTimeDuration: 30
   levelSprite: {fileID: 21300000, guid: 5afb4b01c6884ae4998497de1239395a, type: 3}
   levelMesh: {fileID: 0}

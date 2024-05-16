@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -17,8 +14,6 @@ public class Questions
 
 public class Level2Gameplay : BaseGameplay
 {
-    [Header("Base")]
-    [SerializeField] private Level levelData;
     [Header("Cutscene")]
     [SerializeField] private Image cutsceneImage;
     [Header("Prepare")]
@@ -29,6 +24,10 @@ public class Level2Gameplay : BaseGameplay
     [SerializeField] private TextMeshProUGUI answerOptionText;
     [SerializeField] private TextMeshProUGUI answer2OptionText;
     [SerializeField] private TextMeshProUGUI timerText;
+    [Header("Passed")]
+    [SerializeField] private Star starIsSolved;
+    [SerializeField] private Star starIsRightInTime;
+    [SerializeField] private Star starIsNoMistake;
     [Header("Passed")]
     [SerializeField] private GameObject[] passedSprites;
     [Header("Fail")]
@@ -54,6 +53,7 @@ public class Level2Gameplay : BaseGameplay
     private void Update()
     {
         Timer();
+        WatchStar();
     }
 
     private void OnDestroy()
@@ -74,10 +74,14 @@ public class Level2Gameplay : BaseGameplay
     {
         base.HandlePrepare();
 
+        // Prepare the quiz questions
         GenerateQuestion();
         ShowQuestionSprites();
         ShowQuestionUI();
+
+        // Prepare the timer
         StartTimer();
+
         ChangeState(LevelState.UserInteraction);
     }
 
@@ -123,7 +127,7 @@ public class Level2Gameplay : BaseGameplay
         await ShowModal();
         StopTimer();
 
-        // Booleans re-check
+        // Gained star re-checking
         levelData.isSolved = true;
 
         if (mistake > 0)
@@ -201,7 +205,6 @@ public class Level2Gameplay : BaseGameplay
         currentQuestionSprite.SetActive(false);
     }
 
-
     private async Task ShowSprites(GameObject[] blinks, float duration = 0f)
     {
         if (blinks != null && blinks.Count() > 1)
@@ -246,6 +249,16 @@ public class Level2Gameplay : BaseGameplay
         await Task.Yield();
     }
 
+    private void WatchStar()
+    {
+        starIsSolved.gameObject.SetActive(levelData.isSolved);
+        // Animate time star like a stopwatch
+        starIsRightInTime.gameObject.GetComponent<Image>().fillAmount = 1 - (currentTime / levelData.maxTimeDuration);
+        starIsNoMistake.gameObject.SetActive(levelData.isNoMistake);
+
+    }
+
+
     #endregion
 
     #region Utilities
@@ -253,12 +266,12 @@ public class Level2Gameplay : BaseGameplay
 
     /// <summary>
     /// Format:
-    /// [0] -> Question,
-    /// [1] -> Option 1,
-    /// [2] -> Option 2,
-    /// [3] -> Valid Answer,
-    /// [4] -> Clue 1,
-    /// [5] -> Clue 2
+    /// [0] Question
+    /// [1] Option 1
+    /// [2] Option 2
+    /// [3] Valid Answer
+    /// [4] Clue 1
+    /// [5] Clue 2
     /// </summary>
     private List<string> currentQuestion;
     private GameObject currentQuestionSprite;
@@ -292,6 +305,12 @@ public class Level2Gameplay : BaseGameplay
             currentTime += Time.deltaTime;
 
         timerText.text = Mathf.RoundToInt(currentTime).ToString();
+
+        // Star checking
+        if (currentTime <= levelData.maxTimeDuration)
+        {
+            levelData.isRightInTime = false;
+        }
     }
 
     private async Task PlayCutscene()

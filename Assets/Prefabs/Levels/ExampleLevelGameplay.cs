@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class ExampleLevelGameplay : BaseGameplay
 {
-    [SerializeField] private Level levelData;
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private TextMeshProUGUI stateText;
