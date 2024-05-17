@@ -1,6 +1,8 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 /// <summary>
 /// Parent class for all level gameplay class which can be inherited from
@@ -8,9 +10,21 @@ using UnityEngine;
 public class BaseGameplay : Singleton<BaseGameplay>
 {
     [Header("Base")]
-    [SerializeField] public Level levelData;
+    [SerializeField] protected Level levelData;
+    [Header("Cutscene")]
+    [SerializeField] protected Image cutsceneImage;
+    [Header("Passed")]
+    [SerializeField] protected Star starIsSolved;
+    [SerializeField] protected Star starIsRightInTime;
+    [SerializeField] protected Star starIsNoMistake;
+    [SerializeField] protected UnityEvent OnPassed;
+    [Header("Fail")]
+    [SerializeField] protected UnityEvent OnFail;
+    [Header("Ended")]
+    [SerializeField] protected UnityEvent OnEnded;
+    [SerializeField] protected LevelEndedModal modalEnded;
 
-    public static event Action<LevelState> OnStateChanged;
+    public static event Action<LevelState> OnBeforeLevelStateChanged;
 
     public enum LevelState
     {
@@ -26,6 +40,8 @@ public class BaseGameplay : Singleton<BaseGameplay>
 
     public void ChangeState(LevelState newState)
     {
+        OnBeforeLevelStateChanged?.Invoke(newState);
+
         CurrentLevelState = newState;
 
         switch (newState)
@@ -53,7 +69,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
                 break;
         }
 
-        OnStateChanged?.Invoke(newState);
     }
 
     protected override void Awake()
