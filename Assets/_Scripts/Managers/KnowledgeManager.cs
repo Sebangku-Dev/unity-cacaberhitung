@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class KnowledgeManager : MonoBehaviour
 {
     bool isCheckKnowledge = true;
+    bool isResetKnowledge = false;
 
     [Header("Knowledge Marker Management")]
     [SerializeField] GameObject KnowledgeMarker;
@@ -185,7 +186,15 @@ public class KnowledgeManager : MonoBehaviour
     void ResertKnowledge()
     {
         Destroy(NewKnowledgeObject);
-        SpawnKnowledge();
+
+        string contentNotification = "Knowledge Berpindah Tempat!|Tunggu beberapa saat lagi akan muncul Knowledge baru";
+        navigation.ToggleNotification(contentNotification);
+
+        if (!isResetKnowledge)
+        {
+            Invoke(nameof(SpawnKnowledge),5.0f);
+            isResetKnowledge = true;
+        }
     }
 
     void SetPanelText()

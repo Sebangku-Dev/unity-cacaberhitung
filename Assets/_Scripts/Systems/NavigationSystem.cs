@@ -17,7 +17,6 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
 
     [SerializeField] GameObject Notification;
     [SerializeField] TextMeshProUGUI TextNotifTitle, TextNotifMessage;
-    bool isShowNotification = false;
 
     public async void LoadScene(string targetScene)
     {
@@ -53,11 +52,22 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
             {
                 if (i == index)
                 {
-                    panel.SetActive(!panel.activeSelf);
+                    PopupAnimation animation = panel.GetComponent<PopupAnimation>();
+                    if (animation)
+                    {
+                        if (!panel.activeSelf) animation.Load();
+                        else _ = animation.Close();
+                    }
+                    else panel.SetActive(!panel.activeSelf);
                     if (index > 1)
                     {
                         panels[0].SetActive(panel.activeSelf == false);
-                        panels[1].SetActive(panel.activeSelf == false && MarkerController.isOnMarkerArea);
+
+                        if (panel.activeSelf == false && MarkerController.isOnMarkerArea)
+                        {
+                            PopupAnimation anim = panels[1].GetComponent<PopupAnimation>();
+                            if (anim) anim.Load();
+                        }
                     }
                     else if (index == 1) panels[0].SetActive(panel.activeSelf == false);
                 }
@@ -70,26 +80,15 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
 
     public void ToggleNotification(string content)
     {
-        isShowNotification = true;
-
-        if (isShowNotification)
+        if (!string.IsNullOrEmpty(content))
         {
-            if (!string.IsNullOrEmpty(content))
-            {
-                string[] subs = content.Split('|');
+            string[] subs = content.Split('|');
 
-                if (subs[0] != null) TextNotifTitle.text = subs[0];
-                if (subs[1] != null) TextNotifMessage.text = subs[1];
-            }
-
-            Notification.SetActive(true);
-            Invoke(nameof(HideNotification), 5.0f);
-            isShowNotification = false;
+            if (subs[0] != null) TextNotifTitle.text = subs[0];
+            if (subs[1] != null) TextNotifMessage.text = subs[1];
         }
-    }
 
-    void HideNotification()
-    {
-        Notification.SetActive(false);
+        PopupAnimation animation = Notification.GetComponent<PopupAnimation>();
+        animation.Load();
     }
 }

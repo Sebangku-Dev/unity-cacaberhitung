@@ -40763,6 +40763,7 @@ GameObject:
   - component: {fileID: 983011384}
   - component: {fileID: 983011386}
   - component: {fileID: 983011385}
+  - component: {fileID: 983011387}
   m_Layer: 5
   m_Name: Panel Knowledge
   m_TagString: Untagged
@@ -40829,6 +40830,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 983011383}
   m_CullTransparentMesh: 1
+--- !u!114 &983011387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983011383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f372df3d62aa34089c618deeb2a8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.3
+  isAnimateOnLoad: 0
+  delay: 0
+  isAnimateOnClose: 0
+  delayAfterOnLoad: 2
 --- !u!1001 &984549245
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -42044,6 +42062,7 @@ GameObject:
   - component: {fileID: 1013316609}
   - component: {fileID: 1013316608}
   - component: {fileID: 1013316607}
+  - component: {fileID: 1013316611}
   m_Layer: 5
   m_Name: Notification Panel
   m_TagString: Untagged
@@ -42061,7 +42080,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1746961754}
   m_Father: {fileID: 1082651320}
@@ -42150,6 +42169,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1013316605}
   m_CullTransparentMesh: 1
+--- !u!114 &1013316611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1013316605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f372df3d62aa34089c618deeb2a8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.6
+  isAnimateOnLoad: 0
+  delay: 0.5
+  isAnimateOnClose: 1
+  delayAfterOnLoad: 5
 --- !u!1001 &1014085692
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -83124,6 +83160,7 @@ GameObject:
   - component: {fileID: 2059612356}
   - component: {fileID: 2059612358}
   - component: {fileID: 2059612357}
+  - component: {fileID: 2059612359}
   m_Layer: 5
   m_Name: Panel Mission
   m_TagString: Untagged
@@ -83141,7 +83178,7 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 117968853}
   m_Father: {fileID: 1082651320}
@@ -83190,6 +83227,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2059612355}
   m_CullTransparentMesh: 1
+--- !u!114 &2059612359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059612355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f372df3d62aa34089c618deeb2a8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.3
+  isAnimateOnLoad: 0
+  delay: 0
+  isAnimateOnClose: 0
+  delayAfterOnLoad: 2
 --- !u!1001 &2060586647
 PrefabInstance:
   m_ObjectHideFlags: 0
