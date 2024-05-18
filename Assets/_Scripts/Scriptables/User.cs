@@ -43,10 +43,5 @@ public class User
     public TodaysKnowledge currentKnowledge;
 }
 
-[System.Serializable]
-public class TodaysKnowledge
-{
-    public Knowledge currentKnowledge;
-    public Vector3 position;
-    public DateTime? startingAt;
-}
+
+
