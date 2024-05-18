@@ -9,6 +9,7 @@ public class KnowledgeManager : MonoBehaviour
 {
     bool isCheckKnowledge = true;
     bool isResetKnowledge = false;
+    Knowledge currentKnowledge;
 
     [Header("Knowledge Marker Management")]
     [SerializeField] GameObject KnowledgeMarker;
@@ -17,6 +18,8 @@ public class KnowledgeManager : MonoBehaviour
     [SerializeField] float maxDistanceAboveGround = 1f;
     float x, y, z;
     GameObject NewKnowledgeObject;
+    GameObject selectedArea;
+    LocationManager lm;
 
     [Header("Knowledge Panel Management")]
     [SerializeField] GameObject[] Panels;
@@ -54,13 +57,16 @@ public class KnowledgeManager : MonoBehaviour
         // Debug.Log("is checking knowledge now...");
         if (UserManager.Instance.User.currentKnowledge != null)
         {
-            if ((DateTime.Now - UserManager.Instance.User.currentKnowledge.startingAt.Value).TotalHours > 1)
+            if ((DateTime.Now - UserManager.Instance.User.currentKnowledge.startingAt).TotalHours > 1)
             {
                 GenerateKnowledge();
             }
             else
             {
-                SpawnKnowledge();
+                currentKnowledge = DataSystem.Instance.Knowledge[UserManager.Instance.User.currentKnowledge.id];
+                selectedArea = spawnLocations[UserManager.Instance.User.currentKnowledge.areaId];
+
+                SpawnKnowledge(false);
             }
         }
         else
@@ -81,7 +87,7 @@ public class KnowledgeManager : MonoBehaviour
             }
             if (UserManager.Instance.User.currentKnowledge != null)
             {
-                if ((DateTime.Now - UserManager.Instance.User.currentKnowledge.startingAt.Value).TotalHours > 1)
+                if ((DateTime.Now - UserManager.Instance.User.currentKnowledge.startingAt).TotalHours > 1)
                 {
                     ResertKnowledge();
                 }
@@ -95,25 +101,48 @@ public class KnowledgeManager : MonoBehaviour
         if (DataSystem.Instance.Knowledge != null)
         {
             int randomIndex = UnityEngine.Random.Range(0, DataSystem.Instance.Knowledge.Count);
+
+            // Pilih area secara acak
+            int areaId = UnityEngine.Random.Range(0, spawnLocations.Count);
+            selectedArea = spawnLocations[areaId];
+            lm = selectedArea.GetComponent<LocationManager>();
+
             UserManager.Instance.User.currentKnowledge = new()
             {
-                currentKnowledge = DataSystem.Instance.Knowledge[randomIndex],
+                id = DataSystem.Instance.Knowledge[randomIndex].id,
+                areaId = areaId,
                 startingAt = DateTime.Now
             };
 
-            SpawnKnowledge();
+            UserManager.Instance.Save();
+
+            currentKnowledge = DataSystem.Instance.Knowledge[randomIndex];
+
+            SpawnKnowledge(true);
         }
     }
 
-    void SpawnKnowledge()
+    void SpawnKnowledge(bool isNew)
     {
-        // Pilih area secara acak
-        GameObject selectedArea = spawnLocations[UnityEngine.Random.Range(0, spawnLocations.Count)];
-
         // Buat marker sebagai child dari area yang dipilih
         NewKnowledgeObject = Instantiate(KnowledgeMarker);
         NewKnowledgeObject.transform.SetParent(selectedArea.transform, false);
 
+        if (!isNew)
+        {
+            Vector3 savedPosition = new Vector3(
+                UserManager.Instance.User.currentKnowledge.x,
+                UserManager.Instance.User.currentKnowledge.y,
+                UserManager.Instance.User.currentKnowledge.z
+            );
+
+            NewKnowledgeObject.transform.position = savedPosition;
+        }
+        else TransformNewKnowledge();
+    }
+
+    void TransformNewKnowledge()
+    {
         // Tentukan posisi acak di dalam collider area
         Collider areaCollider = selectedArea.GetComponent<Collider>();
         Vector3 randomPosition = GetRandomPositionInsideCollider(areaCollider);
@@ -132,20 +161,16 @@ public class KnowledgeManager : MonoBehaviour
                 NewKnowledgeObject.transform.position = new Vector3(randomPosition.x, groundPosition.y + maxDistanceAboveGround, randomPosition.z);
             }
 
-            KnowledgeController controller = NewKnowledgeObject.GetComponent<KnowledgeController>();
-            if (controller) controller.navigation = navigation;
+            UserManager.Instance.User.currentKnowledge.x = NewKnowledgeObject.transform.position.x;
+            UserManager.Instance.User.currentKnowledge.y = NewKnowledgeObject.transform.position.y;
+            UserManager.Instance.User.currentKnowledge.z = NewKnowledgeObject.transform.position.z;
 
-            SetPanelText();
-
-            LocationManager lm = selectedArea.GetComponent<LocationManager>();
-            string contentNotification = "Knowledge Baru Muncul!|Ayo jelajahi " + lm.location.name + " dan kumpulkan semua Knowledge!";
-            navigation.ToggleNotification(contentNotification);
+            OnKnowledgeSpawned();
         }
         else
         {
             // Jika tidak, ulangi proses untuk mendapatkan posisi yang valid
-            Destroy(NewKnowledgeObject);
-            SpawnKnowledge();
+            TransformNewKnowledge();
         }
     }
 
@@ -192,17 +217,28 @@ public class KnowledgeManager : MonoBehaviour
 
         if (!isResetKnowledge)
         {
-            Invoke(nameof(SpawnKnowledge),5.0f);
+            Invoke(nameof(SpawnKnowledge), 5.0f);
             isResetKnowledge = true;
         }
     }
 
+    void OnKnowledgeSpawned()
+    {
+        KnowledgeController controller = NewKnowledgeObject.GetComponent<KnowledgeController>();
+        if (controller) controller.navigation = navigation;
+
+        SetPanelText();
+
+        string contentNotification = "Knowledge Baru Muncul!|Ayo jelajahi " + lm.location.name + " dan kumpulkan semua Knowledge!";
+        navigation.ToggleNotification(contentNotification);
+    }
+
     void SetPanelText()
     {
-        TextTitle.text = TextOtherTitle.text = "Tahukah Kamu #" + UserManager.Instance.User.currentKnowledge.currentKnowledge.id + "?";
-        TextAbout.text = TextQuestion.text = UserManager.Instance.User.currentKnowledge.currentKnowledge.question.question;
-        TextOptions[0].text = UserManager.Instance.User.currentKnowledge.currentKnowledge.question.option[0];
-        TextOptions[1].text = UserManager.Instance.User.currentKnowledge.currentKnowledge.question.option[1];
+        TextTitle.text = TextOtherTitle.text = "Tahukah Kamu #" + currentKnowledge.id + "?";
+        TextAbout.text = TextQuestion.text = currentKnowledge.question.question;
+        TextOptions[0].text = currentKnowledge.question.option[0];
+        TextOptions[1].text = currentKnowledge.question.option[1];
     }
 
     public void TogglePanelQuiz()
@@ -215,13 +251,13 @@ public class KnowledgeManager : MonoBehaviour
         if (UserManager.Instance.User.currentKnowledge != null)
         {
             foreach (GameObject panel in Panels) panel.SetActive(false);
-            Debug.Log(UserManager.Instance.User.currentKnowledge.currentKnowledge.question.option[index] == UserManager.Instance.User.currentKnowledge.currentKnowledge.question.answer);
+            // Debug.Log(currentKnowledge.question.option[index] == currentKnowledge.question.answer);
 
-            bool isCorrect = UserManager.Instance.User.currentKnowledge.currentKnowledge.question.option[index] == UserManager.Instance.User.currentKnowledge.currentKnowledge.question.answer;
+            bool isCorrect = currentKnowledge.question.option[index] == currentKnowledge.question.answer;
 
             TextResult.text = isCorrect ? txtCorrect : txtIncorrect;
             ImageResult.sprite = SpriteResult[isCorrect ? 0 : 1];
-            TextKnowledge.text = isCorrect ? UserManager.Instance.User.currentKnowledge.currentKnowledge.explanation : txtMessage;
+            TextKnowledge.text = isCorrect ? currentKnowledge.explanation : txtMessage;
 
             ResultPanel.SetActive(true);
 
@@ -233,7 +269,7 @@ public class KnowledgeManager : MonoBehaviour
     {
         SaveKnowledge newSaved = new SaveKnowledge
         {
-            id = UserManager.Instance.User.currentKnowledge.currentKnowledge.id,
+            id = currentKnowledge.id,
             isCollected = true
         };
 

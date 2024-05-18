@@ -14,7 +14,7 @@ public class UserManager : Singleton<UserManager>
         }
     }
 
-    private User CreateUserFile()
+    public User CreateUserFile()
     {
         User user = NewUser ?? new User();
 

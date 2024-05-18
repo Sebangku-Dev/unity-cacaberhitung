@@ -13,6 +13,17 @@ public class SaveLevel
 }
 
 [System.Serializable]
+public class TodaysKnowledge
+{
+    public int id;
+    public int areaId;
+    public float x;
+    public float y;
+    public float z;
+    public DateTime startingAt;
+}
+
+[System.Serializable]
 public class SaveKnowledge
 {
     public int id;
