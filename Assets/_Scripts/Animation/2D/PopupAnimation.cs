@@ -24,7 +24,7 @@ public class PopupAnimation : BaseAnimation
 
     public void Close()
     {
-        transform.localScale = Vector3.one;
+        if (transform) transform.localScale = Vector3.one;
         int id = LeanTween.scale(gameObject, Vector3.zero, duration - 0.1f).id;
         LTDescr d = LeanTween.descr(id);
 

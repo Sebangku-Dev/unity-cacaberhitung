@@ -16,7 +16,7 @@ public class UserManager : Singleton<UserManager>
 
     public User CreateUserFile()
     {
-        User user = NewUser ?? new User();
+        User user = UserManager.Instance.NewUser ?? new User();
 
         foreach (Level level in DataSystem.Instance.Levels)
         {
@@ -69,7 +69,7 @@ public class UserManager : Singleton<UserManager>
         }
         else
         {
-            Debug.LogWarning("File save isn't exist");
+            Save();
         }
     }
 }

@@ -39,42 +39,6 @@ public class KnowledgeManager : MonoBehaviour
     [TextArea]
     [SerializeField] string txtCorrect, txtIncorrect, txtMessage;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        if (UserManager.Instance.User == null)
-        {
-            UserManager.Instance.Save();
-        }
-        else
-        {
-            CheckKnowledge();
-        }
-    }
-
-    void CheckKnowledge()
-    {
-        // Debug.Log("is checking knowledge now...");
-        if (UserManager.Instance.User.currentKnowledge != null)
-        {
-            if ((DateTime.Now - UserManager.Instance.User.currentKnowledge.startingAt).TotalHours > 1)
-            {
-                GenerateKnowledge();
-            }
-            else
-            {
-                currentKnowledge = DataSystem.Instance.Knowledge[UserManager.Instance.User.currentKnowledge.id];
-                selectedArea = spawnLocations[UserManager.Instance.User.currentKnowledge.areaId];
-
-                SpawnKnowledge(false);
-            }
-        }
-        else
-        {
-            GenerateKnowledge();
-        }
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -85,13 +49,28 @@ public class KnowledgeManager : MonoBehaviour
                 CheckKnowledge();
                 isCheckKnowledge = false;
             }
-            if (UserManager.Instance.User.currentKnowledge != null)
-            {
-                if ((DateTime.Now - UserManager.Instance.User.currentKnowledge.startingAt).TotalHours > 1)
-                {
-                    ResertKnowledge();
-                }
-            }
+        }
+    }
+
+    void CheckKnowledge()
+    {
+        Debug.Log("is checking knowledge now...");
+        if (UserManager.Instance.User.currentKnowledge != null)
+        {
+            Debug.Log("Knowledge is found...");
+
+            currentKnowledge = DataSystem.Instance.Knowledge[UserManager.Instance.User.currentKnowledge.id];
+            selectedArea = spawnLocations[UserManager.Instance.User.currentKnowledge.areaId];
+            lm = selectedArea.GetComponent<LocationManager>();
+
+            Debug.Log(UserManager.Instance.User.listOfSaveKnowledge[UserManager.Instance.User.currentKnowledge.id].isCollected);
+
+            SpawnKnowledge(false);
+        }
+        else
+        {
+            Debug.Log("There is no Knowledge...");
+            GenerateKnowledge();
         }
     }
 
@@ -137,6 +116,7 @@ public class KnowledgeManager : MonoBehaviour
             );
 
             NewKnowledgeObject.transform.position = savedPosition;
+            OnKnowledgeSpawned();
         }
         else TransformNewKnowledge();
     }
