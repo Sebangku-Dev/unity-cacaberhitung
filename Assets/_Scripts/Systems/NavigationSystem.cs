@@ -12,7 +12,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
 
     [SerializeField] GameObject[] panels;
     [SerializeField] private Loading loaderCanvas;
-    private void ActivateLoaderCanvas() => loaderCanvas.gameObject.SetActive(true);
+    private void ActivateLoaderCanvas() => Instantiate(loaderCanvas.gameObject);
     private void DeactivateLoaderCanvas() => loaderCanvas.gameObject.SetActive(false);
 
     [SerializeField] GameObject Notification;
@@ -31,7 +31,26 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
         */
 
         await Task.Delay(1000); // same as WaitForSecond but in async await
+        scene.allowSceneActivation = true;
 
+        // Disable this for better UX
+        // DeactivateLoaderCanvas();
+    }
+
+    // Method overloading with int as a targetScene
+    public async void LoadScene(int sceneIndex)
+    {
+        lastScene = SceneManager.GetActiveScene().buildIndex;
+
+        var scene = SceneManager.LoadSceneAsync(sceneIndex);
+        scene.allowSceneActivation = false; // prevent screen for immediate load
+        ActivateLoaderCanvas();
+
+        /*
+            you can implement progress method here
+        */
+
+        await Task.Delay(1000); // same as WaitForSecond but in async await
         scene.allowSceneActivation = true;
 
         // Disable this for better UX
@@ -40,7 +59,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
 
     public void Back()
     {
-        SceneManager.LoadScene(lastScene);
+        LoadScene(lastScene);
     }
 
     public void TogglePanel(int index)

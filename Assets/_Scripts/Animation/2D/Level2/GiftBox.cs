@@ -45,9 +45,21 @@ public class GiftBox : BaseAnimation
         {
             d.setEase(LeanTweenType.easeInOutQuart).setOnComplete(() =>
             {
-                // Close the question sprite
+                // Reset the question sprite after complete
                 transform.parent.gameObject.SetActive(false);
                 LeanTween.moveLocalY(gameObject, originPosition.y, 0f);
+                switch (animationDirection)
+                {
+                    case Direction.Left:
+                        LeanTween.moveLocalX(lid.gameObject, 0, 0f).setEaseInOutQuart();
+                        break;
+                    case Direction.Right:
+                        LeanTween.moveLocalX(lid.gameObject, 0, 0f).setEaseInOutQuart();
+                        break;
+                    default:
+                        break;
+
+                }
             });
         }
     }

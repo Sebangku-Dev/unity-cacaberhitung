@@ -3,17 +3,17 @@ using UnityEngine.Events;
 
 public class Modal : MonoBehaviour
 {
-    [SerializeField] private string modalName;
+    [SerializeField] protected string modalName;
 
-    [SerializeField] private UnityEvent OnModalActivate;
-    [SerializeField] private UnityEvent OnModalDeactivate;
+    [SerializeField] protected UnityEvent OnModalActivate;
+    [SerializeField] protected UnityEvent OnModalDeactivate;
 
-    public virtual void ActivateModal()
+    protected virtual void ActivateModal()
     {
         OnModalActivate?.Invoke();
     }
 
-    public virtual void DeactivateModal()
+    protected virtual void DeactivateModal()
     {
         OnModalDeactivate?.Invoke();
     }

@@ -28,7 +28,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
 
     public enum LevelState
     {
-        Cutscene,
+        Initialization,
         Prepare,
         UserInteraction,
         Paused,
@@ -46,8 +46,8 @@ public class BaseGameplay : Singleton<BaseGameplay>
 
         switch (newState)
         {
-            case LevelState.Cutscene:
-                HandleCutscene();
+            case LevelState.Initialization:
+                HandleInitialization();
                 break;
             case LevelState.Prepare:
                 HandlePrepare();
@@ -83,9 +83,9 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected virtual void HandlePaused() { }
 
     /// <summary>
-    /// Invoked on start to play cutscene
+    /// Invoked on start to init everything before prepare
     /// </summary>
-    protected virtual void HandleCutscene() { }
+    protected virtual void HandleInitialization() { }
 
     /// <summary>
     /// Invoked on very end state
