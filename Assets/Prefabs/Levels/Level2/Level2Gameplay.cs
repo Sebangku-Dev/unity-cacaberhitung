@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,39 +9,28 @@ using UnityEngine.UI;
 public class Questions
 {
     public string questionString;
-    public GameObject questionSprite;
+    public LevelSprite questionSprite;
 }
 
 public class Level2Gameplay : BaseGameplay
 {
-    [Header("Base")]
-    [SerializeField] private Level levelData;
-    [Header("Cutscene")]
-    [SerializeField] private Image cutsceneImage;
-    [Header("Prepare")]
+
+    [Header("Level2")]
     [SerializeField] private List<Questions> questions;
     [SerializeField] private TextMeshProUGUI questionText;
     [SerializeField] private TextMeshProUGUI clueText;
     [SerializeField] private TextMeshProUGUI clue2Text;
     [SerializeField] private TextMeshProUGUI answerOptionText;
     [SerializeField] private TextMeshProUGUI answer2OptionText;
-    [SerializeField] private TextMeshProUGUI timerText;
-    [Header("Passed")]
-    [SerializeField] private GameObject[] passedSprites;
-    [Header("Fail")]
-    [SerializeField] private GameObject[] failedSprites;
-    [Header("Ended")]
-    [SerializeField] private GameObject[] endedSprites;
-    [SerializeField] private LevelEndedModal modalEnded;
+
 
     private float cutsceneDuration = 2f;
-    private float animationDuration = 0.5f;
 
     #region MonoBehaviour
     protected override void Awake()
     {
         base.Awake();
-        BaseGameplay.OnStateChanged += OnLevelStateChanged;
+        BaseGameplay.OnBeforeLevelStateChanged += OnBeforeStateChanged;
     }
     private void Start()
     {
@@ -54,11 +40,12 @@ public class Level2Gameplay : BaseGameplay
     private void Update()
     {
         Timer();
+        WatchStar();
     }
 
     private void OnDestroy()
     {
-        BaseGameplay.OnStateChanged -= OnLevelStateChanged;
+        BaseGameplay.OnBeforeLevelStateChanged -= OnBeforeStateChanged;
     }
     #endregion
 
@@ -70,14 +57,19 @@ public class Level2Gameplay : BaseGameplay
         await PlayCutscene();
     }
 
-    protected override void HandlePrepare()
+    protected override async void HandlePrepare()
     {
         base.HandlePrepare();
 
+        // Prepare the quiz questions
         GenerateQuestion();
-        ShowQuestionSprites();
+        ShowSprite(currentQuestionSprite);
         ShowQuestionUI();
+        await DelayAnswer(4000f);
+
+        // Prepare the timer
         StartTimer();
+
         ChangeState(LevelState.UserInteraction);
     }
 
@@ -86,30 +78,33 @@ public class Level2Gameplay : BaseGameplay
         base.HandleUserInteraction();
     }
 
-    protected override async void HandlePassed()
+    protected override void HandlePassed()
     {
         base.HandlePassed();
 
-        await ShowSprites(passedSprites);
+        HideSprite(currentQuestionSprite);
+        OnPassed?.Invoke();
 
         // Next question
         if (currentQuestionIndex < questions.Count() - 1)
         {
             currentQuestionIndex++;
-            HideQuestionSprite();
             ChangeState(LevelState.Prepare);
+
         }
         else
             ChangeState(LevelState.Ended);
 
     }
-    protected override async void HandleFail()
+    protected override void HandleFail()
     {
         base.HandleFail();
 
-        await ShowSprites(failedSprites);
+        // No need to trigger hidesprites again because it overrided by its animation
         mistake++;
         levelData.isNoMistake = false;
+
+        OnFail?.Invoke();
 
         // Reanswer user interaction
         ChangeState(LevelState.UserInteraction);
@@ -119,11 +114,12 @@ public class Level2Gameplay : BaseGameplay
     {
         base.HandleEnded();
 
-        await ShowSprites(endedSprites, 3f);
-        await ShowModal();
+        // No need to trigger hidesprites again because it overrided by its animation
         StopTimer();
 
-        // Booleans re-check
+        OnEnded?.Invoke();
+
+        // Gained star re-checking
         levelData.isSolved = true;
 
         if (mistake > 0)
@@ -140,11 +136,13 @@ public class Level2Gameplay : BaseGameplay
 
         // Increase play count
         levelData.playCount++;
+
+        // Show modal
+        await ShowModal();
     }
 
-    private void OnLevelStateChanged(LevelState changedState)
+    private void OnBeforeStateChanged(LevelState changedState)
     {
-        // Do in every state changes
     }
     #endregion
 
@@ -190,55 +188,9 @@ public class Level2Gameplay : BaseGameplay
             answer2OptionText.transform.parent.gameObject.GetComponent<Shadow>().effectColor = new Color(101 / 255f, 134 / 255f, 218 / 255f);
         }
     }
+    private void ShowSprite(LevelSprite sprite) => sprite.Load();
+    private void HideSprite(LevelSprite sprite) => sprite.Close();
 
-    private void ShowQuestionSprites()
-    {
-        currentQuestionSprite.SetActive(true);
-    }
-
-    private void HideQuestionSprite()
-    {
-        currentQuestionSprite.SetActive(false);
-    }
-
-
-    private async Task ShowSprites(GameObject[] blinks, float duration = 0f)
-    {
-        if (blinks != null && blinks.Count() > 1)
-        {
-            foreach (var blink in blinks)
-            {
-                blink.SetActive(true);
-            }
-        }
-        else
-        {
-            blinks[0].SetActive(true);
-        }
-
-        // Disabling answer button for a while
-        answerOptionText.transform.parent.GetComponent<Button>().interactable = false;
-        answer2OptionText.transform.parent.GetComponent<Button>().interactable = false;
-
-        // yield return new WaitForSeconds(animationDuration + duration);
-        await Task.Delay(Mathf.RoundToInt(animationDuration * 1000 + duration * 1000));
-
-        if (blinks != null && blinks.Count() > 1)
-        {
-            foreach (var blink in blinks)
-            {
-                blink.SetActive(false);
-            }
-        }
-        else
-        {
-            blinks[0].SetActive(false);
-        }
-
-        // Re-enabling the button again
-        answerOptionText.transform.parent.GetComponent<Button>().interactable = true;
-        answer2OptionText.transform.parent.GetComponent<Button>().interactable = true;
-    }
 
     private async Task ShowModal()
     {
@@ -246,22 +198,41 @@ public class Level2Gameplay : BaseGameplay
         await Task.Yield();
     }
 
+    private void WatchStar()
+    {
+        starIsSolved.gameObject.SetActive(levelData.isSolved);
+        // Animate time star like a stopwatch
+        starIsRightInTime.gameObject.GetComponent<Image>().fillAmount = 1 - (currentTime / levelData.maxTimeDuration);
+        starIsNoMistake.gameObject.SetActive(levelData.isNoMistake);
+
+    }
+
+    private async Task DelayAnswer(float interStateDelay)
+    {
+        answerOptionText.transform.parent.GetComponent<Button>().interactable = false;
+        answer2OptionText.transform.parent.GetComponent<Button>().interactable = false;
+
+        await Task.Delay(Mathf.RoundToInt(interStateDelay));
+
+        answerOptionText.transform.parent.GetComponent<Button>().interactable = true;
+        answer2OptionText.transform.parent.GetComponent<Button>().interactable = true;
+    }
+
+
     #endregion
 
     #region Utilities
-
-
     /// <summary>
     /// Format:
-    /// [0] -> Question,
-    /// [1] -> Option 1,
-    /// [2] -> Option 2,
-    /// [3] -> Valid Answer,
-    /// [4] -> Clue 1,
-    /// [5] -> Clue 2
+    /// [0] Question
+    /// [1] Option 1
+    /// [2] Option 2
+    /// [3] Valid Answer
+    /// [4] Clue 1
+    /// [5] Clue 2
     /// </summary>
     private List<string> currentQuestion;
-    private GameObject currentQuestionSprite;
+    private LevelSprite currentQuestionSprite;
     private int currentQuestionIndex, mistake = 0;
     private float currentTime = 0;
     private bool isTimerActive = false;
@@ -291,7 +262,11 @@ public class Level2Gameplay : BaseGameplay
         if (isTimerActive)
             currentTime += Time.deltaTime;
 
-        timerText.text = Mathf.RoundToInt(currentTime).ToString();
+        // Star checking
+        if (currentTime <= levelData.maxTimeDuration)
+        {
+            levelData.isRightInTime = false;
+        }
     }
 
     private async Task PlayCutscene()

@@ -1,13 +1,30 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 /// <summary>
 /// Parent class for all level gameplay class which can be inherited from
 /// </summary>
 public class BaseGameplay : Singleton<BaseGameplay>
 {
-    public static event Action<LevelState> OnStateChanged;
+    [Header("Base")]
+    [SerializeField] protected Level levelData;
+    [Header("Cutscene")]
+    [SerializeField] protected Image cutsceneImage;
+    [Header("Passed")]
+    [SerializeField] protected Star starIsSolved;
+    [SerializeField] protected Star starIsRightInTime;
+    [SerializeField] protected Star starIsNoMistake;
+    [SerializeField] protected UnityEvent OnPassed;
+    [Header("Fail")]
+    [SerializeField] protected UnityEvent OnFail;
+    [Header("Ended")]
+    [SerializeField] protected UnityEvent OnEnded;
+    [SerializeField] protected LevelEndedModal modalEnded;
+
+    public static event Action<LevelState> OnBeforeLevelStateChanged;
 
     public enum LevelState
     {
@@ -23,6 +40,8 @@ public class BaseGameplay : Singleton<BaseGameplay>
 
     public void ChangeState(LevelState newState)
     {
+        OnBeforeLevelStateChanged?.Invoke(newState);
+
         CurrentLevelState = newState;
 
         switch (newState)
@@ -50,65 +69,50 @@ public class BaseGameplay : Singleton<BaseGameplay>
                 break;
         }
 
-        OnStateChanged?.Invoke(newState);
     }
 
     protected override void Awake()
     {
         base.Awake();
-        // Implemented on child class
     }
 
-    protected virtual void HandlePaused()
-    {
-        // Implemented on child class
-    }
+    #region Level State
+    /// <summary>
+    /// Invoked when paused
+    /// </summary>
+    protected virtual void HandlePaused() { }
 
     /// <summary>
     /// Invoked on start to play cutscene
     /// </summary>
-    protected virtual void HandleCutscene()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandleCutscene() { }
 
     /// <summary>
     /// Invoked on very end state
     /// </summary>
-    protected virtual void HandleEnded()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandleEnded() { }
 
     /// <summary>
     /// Invoked if user give wrong answer
     /// </summary>
-    protected virtual void HandleFail()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandleFail() { }
 
     /// <summary>
     /// Invoked if user give correct answer
     /// </summary>
-    protected virtual void HandlePassed()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandlePassed() { }
 
     /// <summary>
     /// Invoked after HandlePrepare()
     /// </summary>
-    protected virtual void HandleUserInteraction()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandleUserInteraction() { }
 
     /// <summary>
     /// Invoked on first level load and after passed or fail state
     /// </summary>
-    protected virtual void HandlePrepare()
-    {
-        // Implemented on child class
-    }
+    protected virtual void HandlePrepare() { }
+    #endregion
+
+    #region Utilities
+    #endregion
 }
