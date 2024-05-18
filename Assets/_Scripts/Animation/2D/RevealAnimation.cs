@@ -13,7 +13,7 @@ public class RevealAnimation : BaseAnimation
         if (isAnimateOnLoad) Load();
     }
 
-    public async void Load()
+    public void Load()
     {
 
         gameObject.SetActive(true);
@@ -25,12 +25,11 @@ public class RevealAnimation : BaseAnimation
 
         if (isAnimateOnClose)
         {
-            await Task.Delay(Mathf.RoundToInt(delayAfterOnLoad) * 1000);
-            await Close();
+            Invoke("Close", delayAfterOnLoad);
         }
     }
 
-    public async Task Close()
+    public void Close()
     {
 
         int id = LeanTween.moveLocalY(gameObject, startingLocation.y, duration).id;
@@ -40,8 +39,6 @@ public class RevealAnimation : BaseAnimation
         {
             d.setOnComplete(() => gameObject.SetActive(false)).setEase(LeanTweenType.easeInOutQuart).setDelay(delay);
         }
-
-        await Task.Yield();
     }
 
 }

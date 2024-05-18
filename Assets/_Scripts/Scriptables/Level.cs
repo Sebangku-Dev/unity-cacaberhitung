@@ -22,7 +22,6 @@ public class Level : ScriptableObject
     public bool isRightInTime = false;
     public bool isNoMistake = false;
     public int playCount = 0;
-
     public int maxTimeDuration = 30;
 
     public Sprite levelSprite;

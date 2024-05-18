@@ -570,13 +570,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 1
   isAnimateOnLoad: 0
-  delay: 1
+  delay: 0.5
   isAnimateOnClose: 0
   delayAfterOnLoad: 1
   lid: {fileID: 1145992037}
   animationDirection: 1
   isLidClosed: 0
-  originPosition: {x: 0, y: 0, z: 0}
+  originPosition: {x: 127, y: 155.00003, z: 0}
 --- !u!1 &42513750
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,7 +863,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 1
   isAnimateOnLoad: 0
-  delay: 1
+  delay: 0.5
   isAnimateOnClose: 0
   delayAfterOnLoad: 1
   lid: {fileID: 1602278331}
@@ -963,10 +963,22 @@ MonoBehaviour:
   OnClose:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 129843546}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 1585009712}
+        m_TargetAssemblyTypeName: GiftBox, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 107450078}
+        m_TargetAssemblyTypeName: GiftBox, Assembly-CSharp
+        m_MethodName: Close
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4929,7 +4941,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 980.0001, y: 2300}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1158926379
 CanvasGroup:
@@ -4940,7 +4952,7 @@ CanvasGroup:
   m_GameObject: {fileID: 1158926377}
   m_Enabled: 1
   m_Alpha: 0.6
-  m_Interactable: 1
+  m_Interactable: 0
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &1158926380
@@ -4990,9 +5002,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1158926377}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e81251532b0ff4429e07ee2ac49c18c, type: 3}
+  m_Script: {fileID: 11500000, guid: c7ba1174923510349ae224a1a5a154ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  duration: 0.3
+  isAnimateOnLoad: 1
+  delay: 0
+  isAnimateOnClose: 0
+  delayAfterOnLoad: 2
+  canvasGroup: {fileID: 1158926379}
 --- !u!1 &1158954657
 GameObject:
   m_ObjectHideFlags: 0
@@ -6079,7 +6097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 1
   isAnimateOnLoad: 0
-  delay: 1
+  delay: 0.5
   isAnimateOnClose: 0
   delayAfterOnLoad: 1
   lid: {fileID: 2003723043}
@@ -7137,7 +7155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 1
   isAnimateOnLoad: 0
-  delay: 1
+  delay: 0.5
   isAnimateOnClose: 0
   delayAfterOnLoad: 1
   lid: {fileID: 1625497179}
@@ -9575,6 +9593,7 @@ GameObject:
   - component: {fileID: 2144170711}
   - component: {fileID: 2144170710}
   - component: {fileID: 2144170712}
+  - component: {fileID: 2144170713}
   m_Layer: 0
   m_Name: Modal Ended Canvas
   m_TagString: Modal
@@ -9655,7 +9674,77 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modalName: Level Ended Modal
-  relatedOverlay: {fileID: 1158926382}
+  OnModalActivate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2144170713}
+        m_TargetAssemblyTypeName: PopupAnimation, Assembly-CSharp
+        m_MethodName: Load
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1158926382}
+        m_TargetAssemblyTypeName: FadeAnimation, Assembly-CSharp
+        m_MethodName: Load
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnModalDeactivate:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2144170708}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1158926377}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   starSolved: {fileID: 1318743072}
   starTime: {fileID: 1139521647}
   starPerfect: {fileID: 1640070645}
+--- !u!114 &2144170713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2144170708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f372df3d62aa34089c618deeb2a8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.3
+  isAnimateOnLoad: 0
+  delay: 0
+  isAnimateOnClose: 0
+  delayAfterOnLoad: 2

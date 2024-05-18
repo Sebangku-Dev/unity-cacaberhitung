@@ -8,9 +8,9 @@ public class UserManager : Singleton<UserManager>
     public User NewUser;
     void Start()
     {
-        if (UserManager.Instance.User != null)
+        if (Instance.User != null)
         {
-            if (isLoadData) UserManager.Instance.Load();
+            if (isLoadData) Instance.Load();
         }
     }
 
@@ -40,14 +40,14 @@ public class UserManager : Singleton<UserManager>
             user.listOfSaveKnowledge.Add(saved);
         }
 
-        UserManager.Instance.User = user;
+        Instance.User = user;
 
         return user;
     }
 
     public void Save()
     {
-        User user = UserManager.Instance.User ?? CreateUserFile();
+        User user = Instance.User ?? CreateUserFile();
 
         BinaryFormatter binaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/game.save");
@@ -64,7 +64,7 @@ public class UserManager : Singleton<UserManager>
             User user = (User)binaryFormatter.Deserialize(file);
             file.Close();
 
-            UserManager.Instance.User = user;
+            Instance.User = user;
 
         }
         else

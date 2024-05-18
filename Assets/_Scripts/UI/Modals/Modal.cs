@@ -1,19 +1,20 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Modal : MonoBehaviour
 {
     [SerializeField] private string modalName;
-    [SerializeField] Overlay relatedOverlay;
+
+    [SerializeField] private UnityEvent OnModalActivate;
+    [SerializeField] private UnityEvent OnModalDeactivate;
 
     public virtual void ActivateModal()
     {
-        gameObject.SetActive(true);
-        relatedOverlay.gameObject.SetActive(true);
+        OnModalActivate?.Invoke();
     }
-    
+
     public virtual void DeactivateModal()
     {
-        gameObject.SetActive(false);
-        relatedOverlay.gameObject.SetActive(false);
+        OnModalDeactivate?.Invoke();
     }
 }

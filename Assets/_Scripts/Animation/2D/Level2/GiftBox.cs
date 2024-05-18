@@ -7,9 +7,7 @@ public class GiftBox : BaseAnimation
     [SerializeField] Transform lid;
     [SerializeField] Direction animationDirection;
     [SerializeField] private bool isLidClosed;
-
     [SerializeField] private Vector3 originPosition;
-
 
 
     public void Load()
@@ -26,10 +24,10 @@ public class GiftBox : BaseAnimation
             switch (animationDirection)
             {
                 case Direction.Left:
-                    LeanTween.moveLocalX(lid.gameObject, lid.position.x + -1000, duration).setEaseInOutQuart().setDelay(delay + duration + delayAfterOnLoad);
+                    LeanTween.moveLocalX(lid.gameObject, lid.position.x + -1000, duration).setEaseInOutQuart().setDelay(delay + duration);
                     break;
                 case Direction.Right:
-                    LeanTween.moveLocalX(lid.gameObject, lid.position.x + 1000, duration).setEaseInOutQuart().setDelay(delay + duration + delayAfterOnLoad);
+                    LeanTween.moveLocalX(lid.gameObject, lid.position.x + 1000, duration).setEaseInOutQuart().setDelay(delay + duration);
                     break;
                 default:
                     break;
@@ -45,14 +43,13 @@ public class GiftBox : BaseAnimation
 
         if (d != null)
         {
-            d.setEase(LeanTweenType.easeInOutQuart).setDelay(4 * delay).setOnComplete(() =>
+            d.setEase(LeanTweenType.easeInOutQuart).setOnComplete(() =>
             {
+                // Close the question sprite
                 transform.parent.gameObject.SetActive(false);
                 LeanTween.moveLocalY(gameObject, originPosition.y, 0f);
             });
         }
-
-
     }
 
     [System.Serializable]

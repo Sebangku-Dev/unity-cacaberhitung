@@ -56,7 +56,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
                     if (animation)
                     {
                         if (!panel.activeSelf) animation.Load();
-                        else _ = animation.Close();
+                        else animation.Close();
                     }
                     else panel.SetActive(!panel.activeSelf);
                     if (index > 1)

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class SaveLevel
@@ -29,4 +30,12 @@ public class User
     public List<SaveLevel> listOfSaveLevel = new List<SaveLevel>();
     public List<SaveKnowledge> listOfSaveKnowledge = new List<SaveKnowledge>();
     public TodaysKnowledge currentKnowledge;
+}
+
+[System.Serializable]
+public class TodaysKnowledge
+{
+    public Knowledge currentKnowledge;
+    public Vector3 position;
+    public DateTime? startingAt;
 }
