@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 [System.Serializable]
 public class SaveLevel
@@ -9,6 +10,17 @@ public class SaveLevel
     public bool isFinished;
     public int starCount;
     public string finishAt;
+}
+
+[System.Serializable]
+public class TodaysKnowledge
+{
+    public int id;
+    public int areaId;
+    public float x;
+    public float y;
+    public float z;
+    public DateTime startingAt;
 }
 
 [System.Serializable]
