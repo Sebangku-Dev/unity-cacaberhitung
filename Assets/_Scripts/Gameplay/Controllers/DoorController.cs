@@ -14,10 +14,10 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (DataSystem.Instance.User != null)
+        if (UserManager.Instance.User != null)
         {
             // btnOpenDoor?.SetActive(true);
-            if (other.CompareTag("Player") && DataSystem.Instance.User.currentLevel>=4)
+            if (other.CompareTag("Player") && UserManager.Instance.User.currentLevel>=4)
             {
                 OpenDoor();
             }

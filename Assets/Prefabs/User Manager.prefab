@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 545631468827068651}
-  - component: {fileID: -5406976828386537153}
+  - component: {fileID: 5833862044516069317}
   m_Layer: 0
-  m_Name: SaveManager
+  m_Name: User Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-5406976828386537153
+--- !u!114 &5833862044516069317
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -41,6 +41,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2385380548964361988}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e649563ec50c824381d4fbf884d1170, type: 3}
+  m_Script: {fileID: 11500000, guid: 34f1c6ac8a121454d87280f7f91e6906, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLoadData: 0
+  NewUser:
+    id: 
+    name: 
+    age: 0
+    currentLevel: 0
+    listOfSaveLevel: []
+    listOfSaveKnowledge: []
+    currentKnowledge:
+      currentKnowledge: {fileID: 0}
+      position: {x: 0, y: 0, z: 0}

@@ -39,9 +39,9 @@ public class KnowledgeManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (DataSystem.Instance.User == null)
+        if (UserManager.Instance.User == null)
         {
-            DataSystem.Instance.saveManager.SaveData();
+            UserManager.Instance.Save();
         }
         else
         {
@@ -52,9 +52,9 @@ public class KnowledgeManager : MonoBehaviour
     void CheckKnowledge()
     {
         // Debug.Log("is checking knowledge now...");
-        if (DataSystem.Instance.User.currentKnowledge != null)
+        if (UserManager.Instance.User.currentKnowledge != null)
         {
-            if ((DateTime.Now - DataSystem.Instance.User.currentKnowledge.startingAt.Value).TotalHours > 1)
+            if ((DateTime.Now - UserManager.Instance.User.currentKnowledge.startingAt.Value).TotalHours > 1)
             {
                 GenerateKnowledge();
             }
@@ -72,16 +72,16 @@ public class KnowledgeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DataSystem.Instance.User != null)
+        if (UserManager.Instance.User != null)
         {
             if (isCheckKnowledge)
             {
                 CheckKnowledge();
                 isCheckKnowledge = false;
             }
-            if (DataSystem.Instance.User.currentKnowledge != null)
+            if (UserManager.Instance.User.currentKnowledge != null)
             {
-                if ((DateTime.Now - DataSystem.Instance.User.currentKnowledge.startingAt.Value).TotalHours > 1)
+                if ((DateTime.Now - UserManager.Instance.User.currentKnowledge.startingAt.Value).TotalHours > 1)
                 {
                     ResertKnowledge();
                 }
@@ -95,7 +95,7 @@ public class KnowledgeManager : MonoBehaviour
         if (DataSystem.Instance.Knowledge != null)
         {
             int randomIndex = UnityEngine.Random.Range(0, DataSystem.Instance.Knowledge.Count);
-            DataSystem.Instance.User.currentKnowledge = new()
+            UserManager.Instance.User.currentKnowledge = new()
             {
                 currentKnowledge = DataSystem.Instance.Knowledge[randomIndex],
                 startingAt = DateTime.Now
@@ -199,10 +199,10 @@ public class KnowledgeManager : MonoBehaviour
 
     void SetPanelText()
     {
-        TextTitle.text = TextOtherTitle.text = "Tahukah Kamu #" + DataSystem.Instance.User.currentKnowledge.currentKnowledge.id + "?";
-        TextAbout.text = TextQuestion.text = DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.question;
-        TextOptions[0].text = DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.option[0];
-        TextOptions[1].text = DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.option[1];
+        TextTitle.text = TextOtherTitle.text = "Tahukah Kamu #" + UserManager.Instance.User.currentKnowledge.currentKnowledge.id + "?";
+        TextAbout.text = TextQuestion.text = UserManager.Instance.User.currentKnowledge.currentKnowledge.question.question;
+        TextOptions[0].text = UserManager.Instance.User.currentKnowledge.currentKnowledge.question.option[0];
+        TextOptions[1].text = UserManager.Instance.User.currentKnowledge.currentKnowledge.question.option[1];
     }
 
     public void TogglePanelQuiz()
@@ -212,16 +212,16 @@ public class KnowledgeManager : MonoBehaviour
 
     public void OnClickOption(int index)
     {
-        if (DataSystem.Instance.User.currentKnowledge != null)
+        if (UserManager.Instance.User.currentKnowledge != null)
         {
             foreach (GameObject panel in Panels) panel.SetActive(false);
-            Debug.Log(DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.option[index] == DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.answer);
+            Debug.Log(UserManager.Instance.User.currentKnowledge.currentKnowledge.question.option[index] == UserManager.Instance.User.currentKnowledge.currentKnowledge.question.answer);
 
-            bool isCorrect = DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.option[index] == DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.answer;
+            bool isCorrect = UserManager.Instance.User.currentKnowledge.currentKnowledge.question.option[index] == UserManager.Instance.User.currentKnowledge.currentKnowledge.question.answer;
 
             TextResult.text = isCorrect ? txtCorrect : txtIncorrect;
             ImageResult.sprite = SpriteResult[isCorrect ? 0 : 1];
-            TextKnowledge.text = isCorrect ? DataSystem.Instance.User.currentKnowledge.currentKnowledge.explanation : txtMessage;
+            TextKnowledge.text = isCorrect ? UserManager.Instance.User.currentKnowledge.currentKnowledge.explanation : txtMessage;
 
             ResultPanel.SetActive(true);
 
@@ -233,22 +233,22 @@ public class KnowledgeManager : MonoBehaviour
     {
         SaveKnowledge newSaved = new SaveKnowledge
         {
-            id = DataSystem.Instance.User.currentKnowledge.currentKnowledge.id,
+            id = UserManager.Instance.User.currentKnowledge.currentKnowledge.id,
             isCollected = true
         };
 
         int index = -1;
 
-        if (DataSystem.Instance.User != null && DataSystem.Instance.Knowledge != null) index = DataSystem.Instance.User.listOfSaveKnowledge.FindIndex(knowledge => knowledge.id == newSaved.id);
+        if (UserManager.Instance.User != null && DataSystem.Instance.Knowledge != null) index = UserManager.Instance.User.listOfSaveKnowledge.FindIndex(knowledge => knowledge.id == newSaved.id);
 
         if (index != -1)
         {
-            bool check = DataSystem.Instance.User.listOfSaveKnowledge[index].isCollected;
+            bool check = UserManager.Instance.User.listOfSaveKnowledge[index].isCollected;
 
             if (!check)
             {
-                DataSystem.Instance.User.listOfSaveKnowledge[index].isCollected = newSaved.isCollected;
-                DataSystem.Instance.saveManager.SaveData();
+                UserManager.Instance.User.listOfSaveKnowledge[index].isCollected = newSaved.isCollected;
+                UserManager.Instance.Save();
             }
         }
     }
