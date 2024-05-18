@@ -1,27 +1,61 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class KnowledgeManager : MonoBehaviour
 {
+    bool isCheckKnowledge = true;
+
+    [Header("Knowledge Marker Management")]
     [SerializeField] GameObject KnowledgeMarker;
-    public LayerMask groundLayer;
-    public List<GameObject> spawnLocations;
-    public float maxDistanceAboveGround = 1f;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] List<GameObject> spawnLocations;
+    [SerializeField] float maxDistanceAboveGround = 1f;
     float x, y, z;
     GameObject NewKnowledgeObject;
 
+    [Header("Knowledge Panel Management")]
     [SerializeField] GameObject[] Panels;
-
     [SerializeField] NavigationSystem navigation;
+    [SerializeField] TextMeshProUGUI TextTitle;
+    [SerializeField] TextMeshProUGUI TextAbout;
+
+    [Header("Knowledge Question Management")]
+    [SerializeField] TextMeshProUGUI TextOtherTitle, TextQuestion;
+    [SerializeField] TextMeshProUGUI[] TextOptions;
+
+    [Header("Knowledge Result Management")]
+    [SerializeField] GameObject ResultPanel;
+    [SerializeField] Image ImageResult;
+    [SerializeField] Sprite[] SpriteResult;
+    [SerializeField] TextMeshProUGUI TextResult, TextKnowledge;
+    [TextArea]
+    [SerializeField] string txtCorrect, txtIncorrect, txtMessage;
 
     // Start is called before the first frame update
     void Start()
     {
-        if (DataSystem.Instance.currentKnowledge != null)
+        if (DataSystem.Instance.User == null)
         {
-            if ((DateTime.Now - DataSystem.Instance.currentKnowledge.startingAt.Value).TotalHours > 1)
+            DataSystem.Instance.saveManager.SaveData();
+        }
+        else
+        {
+            CheckKnowledge();
+        }
+
+
+    }
+
+    void CheckKnowledge()
+    {
+        // Debug.Log("is checking knowledge now...");
+        if (DataSystem.Instance.User.currentKnowledge != null)
+        {
+            if ((DateTime.Now - DataSystem.Instance.User.currentKnowledge.startingAt.Value).TotalHours > 1)
             {
                 GenerateKnowledge();
             }
@@ -39,21 +73,30 @@ public class KnowledgeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (DataSystem.Instance.currentKnowledge != null)
+        if (DataSystem.Instance.User != null)
         {
-            if ((DateTime.Now - DataSystem.Instance.currentKnowledge.startingAt.Value).TotalHours > 1)
+            if (isCheckKnowledge)
             {
-                ResertKnowledge();
+                CheckKnowledge();
+                isCheckKnowledge = false;
+            }
+            if (DataSystem.Instance.User.currentKnowledge != null)
+            {
+                if ((DateTime.Now - DataSystem.Instance.User.currentKnowledge.startingAt.Value).TotalHours > 1)
+                {
+                    ResertKnowledge();
+                }
             }
         }
     }
 
     public void GenerateKnowledge()
     {
+        // Debug.Log("is generating knowledge now...");
         if (DataSystem.Instance.Knowledge != null)
         {
             int randomIndex = UnityEngine.Random.Range(0, DataSystem.Instance.Knowledge.Count);
-            DataSystem.Instance.currentKnowledge = new()
+            DataSystem.Instance.User.currentKnowledge = new()
             {
                 currentKnowledge = DataSystem.Instance.Knowledge[randomIndex],
                 startingAt = DateTime.Now
@@ -94,6 +137,7 @@ public class KnowledgeManager : MonoBehaviour
             if (controller) controller.navigation = navigation;
 
             navigation.ToggleNotification();
+            SetPanelText();
         }
         else
         {
@@ -143,8 +187,59 @@ public class KnowledgeManager : MonoBehaviour
         SpawnKnowledge();
     }
 
+    void SetPanelText()
+    {
+        TextTitle.text = TextOtherTitle.text = "Tahukah Kamu #" + DataSystem.Instance.User.currentKnowledge.currentKnowledge.id + "?";
+        TextAbout.text = TextQuestion.text = DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.question;
+        TextOptions[0].text = DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.option[0];
+        TextOptions[1].text = DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.option[1];
+    }
+
     public void TogglePanelQuiz()
     {
         foreach (GameObject Panel in Panels) Panel.SetActive(!Panel.activeSelf);
+    }
+
+    public void OnClickOption(int index)
+    {
+        if (DataSystem.Instance.User.currentKnowledge != null)
+        {
+            foreach (GameObject panel in Panels) panel.SetActive(false);
+            Debug.Log(DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.option[index] == DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.answer);
+
+            bool isCorrect = DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.option[index] == DataSystem.Instance.User.currentKnowledge.currentKnowledge.question.answer;
+
+            TextResult.text = isCorrect ? txtCorrect : txtIncorrect;
+            ImageResult.sprite = SpriteResult[isCorrect ? 0 : 1];
+            TextKnowledge.text = isCorrect ? DataSystem.Instance.User.currentKnowledge.currentKnowledge.explanation : txtMessage;
+
+            ResultPanel.SetActive(true);
+
+            OnSaveKnowledge();
+        }
+    }
+
+    public void OnSaveKnowledge()
+    {
+        SaveKnowledge newSaved = new SaveKnowledge
+        {
+            id = DataSystem.Instance.User.currentKnowledge.currentKnowledge.id,
+            isCollected = true
+        };
+
+        int index = -1;
+
+        if (DataSystem.Instance.User != null && DataSystem.Instance.Knowledge != null) index = DataSystem.Instance.User.listOfSaveKnowledge.FindIndex(knowledge => knowledge.id == newSaved.id);
+
+        if (index != -1)
+        {
+            bool check = DataSystem.Instance.User.listOfSaveKnowledge[index].isCollected;
+            
+            if(!check)
+            {
+                DataSystem.Instance.User.listOfSaveKnowledge[index].isCollected = newSaved.isCollected;
+                DataSystem.Instance.saveManager.SaveData();
+            }
+        }
     }
 }
