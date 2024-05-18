@@ -22945,6 +22945,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1013316605}
     - target: {fileID: 6533563831360498122, guid: 62429c476783ea1478dccddfed341a2f, type: 3}
+      propertyPath: TextNotifTitle
+      value: 
+      objectReference: {fileID: 1633364569}
+    - target: {fileID: 6533563831360498122, guid: 62429c476783ea1478dccddfed341a2f, type: 3}
+      propertyPath: TextNotifMessage
+      value: 
+      objectReference: {fileID: 1255381224}
+    - target: {fileID: 6533563831360498122, guid: 62429c476783ea1478dccddfed341a2f, type: 3}
       propertyPath: panels.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -32556,6 +32564,10 @@ PrefabInstance:
     - target: {fileID: 4168550373605380582, guid: 9a4611aa41002c04fa94a1bfa6f171d2, type: 3}
       propertyPath: m_Name
       value: DataSystem
+      objectReference: {fileID: 0}
+    - target: {fileID: 7571798981420025160, guid: 9a4611aa41002c04fa94a1bfa6f171d2, type: 3}
+      propertyPath: isLoadData
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8810957077297881256, guid: 9a4611aa41002c04fa94a1bfa6f171d2, type: 3}
       propertyPath: m_RootOrder

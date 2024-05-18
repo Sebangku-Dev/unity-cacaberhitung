@@ -46,8 +46,6 @@ public class KnowledgeManager : MonoBehaviour
         {
             CheckKnowledge();
         }
-
-
     }
 
     void CheckKnowledge()
@@ -136,8 +134,11 @@ public class KnowledgeManager : MonoBehaviour
             KnowledgeController controller = NewKnowledgeObject.GetComponent<KnowledgeController>();
             if (controller) controller.navigation = navigation;
 
-            navigation.ToggleNotification();
             SetPanelText();
+
+            LocationManager lm = selectedArea.GetComponent<LocationManager>();
+            string contentNotification = "Knowledge Baru Muncul!|Ayo jelajahi " + lm.location.name + " dan kumpulkan semua Knowledge!";
+            navigation.ToggleNotification(contentNotification);
         }
         else
         {
@@ -234,8 +235,8 @@ public class KnowledgeManager : MonoBehaviour
         if (index != -1)
         {
             bool check = DataSystem.Instance.User.listOfSaveKnowledge[index].isCollected;
-            
-            if(!check)
+
+            if (!check)
             {
                 DataSystem.Instance.User.listOfSaveKnowledge[index].isCollected = newSaved.isCollected;
                 DataSystem.Instance.saveManager.SaveData();

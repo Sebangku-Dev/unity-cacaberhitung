@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 /// <summary>
 /// Used for navigation system accross the scenes
@@ -15,6 +16,8 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
     private void DeactivateLoaderCanvas() => loaderCanvas.gameObject.SetActive(false);
 
     [SerializeField] GameObject Notification;
+    [SerializeField] TextMeshProUGUI TextNotifTitle, TextNotifMessage;
+    bool isShowNotification = false;
 
     public async void LoadScene(string targetScene)
     {
@@ -65,8 +68,28 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
         }
     }
 
-    public void ToggleNotification()
+    public void ToggleNotification(string content)
     {
+        isShowNotification = true;
 
+        if (isShowNotification)
+        {
+            if (!string.IsNullOrEmpty(content))
+            {
+                string[] subs = content.Split('|');
+
+                if (subs[0] != null) TextNotifTitle.text = subs[0];
+                if (subs[1] != null) TextNotifMessage.text = subs[1];
+            }
+
+            Notification.SetActive(true);
+            Invoke(nameof(HideNotification), 5.0f);
+            isShowNotification = false;
+        }
+    }
+
+    void HideNotification()
+    {
+        Notification.SetActive(false);
     }
 }

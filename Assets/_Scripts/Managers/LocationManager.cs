@@ -6,7 +6,7 @@ using TMPro;
 public class LocationManager : MonoBehaviour
 {
     public static bool isExit;
-    [SerializeField] Location location;
+    [SerializeField] public Location location;
     [SerializeField] TextMeshProUGUI TextLocation;
     public void OnTriggerEnter(Collider other)
     {
