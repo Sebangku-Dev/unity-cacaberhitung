@@ -15,7 +15,7 @@ public class SaveLevel
 [System.Serializable]
 public class TodaysKnowledge
 {
-    public int id;
+    public int id = -1;
     public int areaId;
     public float x;
     public float y;
