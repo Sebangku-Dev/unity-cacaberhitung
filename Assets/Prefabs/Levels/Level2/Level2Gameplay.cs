@@ -65,7 +65,7 @@ public class Level2Gameplay : BaseGameplay
         GenerateQuestion();
         ShowSprite(currentQuestionSprite);
         ShowQuestionUI();
-        await DelayAnswer(4000f);
+        await DelayAnswer(2000f);
 
         // Prepare the timer
         StartTimer();
@@ -78,12 +78,15 @@ public class Level2Gameplay : BaseGameplay
         base.HandleUserInteraction();
     }
 
-    protected override void HandlePassed()
+    protected override async void HandlePassed()
     {
         base.HandlePassed();
 
         HideSprite(currentQuestionSprite);
         OnPassed?.Invoke();
+
+        // Wait for a sec and delay answer to prevent user to access it
+        await Task.WhenAll(new Task[] { Task.Delay(1500), DelayAnswer(2000) });
 
         // Next question
         if (currentQuestionIndex < questions.Count() - 1)
@@ -164,7 +167,6 @@ public class Level2Gameplay : BaseGameplay
         questionText.transform.parent.gameObject.SetActive(true);
         answerOptionText.transform.parent.parent.gameObject.SetActive(true);
     }
-
     private void ChangeButtonColor()
     {
         if (answerOptionText.text == "Benar")

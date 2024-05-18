@@ -42,3 +42,6 @@ public class User
     public List<SaveKnowledge> listOfSaveKnowledge = new List<SaveKnowledge>();
     public TodaysKnowledge currentKnowledge;
 }
+
+
+

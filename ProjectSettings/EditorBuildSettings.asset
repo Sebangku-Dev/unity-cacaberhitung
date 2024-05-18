@@ -20,7 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Poin/MenuPoin.unity
     guid: c7c081d6cf30fb741a27edc14855fa15
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Levels/ExampleLevel.unity
     guid: daf329f41aaea344b92a74e7bd3987b2
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level2.unity
+    guid: 82891aacc92fe4248b2c88f7b24bd5b2
   m_configObjects: {}
