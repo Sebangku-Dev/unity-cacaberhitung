@@ -23,6 +23,7 @@ public class Level : ScriptableObject
     public bool isNoMistake = false;
     public int playCount = 0;
     public int maxTimeDuration = 30;
+    public bool isUnlocked = true;
 
     public Sprite levelSprite;
     public Mesh levelMesh;

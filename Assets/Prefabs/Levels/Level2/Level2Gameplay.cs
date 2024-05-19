@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,8 +24,14 @@ public class Level2Gameplay : BaseGameplay
     [SerializeField] private TextMeshProUGUI answerOptionText;
     [SerializeField] private TextMeshProUGUI answer2OptionText;
 
-
     private float cutsceneDuration = 2f;
+    private bool starIsSolvedState, starIsNoMistakeState, starIsRightInTimeState;
+    private List<string> currentQuestion;
+    private LevelSprite currentQuestionSprite;
+    private int currentQuestionIndex, mistake = 0;
+    private float currentTime = 0;
+    private bool isTimerActive = false;
+
 
     #region MonoBehaviour
     protected override void Awake()
@@ -34,9 +41,9 @@ public class Level2Gameplay : BaseGameplay
     }
     private void Start()
     {
-        CheckIsFirstPlay();
-        ChangeState(LevelState.Cutscene);
+        ChangeState(LevelState.Initialization);
     }
+
     private void Update()
     {
         Timer();
@@ -50,10 +57,14 @@ public class Level2Gameplay : BaseGameplay
     #endregion
 
     #region Level State
-    protected override async void HandleCutscene()
+    protected override async void HandleInitialization()
     {
-        base.HandleCutscene();
+        base.HandleInitialization();
+
         StopTimer();
+        CheckIsFirstPlay();
+        SaveScoreState();
+
         await PlayCutscene();
     }
 
@@ -157,6 +168,22 @@ public class Level2Gameplay : BaseGameplay
         else
             ChangeState(LevelState.Fail);
     }
+
+    public void OnReplayClick()
+    {
+        // Reset all state
+        currentQuestionIndex = 0;
+        currentTime = 0;
+        mistake = 0;
+        isTimerActive = false;
+        HideSprite(currentQuestionSprite);
+        levelData.isSolved = starIsSolvedState;
+        levelData.isRightInTime = starIsRightInTimeState;
+        levelData.isSolved = starIsNoMistakeState;
+
+        ChangeState(LevelState.Initialization);
+    }
+
     #endregion
 
     #region UI
@@ -203,7 +230,6 @@ public class Level2Gameplay : BaseGameplay
     private void WatchStar()
     {
         starIsSolved.gameObject.SetActive(levelData.isSolved);
-        // Animate time star like a stopwatch
         starIsRightInTime.gameObject.GetComponent<Image>().fillAmount = 1 - (currentTime / levelData.maxTimeDuration);
         starIsNoMistake.gameObject.SetActive(levelData.isNoMistake);
 
@@ -233,11 +259,6 @@ public class Level2Gameplay : BaseGameplay
     /// [4] Clue 1
     /// [5] Clue 2
     /// </summary>
-    private List<string> currentQuestion;
-    private LevelSprite currentQuestionSprite;
-    private int currentQuestionIndex, mistake = 0;
-    private float currentTime = 0;
-    private bool isTimerActive = false;
 
     private void GenerateQuestion()
     {
@@ -291,6 +312,13 @@ public class Level2Gameplay : BaseGameplay
             levelData.isRightInTime = true;
             levelData.isNoMistake = true;
         }
+    }
+
+    private void SaveScoreState()
+    {
+        starIsSolvedState = levelData.isSolved;
+        starIsRightInTimeState = levelData.isRightInTime;
+        starIsNoMistakeState = levelData.isNoMistake;
     }
     #endregion
 }

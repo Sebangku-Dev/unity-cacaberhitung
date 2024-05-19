@@ -44,4 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 445fd06fa563c104782c9969c33795e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  loaderCanvas: {fileID: 0}
+  panels: []
+  loaderCanvas: {fileID: 413579872, guid: 8b41115513fe123468026b64c01484cf, type: 3}
+  Notification: {fileID: 0}
+  TextNotifTitle: {fileID: 0}
+  TextNotifMessage: {fileID: 0}
