@@ -114,5 +114,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
     #endregion
 
     #region Utilities
+    
     #endregion
 }

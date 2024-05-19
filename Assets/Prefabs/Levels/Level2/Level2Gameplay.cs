@@ -26,9 +26,20 @@ public class Level2Gameplay : BaseGameplay
 
     private float cutsceneDuration = 2f;
     private bool starIsSolvedState, starIsNoMistakeState, starIsRightInTimeState;
+
+    /// <summary>
+    /// Format:
+    /// <para>[0] Question</para> 
+    /// <para>[1] Option 1</para>
+    /// <para>[2] Option 2</para>
+    /// <para>[3] Valid Answer</para>
+    /// <para>[4] Clue 1</para>
+    /// <para>[5] Clue 2</para>
+    /// </summary>
     private List<string> currentQuestion;
+    private int currentQuestionIndex = 0;
     private LevelSprite currentQuestionSprite;
-    private int currentQuestionIndex, mistake = 0;
+    private int mistake = 0;
     private float currentTime = 0;
     private bool isTimerActive = false;
 
@@ -37,7 +48,7 @@ public class Level2Gameplay : BaseGameplay
     protected override void Awake()
     {
         base.Awake();
-        BaseGameplay.OnBeforeLevelStateChanged += OnBeforeStateChanged;
+        OnBeforeLevelStateChanged += OnBeforeStateChanged;
     }
     private void Start()
     {
@@ -52,7 +63,7 @@ public class Level2Gameplay : BaseGameplay
 
     private void OnDestroy()
     {
-        BaseGameplay.OnBeforeLevelStateChanged -= OnBeforeStateChanged;
+        OnBeforeLevelStateChanged -= OnBeforeStateChanged;
     }
     #endregion
 
@@ -250,16 +261,6 @@ public class Level2Gameplay : BaseGameplay
     #endregion
 
     #region Utilities
-    /// <summary>
-    /// Format:
-    /// [0] Question
-    /// [1] Option 1
-    /// [2] Option 2
-    /// [3] Valid Answer
-    /// [4] Clue 1
-    /// [5] Clue 2
-    /// </summary>
-
     private void GenerateQuestion()
     {
         currentQuestion = questions[currentQuestionIndex].questionString.Split(";").ToList();
