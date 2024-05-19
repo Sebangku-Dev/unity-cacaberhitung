@@ -55,7 +55,7 @@ public class KnowledgeManager : MonoBehaviour
     void CheckKnowledge()
     {
         Debug.Log("is checking knowledge now...");
-        if (UserManager.Instance.User.currentKnowledge != null)
+        if (UserManager.Instance.User.knowledgeHasSpawn)
         {
             Debug.Log("Knowledge is found...");
 
@@ -92,6 +92,8 @@ public class KnowledgeManager : MonoBehaviour
                 areaId = areaId,
                 startingAt = DateTime.Now
             };
+
+             UserManager.Instance.User.knowledgeHasSpawn = true;
 
             UserManager.Instance.Save();
 

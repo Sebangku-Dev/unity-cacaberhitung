@@ -21,6 +21,7 @@ public class TodaysKnowledge
     public float y;
     public float z;
     public DateTime startingAt;
+    public bool isColllected;
 }
 
 [System.Serializable]
@@ -40,6 +41,7 @@ public class User
     public int currentLevel;
     public List<SaveLevel> listOfSaveLevel = new List<SaveLevel>();
     public List<SaveKnowledge> listOfSaveKnowledge = new List<SaveKnowledge>();
+    public bool knowledgeHasSpawn;
     public TodaysKnowledge currentKnowledge;
 }
 
