@@ -22,7 +22,7 @@ public class DataSystem : SingletonPersistent<DataSystem>
 
     public Level GetReadyToPlayLevel()
     {
-        return Levels.Find(level => level.isUnlocked && !level.isSolved) ?? null;
+        return Levels.Find(level => level.isToBePlayed && level.isUnlocked) ?? null;
     }
 
     public Level GetLevelById(int id)

@@ -13,7 +13,10 @@ public class MarkerController : MonoBehaviour
 
     private void Start()
     {
-        gameObject.SetActive(relatedLevel.isUnlocked);
+        gameObject.SetActive(relatedLevel.isToBePlayed);
+
+        // Unlock barrier if solved
+        UnlockBarrierIfSolved();
     }
 
     public void OnTriggerEnter(Collider other)
@@ -33,6 +36,15 @@ public class MarkerController : MonoBehaviour
             playLevelModal.DeactivatePlayLevelModal();
         }
     }
+
+    private void UnlockBarrierIfSolved()
+    {
+        if (BarrierToUnlock && relatedLevel.isSolved)
+        {
+            BarrierToUnlock.SetActive(false);
+        }
+    }
+
 
     void ToggleMissionPanel()
     {
