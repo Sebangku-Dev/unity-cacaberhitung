@@ -29,6 +29,7 @@ public class Level : ScriptableObject
     public bool isSolved = false;
     public bool isRightInTime = false;
     public bool isNoMistake = false;
+    public bool isToBePlayed = false;
     public Transform marker;
     public Level nextLevel;
 }

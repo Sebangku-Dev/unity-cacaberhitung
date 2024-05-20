@@ -5,6 +5,7 @@ using UnityEngine;
 public class DoorController : MonoBehaviour
 {
     [SerializeField] private Animator doorAnimator;
+    [SerializeField] private GameObject relatedBarrier;
 
     private void Start()
     {
@@ -16,8 +17,7 @@ public class DoorController : MonoBehaviour
     {
         if (UserManager.Instance.User != null)
         {
-            // btnOpenDoor?.SetActive(true);
-            if (other.CompareTag("Player") && UserManager.Instance.User.currentLevel>=4)
+            if (other.CompareTag("Player") && !relatedBarrier.activeSelf)
             {
                 OpenDoor();
             }
@@ -27,7 +27,6 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        // btnOpenDoor?.SetActive(false);
         if (other.CompareTag("Player"))
             CloseDoor();
     }

@@ -165,9 +165,11 @@ public class Level2Gameplay : BaseGameplay
         // Add score to user current score based on true-ish boolean
         ScoreSystem.Instance.AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
 
-        // Unlock next level
-        if (!levelData.nextLevel.isUnlocked) levelData.nextLevel.isUnlocked = true;
-        if (levelData.nextLevel.isSolved) levelData.nextLevel.isSolved = false;
+        // Show and unlock next level   
+        levelData.isToBePlayed = false;
+        levelData.nextLevel.isToBePlayed = true;
+        levelData.nextLevel.isUnlocked = true;
+        levelData.nextLevel.isSolved = false;
 
         // Show modal
         await ShowModal();
