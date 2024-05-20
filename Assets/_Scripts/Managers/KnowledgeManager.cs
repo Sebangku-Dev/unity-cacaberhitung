@@ -24,6 +24,7 @@ public class KnowledgeManager : MonoBehaviour
     [Header("Knowledge Info Management")]
     [SerializeField] GameObject MiniInfo;
     [SerializeField] TextMeshProUGUI TextLocation, TextTimer;
+    [SerializeField] GameObject ButtonKnowledgeHint;
 
     [Header("Knowledge Panel Management")]
     [SerializeField] GameObject[] Panels;
@@ -43,6 +44,7 @@ public class KnowledgeManager : MonoBehaviour
     [TextArea]
     [SerializeField] string txtCorrect, txtIncorrect, txtMessage;
 
+    #region Knowledge Check Handler
     // Update is called once per frame
     void Update()
     {
@@ -61,6 +63,7 @@ public class KnowledgeManager : MonoBehaviour
                     if (IsMoreThanAnHour())
                     {
                         Debug.Log("Current knowledge is time over...");
+                        ResertKnowledge();
                     }
                 }
             }
@@ -77,7 +80,8 @@ public class KnowledgeManager : MonoBehaviour
             if (IsMoreThanAnHour())
             {
                 Debug.Log("But time is over...");
-                GenerateKnowledge();
+
+                ResertKnowledge();
             }
             else
             {
@@ -88,6 +92,11 @@ public class KnowledgeManager : MonoBehaviour
                 if (UserManager.Instance.User.listOfSaveKnowledge[UserManager.Instance.User.currentKnowledge.id].isCollected)
                 {
                     Debug.Log("Current knowledge has collected...");
+
+                    string contentNotification = "Knowledge sebelumnya telah dikoleksi!|Tunggu beberapa saat sebelum knowledge baru muncul... ";
+                    navigation.ToggleNotification(contentNotification);
+
+                    SetPanelText();
                 }
                 else
                 {
@@ -110,11 +119,16 @@ public class KnowledgeManager : MonoBehaviour
 
         TimeSpan timeSpan = now - UserManager.Instance.User.currentKnowledge.startingAt;
 
+        TextTimer.text = "Timer: " + timeSpan.ToString(@"mm\:ss");
+
         return timeSpan.TotalHours > 1;
     }
+    #endregion
 
+    #region KnowledgeMarker Handler
     public void GenerateKnowledge()
     {
+        isResetKnowledge = false;
         Debug.Log("Is generating knowledge now...");
         if (DataSystem.Instance.Knowledge != null)
         {
@@ -160,6 +174,22 @@ public class KnowledgeManager : MonoBehaviour
         else TransformNewKnowledge();
     }
 
+    void ResertKnowledge()
+    {
+        if (NewKnowledgeObject != null) Destroy(NewKnowledgeObject);
+
+        string contentNotification = "Knowledge sebelumnya telah hilang!|Tunggu beberapa saat lagi akan muncul Knowledge baru";
+        navigation.ToggleNotification(contentNotification);
+
+        if (!isResetKnowledge)
+        {
+            Invoke(nameof(GenerateKnowledge), 5.0f);
+            isResetKnowledge = true;
+        }
+    }
+    #endregion
+
+    #region Randomize Knowledge Position Handler
     void TransformNewKnowledge()
     {
         Collider areaCollider = selectedArea.GetComponent<Collider>();
@@ -220,21 +250,9 @@ public class KnowledgeManager : MonoBehaviour
         groundPosition = Vector3.zero;
         return false;
     }
+    #endregion
 
-    void ResertKnowledge()
-    {
-        Destroy(NewKnowledgeObject);
-
-        string contentNotification = "Knowledge Berpindah Tempat!|Tunggu beberapa saat lagi akan muncul Knowledge baru";
-        navigation.ToggleNotification(contentNotification);
-
-        if (!isResetKnowledge)
-        {
-            Invoke(nameof(SpawnKnowledge), 5.0f);
-            isResetKnowledge = true;
-        }
-    }
-
+    #region Knowledge UI Handler
     void OnKnowledgeSpawned()
     {
         KnowledgeController controller = NewKnowledgeObject.GetComponent<KnowledgeController>();
@@ -249,10 +267,24 @@ public class KnowledgeManager : MonoBehaviour
     void SetPanelText()
     {
         TextTitle.text = TextOtherTitle.text = "Tahukah Kamu #" + currentKnowledge.id + "?";
+
         TextAbout.text = TextQuestion.text = currentKnowledge.question.question;
+
         TextOptions[0].text = currentKnowledge.question.option[0];
         TextOptions[1].text = currentKnowledge.question.option[1];
+
+        TextLocation.text = lm.location.name;
     }
+
+    public void ToggleInfo()
+    {
+        MiniInfo.SetActive(!MiniInfo.activeSelf);
+        ButtonKnowledgeHint.SetActive(!ButtonKnowledgeHint.activeSelf);
+    }
+
+    #endregion
+
+    #region Quiz Handler
 
     public void TogglePanelQuiz()
     {
@@ -300,5 +332,9 @@ public class KnowledgeManager : MonoBehaviour
                 UserManager.Instance.Save();
             }
         }
+
+        if (NewKnowledgeObject != null) Destroy(NewKnowledgeObject);
     }
+
+    #endregion
 }
