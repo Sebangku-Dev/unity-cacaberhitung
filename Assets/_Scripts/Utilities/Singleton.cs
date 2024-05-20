@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -16,7 +17,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     protected void OnApplicationQuit()
     {
         PlayerPrefs.DeleteAll();
-        
+
         Instance = null;
         Destroy(gameObject);
     }
@@ -26,11 +27,13 @@ public abstract class SingletonPersistent<T> : Singleton<T> where T : MonoBehavi
 {
     protected override void Awake()
     {
-        if (Instance != null)
+        if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
+            return;
         }
-        DontDestroyOnLoad(gameObject);
+
         base.Awake();
+        DontDestroyOnLoad(gameObject);
     }
 }
