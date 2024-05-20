@@ -22,7 +22,7 @@ MonoBehaviour:
   levelSprite: {fileID: 21300000, guid: 129bedb3e7c2f824d84e2b07bb973b41, type: 3}
   levelSceneName: Level2
   playCount: 1
-  maxTimeDuration: 15
+  maxTimeDuration: 60
   isSolved: 1
   isRightInTime: 1
   isNoMistake: 1

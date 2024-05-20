@@ -24,9 +24,6 @@ public class Level2Gameplay : BaseGameplay
     [SerializeField] private TextMeshProUGUI answerOptionText;
     [SerializeField] private TextMeshProUGUI answer2OptionText;
 
-    private float cutsceneDuration = 4f;
-    private bool starIsSolvedState, starIsNoMistakeState, starIsRightInTimeState;
-
     /// <summary>
     /// Format:
     /// <para>[0] Question</para> 
@@ -39,9 +36,6 @@ public class Level2Gameplay : BaseGameplay
     private List<string> currentQuestion;
     private int currentQuestionIndex = 0;
     private LevelSprite currentQuestionSprite;
-    private int mistake = 0;
-    private float currentTime = 0;
-    private bool isTimerActive = false;
 
 
     #region MonoBehaviour
@@ -49,9 +43,6 @@ public class Level2Gameplay : BaseGameplay
     {
         base.Awake();
         OnBeforeLevelStateChanged += OnBeforeStateChanged;
-
-        // For smoother transition between loading and cutscene
-        whiteOverlay.gameObject.SetActive(true);
     }
 
     private void Start()
@@ -59,7 +50,7 @@ public class Level2Gameplay : BaseGameplay
         ChangeState(LevelState.Initialization);
     }
 
-    private void Update()
+    protected override void Update()
     {
         Timer();
         WatchStar();
@@ -81,7 +72,6 @@ public class Level2Gameplay : BaseGameplay
         StopTimer();
         CheckIsFirstPlay();
         SaveScoreState();
-
     }
 
     protected override async void HandlePrepare()
@@ -139,10 +129,11 @@ public class Level2Gameplay : BaseGameplay
     {
         base.HandleFail();
 
-        // No need to trigger hidesprites again because it overrided by its animation
+        // Increase mistake
         mistake++;
         levelData.isNoMistake = false;
 
+        // Event to trigger something e.g. Caca popup animation
         OnFail?.Invoke();
 
         // Reanswer user interaction
@@ -158,35 +149,20 @@ public class Level2Gameplay : BaseGameplay
 
         OnEnded?.Invoke();
 
-        // Gained star re-checking
-        levelData.isSolved = true;
-
-        if (mistake > 0)
-        {
-            levelData.isNoMistake = false;
-        }
-        else levelData.isNoMistake = true;
-
-        if (currentTime <= levelData.maxTimeDuration)
-        {
-            levelData.isRightInTime = true;
-        }
-        else levelData.isRightInTime = false;
+        // Calculate the stars
+        CalculateStars();
 
         // Increase play count
         levelData.playCount++;
 
         // Add score to user current score based on true-ish boolean
-        ScoreSystem.Instance.AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
+        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
 
         // Show and unlock next level   
-        levelData.isToBePlayed = false;
-        levelData.nextLevel.isToBePlayed = true;
-        levelData.nextLevel.isUnlocked = true;
-        levelData.nextLevel.isSolved = false;
+        ShowAndUnlockNextLevel();
 
-        // Show modal
-        await ShowModal();
+        // Show ended modal
+        await ShowEndedModal();
     }
 
     private void OnBeforeStateChanged(LevelState changedState)
@@ -202,22 +178,6 @@ public class Level2Gameplay : BaseGameplay
         else
             ChangeState(LevelState.Fail);
     }
-
-    public void OnReplayClick()
-    {
-        // Reset all state
-        currentQuestionIndex = 0;
-        currentTime = 0;
-        mistake = 0;
-        isTimerActive = false;
-        HideSprite(currentQuestionSprite);
-        levelData.isSolved = starIsSolvedState;
-        levelData.isRightInTime = starIsRightInTimeState;
-        levelData.isSolved = starIsNoMistakeState;
-
-        ChangeState(LevelState.Initialization);
-    }
-
     #endregion
 
     #region UI
@@ -250,23 +210,6 @@ public class Level2Gameplay : BaseGameplay
             answer2OptionText.transform.parent.gameObject.GetComponent<Image>().color = new Color(121 / 255f, 154 / 255f, 238 / 255f);
             answer2OptionText.transform.parent.gameObject.GetComponent<Shadow>().effectColor = new Color(101 / 255f, 134 / 255f, 218 / 255f);
         }
-    }
-    private void ShowSprite(LevelSprite sprite) => sprite.Load();
-    private void HideSprite(LevelSprite sprite) => sprite.Close();
-
-
-    private async Task ShowModal()
-    {
-        modalEnded.ActivateEndedModal(levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake);
-        await Task.Yield();
-    }
-
-    private void WatchStar()
-    {
-        starIsSolved.gameObject.SetActive(levelData.isSolved);
-        starIsRightInTime.gameObject.GetComponent<Image>().fillAmount = 1 - (currentTime / levelData.maxTimeDuration);
-        starIsNoMistake.gameObject.SetActive(levelData.isNoMistake);
-
     }
 
     private async Task DelayAnswer(float interStateDelay)
@@ -301,46 +244,9 @@ public class Level2Gameplay : BaseGameplay
         }
     }
 
-    private bool IsAnswerCorrect(string answer, string valid) => answer == valid;
-    private void StartTimer() => isTimerActive = true;
-    private void StopTimer() => isTimerActive = false;
-    private void Timer()
-    {
-        if (isTimerActive)
-            currentTime += Time.deltaTime;
-    }
+    protected bool IsAnswerCorrect(string answer, string valid) => answer == valid;
 
-    private async Task PlayCutscene()
-    {
-        cutscenePlayer.clip = levelData.cutsceneClip;
-        cutscenePlayer.transform.parent.gameObject.SetActive(true);
 
-        // yield return new WaitForSeconds(cutsceneDuration); // put your video here
-        await Task.Delay(Mathf.RoundToInt(cutsceneDuration * 1000));
-
-        // Hide the cutscene
-        cutscenePlayer.transform.parent.gameObject.SetActive(false);
-        whiteOverlay.gameObject.SetActive(false);
-
-        ChangeState(LevelState.Prepare);
-    }
-
-    private void CheckIsFirstPlay()
-    {
-        if (levelData.playCount < 1)
-        {
-            levelData.isSolved = true;
-            levelData.isRightInTime = true;
-            levelData.isNoMistake = true;
-        }
-    }
-
-    private void SaveScoreState()
-    {
-        starIsSolvedState = levelData.isSolved;
-        starIsRightInTimeState = levelData.isRightInTime;
-        starIsNoMistakeState = levelData.isNoMistake;
-    }
     #endregion
 }
 

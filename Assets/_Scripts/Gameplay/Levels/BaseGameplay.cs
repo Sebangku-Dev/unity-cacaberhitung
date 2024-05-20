@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Video;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 /// <summary>
 /// Parent class for all level gameplay class which can be inherited from
@@ -77,6 +78,14 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected override void Awake()
     {
         base.Awake();
+
+        // For smoother transition between loading and cutscene
+        whiteOverlay.gameObject.SetActive(true);
+    }
+
+    protected virtual void Update()
+    {
+
     }
 
     #region Level State
@@ -117,7 +126,141 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected virtual void HandlePrepare() { }
     #endregion
 
+    #region UI
+    /// <summary>
+    /// Method to show LevelSprite. Dont forget to put LevelSprite class to gameObject that you want to show up
+    /// </summary>
+    /// <param name="sprite">Sprite which you want to show</param>
+    protected void ShowSprite(LevelSprite sprite) => sprite.Load();
+
+    /// <summary>
+    /// Method to hide LevelSprite. Dont forget to put LevelSprite class to gameObject that you want to hide in 
+    /// </summary>
+    /// <param name="sprite">Sprite which you want to hide</param>
+    protected void HideSprite(LevelSprite sprite) => sprite.Close();
+
+    /// <summary>
+    /// Method to show EndedModal at <see cref="LevelState.Ended"/>
+    /// </summary>
+    /// <returns></returns>
+    protected async Task ShowEndedModal()
+    {
+        modalEnded.ActivateEndedModal(levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake);
+        await Task.Yield();
+    }
+    #endregion
+
     #region Utilities
+    protected int mistake = 0;
+    protected float currentTime = 0;
+    protected bool isTimerActive = false;
+    protected void StartTimer() => isTimerActive = true;
+    protected void StopTimer() => isTimerActive = false;
+    protected void Timer()
+    {
+        if (isTimerActive)
+            currentTime += Time.deltaTime;
+    }
+
+    /// <summary>
+    /// Variable that holds cutscene duration
+    /// </summary>
+    protected float cutsceneDuration = 4f;
+
+    /// <summary>
+    /// Method to play cutscene. Strongly related to <see cref="cutscenePlayer"/> to play the <see cref="levelData.cutSceneClip"/>
+    /// </summary>
+    /// <returns>Task.Delay at specific <see cref="cutsceneDuration"/></returns>
+    protected async Task PlayCutscene()
+    {
+        cutscenePlayer.clip = levelData.cutsceneClip;
+        cutscenePlayer.transform.parent.gameObject.SetActive(true);
+
+        // yield return new WaitForSeconds(cutsceneDuration); // put your video here
+        await Task.Delay(Mathf.RoundToInt(cutsceneDuration * 1000));
+
+        // Hide the cutscene
+        cutscenePlayer.transform.parent.gameObject.SetActive(false);
+        whiteOverlay.gameObject.SetActive(false);
+
+        ChangeState(LevelState.Prepare);
+    }
+
+    /// <summary>
+    /// Variable that holds temporary star state. Strongly related to <see cref="SaveScoreState"/>
+    /// </summary>
+    protected bool starIsSolvedState, starIsNoMistakeState, starIsRightInTimeState;
+
+    /// <summary>
+    /// If first play, then set all the stars to true. Related to stars panel
+    /// </summary>
+    protected void CheckIsFirstPlay()
+    {
+        if (levelData.playCount < 1)
+        {
+            levelData.isSolved = true;
+            levelData.isRightInTime = true;
+            levelData.isNoMistake = true;
+        }
+    }
+
+    /// <summary>
+    /// Used for OnReplay in Paused Modal to preserve the early star state before playing
+    /// <para>Strongly related to <see cref="starIsSolvedState"/>, <see cref="starIsNoMistakeState"/>, <see cref="starIsRightInTimeState"/></para>
+    /// </summary>
+    protected void SaveScoreState()
+    {
+        starIsSolvedState = levelData.isSolved;
+        starIsRightInTimeState = levelData.isRightInTime;
+        starIsNoMistakeState = levelData.isNoMistake;
+    }
+
+    /// <summary>
+    /// Method to interact with stars panel based on <see cref="levelData"/> boolean values. Strongly related to Stars gameObject
+    /// </summary>
+    protected void WatchStar()
+    {
+        starIsSolved.gameObject.SetActive(levelData.isSolved);
+        starIsRightInTime.gameObject.GetComponent<Image>().fillAmount = 1 - (currentTime / levelData.maxTimeDuration);
+        starIsNoMistake.gameObject.SetActive(levelData.isNoMistake);
+    }
+
+    /// <summary>
+    /// Calculate the stars based on <see cref="levelData"/> value
+    /// </summary>
+    protected void CalculateStars()
+    {
+        levelData.isSolved = true;
+        if (mistake > 0)
+            levelData.isNoMistake = false;
+        else
+            levelData.isNoMistake = true;
+
+        if (currentTime <= levelData.maxTimeDuration)
+            levelData.isRightInTime = true;
+        else
+            levelData.isRightInTime = false;
+    }
+
+    /// <summary>
+    /// <see cref="ScoreSystem.AddScore(int)"/> wrapper 
+    /// </summary>
+    /// <param name="addedScore">Added score in integer</param>
+    protected void AddScore(int addedScore)
+    {
+        ScoreSystem.Instance.AddScore(addedScore);
+    }
+
+    /// <summary>
+    /// Used in <see cref="LevelState.Ended"/> to show and unlock next level by <see cref="levelData"/> value
+    /// </summary>
+    protected void ShowAndUnlockNextLevel()
+    {
+        levelData.isToBePlayed = false;
+        levelData.nextLevel.isToBePlayed = true;
+        levelData.nextLevel.isUnlocked = true;
+        levelData.nextLevel.isSolved = false;
+    }
 
     #endregion
 }
