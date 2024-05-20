@@ -162,6 +162,13 @@ public class Level2Gameplay : BaseGameplay
         // Increase play count
         levelData.playCount++;
 
+        // Add score to user current score based on true-ish boolean
+        ScoreSystem.Instance.AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
+
+        // Unlock next level
+        if (!levelData.nextLevel.isUnlocked) levelData.nextLevel.isUnlocked = true;
+        if (levelData.nextLevel.isSolved) levelData.nextLevel.isSolved = false;
+
         // Show modal
         await ShowModal();
     }
@@ -285,12 +292,6 @@ public class Level2Gameplay : BaseGameplay
     {
         if (isTimerActive)
             currentTime += Time.deltaTime;
-
-        // Star checking
-        if (currentTime <= levelData.maxTimeDuration)
-        {
-            levelData.isRightInTime = false;
-        }
     }
 
     private async Task PlayCutscene()

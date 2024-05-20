@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class DataSystem : SingletonPersistent<DataSystem>
@@ -21,5 +18,15 @@ public class DataSystem : SingletonPersistent<DataSystem>
     {
         Levels = Resources.LoadAll<Level>("Levels").ToList();
         Knowledge = Resources.LoadAll<Knowledge>("Knowledges").ToList();
+    }
+
+    public Level GetReadyToPlayLevel()
+    {
+        return Levels.Find(level => level.isUnlocked && !level.isSolved) ?? null;
+    }
+
+    public Level GetLevelById(int id)
+    {
+        return Levels.Find(level => level.id == id);
     }
 }
