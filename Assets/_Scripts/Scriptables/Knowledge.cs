@@ -16,7 +16,7 @@ public class Knowledge : ScriptableObject
 {
     [Header("Knowledge's general Information")]
     public int id;
-    public LevelType.LevelTypes type;
+    public LevelTypes type;
     public string title;
     [TextArea]
     public string explanation;

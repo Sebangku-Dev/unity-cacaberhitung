@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "Achievement", menuName ="Scriptable/Achievement")]
+[CreateAssetMenu(fileName = "Achievement", menuName = "Scriptable/Achievement")]
 public class Achievement : ScriptableObject
 {
     public string title;
     public Sprite badge;
-    public LevelType.LevelTypes type;
+    public LevelTypes type;
     public string description;
 }
