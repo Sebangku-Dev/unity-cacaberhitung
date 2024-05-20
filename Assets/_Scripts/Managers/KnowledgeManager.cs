@@ -21,6 +21,10 @@ public class KnowledgeManager : MonoBehaviour
     GameObject selectedArea;
     LocationManager lm;
 
+    [Header("Knowledge Info Management")]
+    [SerializeField] GameObject MiniInfo;
+    [SerializeField] TextMeshProUGUI TextLocation, TextTimer;
+
     [Header("Knowledge Panel Management")]
     [SerializeField] GameObject[] Panels;
     [SerializeField] NavigationSystem navigation;
@@ -49,23 +53,49 @@ public class KnowledgeManager : MonoBehaviour
                 CheckKnowledge();
                 isCheckKnowledge = false;
             }
+
+            else
+            {
+                if (UserManager.Instance.User.knowledgeHasSpawn)
+                {
+                    if (IsMoreThanAnHour())
+                    {
+                        Debug.Log("Current knowledge is time over...");
+                    }
+                }
+            }
         }
     }
 
     void CheckKnowledge()
     {
-        Debug.Log("is checking knowledge now...");
+        Debug.Log("Is checking knowledge now...");
         if (UserManager.Instance.User.knowledgeHasSpawn)
         {
             Debug.Log("Knowledge is found...");
 
-            currentKnowledge = DataSystem.Instance.Knowledge[UserManager.Instance.User.currentKnowledge.id];
-            selectedArea = spawnLocations[UserManager.Instance.User.currentKnowledge.areaId];
-            lm = selectedArea.GetComponent<LocationManager>();
+            if (IsMoreThanAnHour())
+            {
+                Debug.Log("But time is over...");
+                GenerateKnowledge();
+            }
+            else
+            {
+                currentKnowledge = DataSystem.Instance.Knowledge[UserManager.Instance.User.currentKnowledge.id];
+                selectedArea = spawnLocations[UserManager.Instance.User.currentKnowledge.areaId];
+                lm = selectedArea.GetComponent<LocationManager>();
 
-            Debug.Log(UserManager.Instance.User.listOfSaveKnowledge[UserManager.Instance.User.currentKnowledge.id].isCollected);
+                if (UserManager.Instance.User.listOfSaveKnowledge[UserManager.Instance.User.currentKnowledge.id].isCollected)
+                {
+                    Debug.Log("Current knowledge has collected...");
+                }
+                else
+                {
+                    Debug.Log("Respawn current knowledge...");
 
-            SpawnKnowledge(false);
+                    SpawnKnowledge(false);
+                }
+            }
         }
         else
         {
@@ -74,14 +104,22 @@ public class KnowledgeManager : MonoBehaviour
         }
     }
 
+    public bool IsMoreThanAnHour()
+    {
+        DateTime now = DateTime.UtcNow;
+
+        TimeSpan timeSpan = now - UserManager.Instance.User.currentKnowledge.startingAt;
+
+        return timeSpan.TotalHours > 1;
+    }
+
     public void GenerateKnowledge()
     {
-        // Debug.Log("is generating knowledge now...");
+        Debug.Log("Is generating knowledge now...");
         if (DataSystem.Instance.Knowledge != null)
         {
             int randomIndex = UnityEngine.Random.Range(0, DataSystem.Instance.Knowledge.Count);
 
-            // Pilih area secara acak
             int areaId = UnityEngine.Random.Range(0, spawnLocations.Count);
             selectedArea = spawnLocations[areaId];
             lm = selectedArea.GetComponent<LocationManager>();
@@ -93,7 +131,7 @@ public class KnowledgeManager : MonoBehaviour
                 startingAt = DateTime.Now
             };
 
-             UserManager.Instance.User.knowledgeHasSpawn = true;
+            UserManager.Instance.User.knowledgeHasSpawn = true;
 
             UserManager.Instance.Save();
 
@@ -105,7 +143,6 @@ public class KnowledgeManager : MonoBehaviour
 
     void SpawnKnowledge(bool isNew)
     {
-        // Buat marker sebagai child dari area yang dipilih
         NewKnowledgeObject = Instantiate(KnowledgeMarker);
         NewKnowledgeObject.transform.SetParent(selectedArea.transform, false);
 
@@ -125,21 +162,17 @@ public class KnowledgeManager : MonoBehaviour
 
     void TransformNewKnowledge()
     {
-        // Tentukan posisi acak di dalam collider area
         Collider areaCollider = selectedArea.GetComponent<Collider>();
         Vector3 randomPosition = GetRandomPositionInsideCollider(areaCollider);
 
-        // Cek apakah posisi acak berada di atas permukaan ground
         if (IsAboveGround(randomPosition, out Vector3 groundPosition))
         {
-            // Pastikan marker tidak lebih dari maxDistanceAboveGround di atas ground
             if (randomPosition.y - groundPosition.y <= maxDistanceAboveGround)
             {
                 NewKnowledgeObject.transform.position = randomPosition;
             }
             else
             {
-                // Jika terlalu tinggi, set posisi marker ke groundPosition + maxDistanceAboveGround
                 NewKnowledgeObject.transform.position = new Vector3(randomPosition.x, groundPosition.y + maxDistanceAboveGround, randomPosition.z);
             }
 
@@ -151,7 +184,6 @@ public class KnowledgeManager : MonoBehaviour
         }
         else
         {
-            // Jika tidak, ulangi proses untuk mendapatkan posisi yang valid
             TransformNewKnowledge();
         }
     }
@@ -167,7 +199,6 @@ public class KnowledgeManager : MonoBehaviour
             UnityEngine.Random.Range(minBounds.z, maxBounds.z)
         );
 
-        // Pastikan posisi berada di dalam collider
         if (collider.bounds.Contains(randomPosition))
         {
             return randomPosition;
