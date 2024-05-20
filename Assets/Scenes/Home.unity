@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -186,19 +186,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 209041632}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6533563831360498122, guid: 62429c476783ea1478dccddfed341a2f, type: 3}
-        m_TargetAssemblyTypeName: NavigationSystem, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Main
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!224 &209041631
 RectTransform:
   m_ObjectHideFlags: 0
@@ -537,6 +525,7 @@ GameObject:
   - component: {fileID: 390346775}
   - component: {fileID: 390346774}
   - component: {fileID: 390346773}
+  - component: {fileID: 390346776}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -594,6 +583,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &390346776
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390346772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462b3a3a19af67c4d98d0fc0088d9392, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playButton: {fileID: 209041629}
 --- !u!224 &413579868 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2154666823133302879, guid: 8b41115513fe123468026b64c01484cf, type: 3}
