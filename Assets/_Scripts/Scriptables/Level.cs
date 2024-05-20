@@ -1,9 +1,6 @@
 using UnityEngine;
 
-public class LevelType
-{
-    public enum LevelTypes { Counting, Aritmathic, Geometry }
-}
+public enum LevelTypes { Counting, Aritmathic, Geometry }
 
 [CreateAssetMenu(fileName = "Level", menuName = "Scriptable/Level")]
 public class Level : ScriptableObject
@@ -11,7 +8,7 @@ public class Level : ScriptableObject
     [Header("Base information")]
     public int id;
     public string title;
-    public LevelType.LevelTypes type;
+    public LevelTypes type;
     public bool isUnlocked = true;
 
     [Header("Used in menu or main")]

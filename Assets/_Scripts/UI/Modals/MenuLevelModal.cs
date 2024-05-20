@@ -22,6 +22,5 @@ public class MenuLevelModal : Modal
     public void Exit()
     {
         OnExit?.Invoke();
-        ScoreSystem.Instance.AddScore(3);
     }
 }
