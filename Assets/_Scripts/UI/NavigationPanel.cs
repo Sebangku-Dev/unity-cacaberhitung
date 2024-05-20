@@ -5,8 +5,8 @@ public class NavigationPanel : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    private void Start()
+    private void Update()
     {
-        scoreText.text = UserManager.Instance.User.currentScore.ToString();
+        scoreText.text = ScoreSystem.Instance.totalScore.ToString();
     }
 }

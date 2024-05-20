@@ -5,7 +5,7 @@ public class ArrowHintController : MonoBehaviour
 
     private Level targetLevel;
 
-    private void Start() => targetLevel = DataSystem.Instance.GetReadyToPlayLevel();
+    private void Start() => targetLevel = LevelManager.Instance.GetReadyToPlayLevel();
     private void Update() => RotateArrowTowardsMission();
 
     void RotateArrowTowardsMission()

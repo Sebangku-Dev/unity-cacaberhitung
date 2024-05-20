@@ -17,7 +17,7 @@ public class MarkerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if (UserManager.Instance.User != null) indexLevel = UserManager.Instance.User.currentLevel;
+        // if (UserManager.Instance.User != null) indexLevel = UserManager.Instance.User.currentLevel;
 
         int index = 0;
         foreach (GameObject Marker in Markers)

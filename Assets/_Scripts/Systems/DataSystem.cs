@@ -1,9 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 public class DataSystem : SingletonPersistent<DataSystem>
 {
+    public User User { get; set; }
     public List<Level> Levels { get; private set; }
     public List<Achievement> Achievements { get; private set; }
     public List<Knowledge> Knowledge { get; private set; }
@@ -18,15 +21,5 @@ public class DataSystem : SingletonPersistent<DataSystem>
     {
         Levels = Resources.LoadAll<Level>("Levels").ToList();
         Knowledge = Resources.LoadAll<Knowledge>("Knowledges").ToList();
-    }
-
-    public Level GetReadyToPlayLevel()
-    {
-        return Levels.Find(level => level.isToBePlayed && level.isUnlocked) ?? null;
-    }
-
-    public Level GetLevelById(int id)
-    {
-        return Levels.Find(level => level.id == id);
     }
 }

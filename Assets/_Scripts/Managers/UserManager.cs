@@ -6,7 +6,7 @@ public class UserManager : Singleton<UserManager>
     [SerializeField] bool isLoadData;
     public User User { get; set; }
     public User NewUser;
-    void Start()
+    private void OnEnable()
     {
         if (isLoadData) UserManager.Instance.Load();
     }
@@ -20,7 +20,6 @@ public class UserManager : Singleton<UserManager>
             SaveLevel saved = new()
             {
                 id = level.id,
-                isFinished = false
             };
 
             user.listOfSaveLevel.Add(saved);

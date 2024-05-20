@@ -1,8 +1,15 @@
-using Unity.VisualScripting;
+
+
+using UnityEngine;
 
 public class ScoreSystem : SingletonPersistent<ScoreSystem>
 {
-    private int totalScore;
+    public int totalScore { get; private set; }
+
+    private void Start()
+    {
+        this.totalScore = UserManager.Instance.User.currentScore;
+    }
 
     public void AddScore(int totalScore)
     {
