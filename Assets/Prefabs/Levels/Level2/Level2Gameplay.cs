@@ -178,6 +178,21 @@ public class Level2Gameplay : BaseGameplay
         else
             ChangeState(LevelState.Fail);
     }
+
+    public void OnReplayClick()
+    {
+        // Reset all state
+        currentQuestionIndex = 0;
+        currentTime = 0;
+        mistake = 0;
+        isTimerActive = false;
+        HideSprite(currentQuestionSprite);
+        levelData.isSolved = starIsSolvedState;
+        levelData.isRightInTime = starIsRightInTimeState;
+        levelData.isSolved = starIsNoMistakeState;
+
+        ChangeState(LevelState.Initialization);
+    }
     #endregion
 
     #region UI

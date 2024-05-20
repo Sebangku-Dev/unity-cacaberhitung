@@ -2,25 +2,36 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using System.Linq;
+using System;
 
 /// <summary>
 /// Used for navigation system accross the scenes
 /// </summary>
 public class NavigationSystem : SingletonPersistent<NavigationSystem>
 {
-    private static int lastScene;
+    private int lastSceneIndex;
+
+    /// <summary>
+    /// ;1;2;3;4;5;6 -> 1 is oldest, 6 is latest. Index starts from 1
+    /// </summary>
+    private string lastScenesString = "";
 
     [SerializeField] GameObject[] panels;
     [SerializeField] private Loading loaderCanvas;
     private void ActivateLoaderCanvas() => Instantiate(loaderCanvas.gameObject);
     private void DeactivateLoaderCanvas() => loaderCanvas.gameObject.SetActive(false);
 
-    [SerializeField] GameObject Notification;
-    [SerializeField] TextMeshProUGUI TextNotifTitle, TextNotifMessage;
-
     public async void LoadScene(string targetScene)
     {
-        lastScene = SceneManager.GetActiveScene().buildIndex;
+        // Get build scene index
+        lastSceneIndex = SceneManager.GetActiveScene().buildIndex;
+
+        // Condition to push build indesx to lastSceneString
+        if (lastScenesString.Length > 0) { lastScenesString += $";{lastSceneIndex}"; }
+        else lastScenesString += $"{lastSceneIndex}";
+
+        Debug.Log(lastScenesString);
 
         var scene = SceneManager.LoadSceneAsync(targetScene);
         scene.allowSceneActivation = false; // prevent screen for immediate load
@@ -30,37 +41,34 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
             you can implement progress method here
         */
 
-        await Task.Delay(1000); // same as WaitForSecond but in async await
+        await Task.Delay(500); // same as WaitForSecond but in async await
         scene.allowSceneActivation = true;
-
-        // Disable this for better UX
-        // DeactivateLoaderCanvas();
     }
 
-    // Method overloading with int as a targetScene
-    public async void LoadScene(int sceneIndex)
+    public async void Back()
     {
-        lastScene = SceneManager.GetActiveScene().buildIndex;
+        int latestSceneIndex = 0;
 
-        var scene = SceneManager.LoadSceneAsync(sceneIndex);
-        scene.allowSceneActivation = false; // prevent screen for immediate load
+        if (lastScenesString.Length > 1)
+        {
+            latestSceneIndex = Int16.Parse(lastScenesString.Split(";").Last());
+            lastScenesString = lastScenesString.Substring(0, lastScenesString.Length - 2);
+        }
+        else
+            latestSceneIndex = Int16.Parse(lastScenesString);
+
+        var scene = SceneManager.LoadSceneAsync(latestSceneIndex);
+        scene.allowSceneActivation = false;
         ActivateLoaderCanvas();
-
         /*
             you can implement progress method here
         */
-
-        await Task.Delay(1000); // same as WaitForSecond but in async await
+        await Task.Delay(500); // same as WaitForSecond but in async await
         scene.allowSceneActivation = true;
-
-        // Disable this for better UX
-        // DeactivateLoaderCanvas();
     }
 
-    public void Back()
-    {
-        LoadScene(lastScene);
-    }
+    [SerializeField] GameObject Notification;
+    [SerializeField] TextMeshProUGUI TextNotifTitle, TextNotifMessage;
 
     public void TogglePanel(int index)
     {

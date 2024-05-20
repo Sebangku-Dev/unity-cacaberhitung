@@ -32,4 +32,9 @@ public class MenuLevelModal : Modal
     {
         OnExit?.Invoke();
     }
+
+    public void Back()
+    {
+        NavigationSystem.Instance.Back();
+    }
 }
