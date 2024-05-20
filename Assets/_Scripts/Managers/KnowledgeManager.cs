@@ -115,7 +115,7 @@ public class KnowledgeManager : MonoBehaviour
 
     public bool IsMoreThanAnHour()
     {
-        DateTime now = DateTime.UtcNow;
+        DateTime now = DateTime.Now;
 
         TimeSpan timeSpan = now - UserManager.Instance.User.currentKnowledge.startingAt;
 
