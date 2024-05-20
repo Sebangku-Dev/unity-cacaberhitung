@@ -24,10 +24,9 @@ public class MarkerManager : MonoBehaviour
         {
             Marker.SetActive(index == indexLevel);
 
-
             if (Marker.TryGetComponent<MarkerController>(out var markerController))
             {
-                if (index == indexLevel) currentLevel = markerController.levelToPlay;
+                if (index == indexLevel) currentLevel = markerController.relatedLevel;
                 if (index < indexLevel && markerController.BarrierToUnlock != null) markerController.BarrierToUnlock.SetActive(false);
             }
 

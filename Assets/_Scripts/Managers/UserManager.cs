@@ -63,7 +63,6 @@ public class UserManager : Singleton<UserManager>
             file.Close();
 
             UserManager.Instance.User = user;
-
         }
         else
         {

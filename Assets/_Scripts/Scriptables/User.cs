@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System;
 
 [System.Serializable]
@@ -39,6 +37,7 @@ public class User
     public string name;
     public int age;
     public int currentLevel;
+    public int currentScore;
     public List<SaveLevel> listOfSaveLevel = new List<SaveLevel>();
     public List<SaveKnowledge> listOfSaveKnowledge = new List<SaveKnowledge>();
     public bool knowledgeHasSpawn;

@@ -12,22 +12,23 @@ public class Level : ScriptableObject
     public int id;
     public string title;
     public LevelType.LevelTypes type;
+    public bool isUnlocked = true;
 
     [Header("Used in menu or main")]
     [TextArea]
     public string description;
     [TextArea]
     public string hint;
-    public bool isSolved = false;
-    public bool isRightInTime = false;
-    public bool isNoMistake = false;
-    public int playCount = 0;
-    public int maxTimeDuration = 30;
-    public bool isUnlocked = true;
-
     public Sprite levelSprite;
-    public Mesh levelMesh;
+
 
     [Header("Used in game")]
     public string levelSceneName;
+    public int playCount = 0;
+    public int maxTimeDuration = 30;
+    public bool isSolved = false;
+    public bool isRightInTime = false;
+    public bool isNoMistake = false;
+    public Transform marker;
+    public Level nextLevel;
 }

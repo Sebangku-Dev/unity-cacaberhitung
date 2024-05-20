@@ -31,7 +31,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
         Initialization,
         Prepare,
         UserInteraction,
-        Paused,
         Passed,
         Fail,
         Ended
@@ -55,9 +54,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
             case LevelState.UserInteraction:
                 HandleUserInteraction();
                 break;
-            case LevelState.Paused:
-                HandlePaused();
-                break;
             case LevelState.Passed:
                 HandlePassed();
                 break;
@@ -77,10 +73,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
     }
 
     #region Level State
-    /// <summary>
-    /// Invoked when paused
-    /// </summary>
-    protected virtual void HandlePaused() { }
 
     /// <summary>
     /// Invoked on start to init everything before prepare
@@ -114,5 +106,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
     #endregion
 
     #region Utilities
+    
     #endregion
 }

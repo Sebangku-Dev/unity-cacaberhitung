@@ -1,24 +1,27 @@
+using System;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class MarkerController : MonoBehaviour
 {
-    public static bool isOnMarkerArea;
-    [SerializeField] public Level levelToPlay;
+    [SerializeField] public Level relatedLevel;
+    [SerializeField] public PlayLevelModal playLevelModal;
     [SerializeField] public GameObject BarrierToUnlock;
-    // [SerializeField] NavigationSystem nav;
 
-    [SerializeField] TextMeshProUGUI TextTitle, TextDetail;
+    public static bool isOnMarkerArea;
+
+    private void Start()
+    {
+        gameObject.SetActive(relatedLevel.isUnlocked);
+    }
 
     public void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            TextTitle.text = levelToPlay.title;
-            TextDetail.text = levelToPlay.description;
-            
-            ToggleMissionPanel();
+            // ToggleMissionPanel();
+            playLevelModal.ActivatePlayLevelModal(relatedLevel);
         }
     }
 
@@ -26,7 +29,8 @@ public class MarkerController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            ToggleMissionPanel();
+            // ToggleMissionPanel();
+            playLevelModal.DeactivatePlayLevelModal();
         }
     }
 
@@ -34,10 +38,5 @@ public class MarkerController : MonoBehaviour
     {
         NavigationSystem.Instance.TogglePanel(1);
         MarkerController.isOnMarkerArea = !MarkerController.isOnMarkerArea;
-    }
-
-    public void PlayLevel()
-    {
-        NavigationSystem.Instance.LoadScene(levelToPlay.levelSceneName);
     }
 }
