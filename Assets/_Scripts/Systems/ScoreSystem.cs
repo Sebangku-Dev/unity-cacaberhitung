@@ -4,16 +4,21 @@ using UnityEngine;
 
 public class ScoreSystem : SingletonPersistent<ScoreSystem>
 {
-    public int Score { get; private set; }
+    [SerializeField] public int Score;
 
-    private void Start()
+    protected override void Awake()
     {
-        this.Score = UserManager.Instance.User.currentScore;
+        base.Awake();
     }
 
     public void AddScore(int totalScore)
     {
-        this.Score = totalScore;
-        UserManager.Instance.User.currentScore = this.Score;
+        ScoreSystem.Instance.Score += totalScore;
     }
+
+    private void LoadFromUser()
+    {
+        ScoreSystem.Instance.Score = UserManager.Instance.User.currentScore;
+    }
+
 }

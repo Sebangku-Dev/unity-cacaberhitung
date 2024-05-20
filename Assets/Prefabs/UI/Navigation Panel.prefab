@@ -160,8 +160,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NavigationPanel, Assembly-CSharp
-        m_MethodName: OnMenuClick
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: SavePosition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 6165763117567164225}
   - component: {fileID: 6165763117567164226}
   - component: {fileID: 4613646121579810775}
+  - component: {fileID: 568987353}
   m_Layer: 5
   m_Name: Navigation Panel
   m_TagString: Untagged
@@ -681,6 +682,26 @@ MonoBehaviour:
   backButton: {fileID: 7067577918342402983}
   pointButton: {fileID: 6547121543818768025}
   menuButton: {fileID: 5497635697520669638}
+--- !u!114 &568987353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6165763117567164224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: 216.5
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &6165763118419992977
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,8 +1151,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: NavigationPanel, Assembly-CSharp
-        m_MethodName: OnPointClick
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: SavePosition
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
