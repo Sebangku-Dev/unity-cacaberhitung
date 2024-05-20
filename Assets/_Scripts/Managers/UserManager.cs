@@ -8,7 +8,6 @@ public class UserManager : Singleton<UserManager>
     public User User { get; set; }
     public User NewUser;
 
-
     private void Start()
     {
         if (isLoadData) UserManager.Instance.Load();

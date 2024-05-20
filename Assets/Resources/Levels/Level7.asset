@@ -26,5 +26,6 @@ MonoBehaviour:
   isRightInTime: 0
   isNoMistake: 0
   isToBePlayed: 0
+  cutsceneClip: {fileID: 32900000, guid: 376b7546cfaf9834dad37e11fdc9b356, type: 3}
   marker: {fileID: 8510384583731677196, guid: 70c47e3d876de2e408f5d8fc44c74948, type: 3}
   nextLevel: {fileID: 11400000, guid: 7c454631d4d128e448cf1f1696fb0e33, type: 2}

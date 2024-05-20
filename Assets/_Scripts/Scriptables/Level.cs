@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Video;
 
 public enum LevelTypes { Counting, Aritmathic, Geometry }
 
@@ -27,6 +28,7 @@ public class Level : ScriptableObject
     public bool isRightInTime = false;
     public bool isNoMistake = false;
     public bool isToBePlayed = false;
+    public VideoClip cutsceneClip;
     public Transform marker;
     public Level nextLevel;
 }

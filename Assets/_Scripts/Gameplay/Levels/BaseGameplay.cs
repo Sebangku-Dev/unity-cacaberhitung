@@ -1,7 +1,7 @@
 using System;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Video;
 using UnityEngine.UI;
 
 /// <summary>
@@ -12,7 +12,8 @@ public class BaseGameplay : Singleton<BaseGameplay>
     [Header("Base")]
     [SerializeField] protected Level levelData;
     [Header("Cutscene")]
-    [SerializeField] protected Image cutsceneImage;
+    [SerializeField] protected Image whiteOverlay;
+    [SerializeField] protected VideoPlayer cutscenePlayer;
     [Header("Passed")]
     [SerializeField] protected Star starIsSolved;
     [SerializeField] protected Star starIsRightInTime;
@@ -106,6 +107,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
     #endregion
 
     #region Utilities
-    
+
     #endregion
 }

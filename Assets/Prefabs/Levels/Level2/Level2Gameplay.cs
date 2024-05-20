@@ -24,7 +24,7 @@ public class Level2Gameplay : BaseGameplay
     [SerializeField] private TextMeshProUGUI answerOptionText;
     [SerializeField] private TextMeshProUGUI answer2OptionText;
 
-    private float cutsceneDuration = 2f;
+    private float cutsceneDuration = 4f;
     private bool starIsSolvedState, starIsNoMistakeState, starIsRightInTimeState;
 
     /// <summary>
@@ -49,7 +49,11 @@ public class Level2Gameplay : BaseGameplay
     {
         base.Awake();
         OnBeforeLevelStateChanged += OnBeforeStateChanged;
+
+        // For smoother transition between loading and cutscene
+        whiteOverlay.gameObject.SetActive(true);
     }
+
     private void Start()
     {
         ChangeState(LevelState.Initialization);
@@ -72,11 +76,12 @@ public class Level2Gameplay : BaseGameplay
     {
         base.HandleInitialization();
 
+        await PlayCutscene();
+
         StopTimer();
         CheckIsFirstPlay();
         SaveScoreState();
 
-        await PlayCutscene();
     }
 
     protected override async void HandlePrepare()
@@ -298,13 +303,16 @@ public class Level2Gameplay : BaseGameplay
 
     private async Task PlayCutscene()
     {
-        cutsceneImage.gameObject.SetActive(true);
-        cutsceneImage.sprite = levelData.levelSprite;
+        cutscenePlayer.clip = levelData.cutsceneClip;
+        cutscenePlayer.transform.parent.gameObject.SetActive(true);
 
         // yield return new WaitForSeconds(cutsceneDuration); // put your video here
         await Task.Delay(Mathf.RoundToInt(cutsceneDuration * 1000));
 
-        cutsceneImage.gameObject.SetActive(false);
+        // Hide the cutscene
+        cutscenePlayer.transform.parent.gameObject.SetActive(false);
+        whiteOverlay.gameObject.SetActive(false);
+
         ChangeState(LevelState.Prepare);
     }
 
