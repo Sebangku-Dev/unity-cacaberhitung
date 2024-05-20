@@ -1,11 +1,14 @@
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
+using System;
 public class UserManager : Singleton<UserManager>
 {
     [SerializeField] bool isLoadData;
     public User User { get; set; }
     public User NewUser;
+
+
     private void Start()
     {
         if (isLoadData) UserManager.Instance.Load();

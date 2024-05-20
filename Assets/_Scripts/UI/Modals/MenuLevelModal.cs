@@ -11,7 +11,17 @@ public class MenuLevelModal : Modal
 
     public void ActivateMenuLevelModal() => base.ActivateModal();
     public void DeactivateMenuLevelModal() => base.DeactivateModal();
-    public void Replay() => OnReplay?.Invoke();
-    public void Resume() => OnResume?.Invoke();
-    public void Exit() => OnExit?.Invoke();
+    public void Replay()
+    {
+        OnReplay?.Invoke();
+    }
+    public void Resume()
+    {
+        OnResume?.Invoke();
+    }
+    public void Exit()
+    {
+        OnExit?.Invoke();
+        ScoreSystem.Instance.AddScore(3);
+    }
 }
