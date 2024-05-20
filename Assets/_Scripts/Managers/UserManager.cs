@@ -6,7 +6,7 @@ public class UserManager : Singleton<UserManager>
     [SerializeField] bool isLoadData;
     public User User { get; set; }
     public User NewUser;
-    private void OnEnable()
+    private void Start()
     {
         if (isLoadData) UserManager.Instance.Load();
     }

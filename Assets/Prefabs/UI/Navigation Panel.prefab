@@ -679,7 +679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 6165763118437057505}
   backButton: {fileID: 7067577918342402983}
-  poinButton: {fileID: 6547121543818768025}
+  pointButton: {fileID: 6547121543818768025}
   menuButton: {fileID: 5497635697520669638}
 --- !u!1 &6165763118419992977
 GameObject:

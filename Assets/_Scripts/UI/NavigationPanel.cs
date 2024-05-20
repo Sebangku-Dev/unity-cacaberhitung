@@ -6,7 +6,7 @@ public class NavigationPanel : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    [SerializeField] private Button backButton, poinButton, menuButton;
+    [SerializeField] private Button backButton, pointButton, menuButton;
 
     private void Start()
     {
@@ -14,7 +14,7 @@ public class NavigationPanel : MonoBehaviour
 
         backButton.onClick.AddListener(NavigationSystem.Instance.Back);
 
-        poinButton.onClick.AddListener(() => NavigationSystem.Instance.LoadScene("MenuPoin"));
+        pointButton.onClick.AddListener(() => NavigationSystem.Instance.LoadScene("MenuPoin"));
 
         menuButton.onClick.AddListener(() => NavigationSystem.Instance.LoadScene("MenuLevel"));
     }
