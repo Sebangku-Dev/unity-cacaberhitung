@@ -103,6 +103,15 @@ public class Level2Gameplay : BaseGameplay
     protected override void HandleUserInteraction()
     {
         base.HandleUserInteraction();
+
+        if (!isTimerActive) StartTimer();
+    }
+
+    protected override void HandlePaused()
+    {
+        base.HandlePaused();
+
+        StopTimer();
     }
 
     protected override async void HandlePassed()
