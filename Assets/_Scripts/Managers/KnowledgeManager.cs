@@ -89,11 +89,11 @@ public class KnowledgeManager : MonoBehaviour
                 selectedArea = spawnLocations[UserManager.Instance.User.currentKnowledge.areaId];
                 lm = selectedArea.GetComponent<LocationManager>();
 
-                if (UserManager.Instance.User.listOfSaveKnowledge[UserManager.Instance.User.currentKnowledge.id].isCollected)
+                if (UserManager.Instance.User.currentKnowledge.isAnswered)
                 {
-                    Debug.Log("Current knowledge has collected...");
+                    Debug.Log("Current knowledge has answered...");
 
-                    string contentNotification = "Knowledge sebelumnya telah dikoleksi!|Tunggu beberapa saat sebelum knowledge baru muncul... ";
+                    string contentNotification = "Knowledge sebelumnya telah dikerjakan!|Tunggu beberapa saat sebelum knowledge baru muncul... ";
                     navigation.ToggleNotification(contentNotification);
 
                     SetPanelText();
@@ -306,16 +306,17 @@ public class KnowledgeManager : MonoBehaviour
 
             ResultPanel.SetActive(true);
 
-            OnSaveKnowledge();
+            OnSaveKnowledge(isCorrect);
         }
     }
 
-    public void OnSaveKnowledge()
+    public void OnSaveKnowledge(bool isCorrect)
     {
         SaveKnowledge newSaved = new SaveKnowledge
         {
             id = currentKnowledge.id,
-            isCollected = true
+            isCollected = isCorrect,
+            collectedAt = DateTime.Now.ToString()
         };
 
         int index = -1;
@@ -324,11 +325,13 @@ public class KnowledgeManager : MonoBehaviour
 
         if (index != -1)
         {
+            UserManager.Instance.User.currentKnowledge.isAnswered = true;
+            
             bool check = UserManager.Instance.User.listOfSaveKnowledge[index].isCollected;
 
             if (!check)
             {
-                UserManager.Instance.User.listOfSaveKnowledge[index].isCollected = newSaved.isCollected;
+                UserManager.Instance.User.listOfSaveKnowledge[index] = newSaved;
                 UserManager.Instance.Save();
             }
         }

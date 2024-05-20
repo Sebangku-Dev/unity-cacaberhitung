@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 3
   title: 
   type: 0
-  isUnlocked: 0
+  isUnlocked: 1
   description: 
   hint: 
   levelSprite: {fileID: 0}
@@ -25,6 +25,6 @@ MonoBehaviour:
   isSolved: 0
   isRightInTime: 0
   isNoMistake: 0
-  isToBePlayed: 0
+  isToBePlayed: 1
   marker: {fileID: 3380624938650010670, guid: 5c45a8b152da992459bdc65a48d4b5fd, type: 3}
   nextLevel: {fileID: 11400000, guid: 5f66322518398c14fbb3d9950f96158a, type: 2}

@@ -19,7 +19,7 @@ public class TodaysKnowledge
     public float y;
     public float z;
     public DateTime startingAt;
-    public bool isColllected;
+    public bool isAnswered = false;
 }
 
 [System.Serializable]
