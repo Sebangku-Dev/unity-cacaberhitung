@@ -6,7 +6,7 @@ using UnityEngine;
 public class DrawAstexture : MonoBehaviour
 {
     public Texture2D baseTexture, defaultTexture;
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -42,13 +42,56 @@ public class DrawAstexture : MonoBehaviour
         // Set the color as white if the lmb is being pressed, black if rmb.
         Color colorToSet = Input.GetMouseButton(0) ? Color.white : Color.black;
 
-        // Update the texture and apply.
-        baseTexture.SetPixel((int)pixelUV.x, (int)pixelUV.y, colorToSet);
+        int x = (int)pixelUV.x;
+        int y = (int)pixelUV.y;
+
+        // for (int i = -6; i <= 6; i++)
+        // {
+        //     for (int j = -6; j <= 6; j++)
+        //     {
+        //         int newX = x + i;
+        //         int newY = y + j;
+
+        //         // Pastikan koordinat baru berada dalam batas tekstur
+        //         if (newX >= 0 && newX < baseTexture.width && newY >= 0 && newY < baseTexture.height)
+        //         {
+        //             baseTexture.SetPixel(newX, newY, colorToSet);
+        //         }
+        //     }
+        // }
+
+        int radius = 10;
+
+        for (int i = 0; i <= 2 * radius; i++)
+        {
+            // Loop untuk setiap kolom
+            for (int j = 0; j <= 2 * radius; j++)
+            {
+                // Hitung jarak dari pusat lingkaran
+                double distance = Math.Sqrt((i - radius) * (i - radius) + (j - radius) * (j - radius));
+
+                // Jika jarak kurang dari atau sama dengan radius, cetak '*'
+                if (distance <= radius)
+                {
+                    int newX = x + i-radius;
+                    int newY = y + j-radius;
+
+                    // Pastikan koordinat baru berada dalam batas tekstur
+                    if (newX >= 0 && newX < baseTexture.width && newY >= 0 && newY < baseTexture.height)
+                    {
+                        baseTexture.SetPixel(newX, newY, colorToSet);
+                    }
+
+                }
+            }
+        }
+
         baseTexture.Apply();
 
     }
 
-    public void ResetTexture(){
+    public void ResetTexture()
+    {
         baseTexture.SetPixels(defaultTexture.GetPixels());
         baseTexture.Apply();
     }

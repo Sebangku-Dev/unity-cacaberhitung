@@ -6,7 +6,11 @@ using UnityEngine;
 
 public class Level1Gameplay : BaseGameplay
 {
-     #region MonoBehaviour
+    [SerializeField] GetInferenceModel model;
+    [SerializeField] GameObject CandleContainer, Candle;
+    [SerializeField] int minCandles, maxCandles, state;
+
+    #region MonoBehaviour
     protected override void Awake()
     {
         base.Awake();
@@ -46,6 +50,8 @@ public class Level1Gameplay : BaseGameplay
     {
         base.HandlePrepare();
 
+        GenerateCandles();
+
         await DelayAnswer(2000f);
 
         // Prepare the timer
@@ -59,6 +65,8 @@ public class Level1Gameplay : BaseGameplay
         base.HandleUserInteraction();
 
         if (!isTimerActive) StartTimer();
+
+
     }
 
     protected override void HandlePaused()
@@ -78,14 +86,14 @@ public class Level1Gameplay : BaseGameplay
         // Wait for a sec and delay answer to prevent user to access it
         await Task.WhenAll(new Task[] { Task.Delay(1500), DelayAnswer(2000) });
 
-        // if (check if gameplay still continue)
-        // {
-        //     change gameplay index
-        //     ChangeState(LevelState.Prepare);
+        if (state < 4)
+        {
+            // change gameplay index
+            ChangeState(LevelState.Prepare);
 
-        // }
-        // else
-        //     ChangeState(LevelState.Ended);
+        }
+        else
+            ChangeState(LevelState.Ended);
     }
     protected override void HandleFail()
     {
@@ -140,4 +148,32 @@ public class Level1Gameplay : BaseGameplay
 
         //state after delay
     }
+
+    #region User Interaction
+
+    public void OnClickConfirm()
+    {
+        int answer = CandleContainer.transform.childCount;
+
+        ChangeState(model.prediction.predictedValue == answer ? LevelState.Passed : LevelState.Fail);
+    }
+
+    #endregion
+
+    #region Utilities
+
+    private void GenerateCandles()
+    {
+        foreach (Transform child in CandleContainer.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        for (int i = 0; i <= UnityEngine.Random.Range(minCandles, maxCandles); i++)
+        {
+            GameObject candle = Instantiate(Candle, CandleContainer.transform);
+        }
+    }
+
+    #endregion
 }
