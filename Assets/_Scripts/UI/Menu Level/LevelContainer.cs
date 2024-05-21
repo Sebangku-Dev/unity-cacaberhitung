@@ -22,7 +22,6 @@ public class LevelContainer : MonoBehaviour
         if (levels.Count < 1)
         {
             var instantiatedLevelCard = Instantiate(levelCardPrefab, transform);
-            instantiatedLevelCard.imagePlaceholder.sprite = fallbackSprite;
         }
         else
         {

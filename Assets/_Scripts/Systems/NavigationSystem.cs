@@ -31,8 +31,6 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
         if (lastScenesString.Length > 0) { lastScenesString += $";{lastSceneIndex}"; }
         else lastScenesString += $"{lastSceneIndex}";
 
-        Debug.Log(lastScenesString);
-
         var scene = SceneManager.LoadSceneAsync(targetScene);
         scene.allowSceneActivation = false; // prevent screen for immediate load
         ActivateLoaderCanvas();
