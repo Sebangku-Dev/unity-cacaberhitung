@@ -4,8 +4,6 @@ using System.Linq;
 using UnityEngine;
 using Unity.Barracuda;
 using System;
-using UnityEngine.Rendering;
-using Unity.VisualScripting;
 
 public class GetInferenceModel : MonoBehaviour
 {
@@ -79,5 +77,14 @@ public class GetInferenceModel : MonoBehaviour
     void OnDestroy()
     {
         engine?.Dispose();
+    }
+
+    public string GetTextHint(){
+        string hint = "";
+
+        OnCheckPrediction();
+        hint = ""+prediction.predictedValue;
+
+        return hint;
     }
 }

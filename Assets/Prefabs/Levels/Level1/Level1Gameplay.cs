@@ -7,8 +7,10 @@ using UnityEngine;
 public class Level1Gameplay : BaseGameplay
 {
     [SerializeField] GetInferenceModel model;
+    [SerializeField] DrawAstexture texture;
     [SerializeField] GameObject CandleContainer, Candle;
-    [SerializeField] int minCandles, maxCandles, state;
+    [SerializeField] int minCandles, maxCandles, state, maxState;
+    [SerializeField] MeshRenderer DrawCanvas;
 
     #region MonoBehaviour
     protected override void Awake()
@@ -52,6 +54,9 @@ public class Level1Gameplay : BaseGameplay
 
         GenerateCandles();
 
+        DrawCanvas.enabled = true;
+        texture.ResetTexture();
+
         await DelayAnswer(2000f);
 
         // Prepare the timer
@@ -81,16 +86,16 @@ public class Level1Gameplay : BaseGameplay
         base.HandlePassed();
 
         // HideSprite(hide some sprite);
-        // OnPassed?.Invoke();
+        OnPassed?.Invoke();
 
         // Wait for a sec and delay answer to prevent user to access it
         await Task.WhenAll(new Task[] { Task.Delay(1500), DelayAnswer(2000) });
 
-        if (state < 4)
+        if (state < maxState)
         {
             // change gameplay index
             ChangeState(LevelState.Prepare);
-
+            state++;
         }
         else
             ChangeState(LevelState.Ended);
@@ -113,6 +118,8 @@ public class Level1Gameplay : BaseGameplay
     protected override async void HandleEnded()
     {
         base.HandleEnded();
+
+        DrawCanvas.enabled = false;
 
         // No need to trigger hidesprites again because it overrided by its animation
         StopTimer();
@@ -172,6 +179,7 @@ public class Level1Gameplay : BaseGameplay
         for (int i = 0; i <= UnityEngine.Random.Range(minCandles, maxCandles); i++)
         {
             GameObject candle = Instantiate(Candle, CandleContainer.transform);
+            candle.GetComponent<PopupAnimation>().Load();
         }
     }
 

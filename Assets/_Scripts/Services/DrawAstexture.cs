@@ -1,11 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class DrawAstexture : MonoBehaviour
 {
     public Texture2D baseTexture, defaultTexture;
+    [SerializeField] TextMeshProUGUI textHint;
+    [SerializeField] GetInferenceModel model;
 
     // Update is called once per frame
     void Update()
@@ -81,11 +84,11 @@ public class DrawAstexture : MonoBehaviour
                     {
                         baseTexture.SetPixel(newX, newY, colorToSet);
                     }
-
                 }
             }
         }
 
+        textHint.text = model.GetTextHint();
         baseTexture.Apply();
 
     }
