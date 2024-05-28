@@ -4,15 +4,21 @@ using UnityEngine;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime;
 
 public class Level4Gameplay : BaseGameplay
 {
+    [SerializeField] GameObject[] Phases;
+
     [SerializeField] GameObject[] StepToCompare;
     [SerializeField] private List<float> scales = new List<float> { 0.7f, 1.0f, 1.3f, 1.6f, 1.8f };
     bool isCompareLongest;
     [SerializeField] TextMeshProUGUI TextQuestionCompare;
 
     [SerializeField] GameObject StepToMeasure;
+    [SerializeField] TMP_InputField InputMeasure;
+    float measureAnswer;
+
     [SerializeField] int state, CompareFinishAtState, MeasureFinishAtState;
 
     #region MonoBehaviour
@@ -55,6 +61,9 @@ public class Level4Gameplay : BaseGameplay
     {
         base.HandlePrepare();
 
+        if (state == 0) foreach (GameObject phase in Phases) phase.SetActive(phase == Phases[0]);
+        else if (state == CompareFinishAtState) foreach (GameObject phase in Phases) phase.SetActive(phase == Phases[1]);
+
         if (state < CompareFinishAtState)
         {
             ResizeStepsLength();
@@ -75,8 +84,6 @@ public class Level4Gameplay : BaseGameplay
         base.HandleUserInteraction();
 
         if (!isTimerActive) StartTimer();
-
-
     }
 
     protected override void HandlePaused()
@@ -99,7 +106,7 @@ public class Level4Gameplay : BaseGameplay
         if (state < MeasureFinishAtState)
         {
             // change gameplay index
-            state ++;
+            state++;
             ChangeState(LevelState.Prepare);
         }
         else
@@ -179,6 +186,14 @@ public class Level4Gameplay : BaseGameplay
         ChangeState(StepToCompare[index] == correctScaleObject ? LevelState.Passed : LevelState.Fail);
     }
 
+    public void OnCheckMeasure()
+    {
+        if (float.TryParse(InputMeasure.text, out float inputValue))
+        {
+            ChangeState(Mathf.Approximately(inputValue, measureAnswer) ? LevelState.Passed : LevelState.Fail);
+        }
+    }
+
     #endregion
 
     #region Utilities
@@ -222,7 +237,10 @@ public class Level4Gameplay : BaseGameplay
 
     void SetRuler()
     {
+        bool isHalfPhase = state < ((MeasureFinishAtState - CompareFinishAtState) / 2);
 
+        Shuffle(scales);
+        StepToMeasure.transform.localScale = Vector3.one * scales[0];
     }
 
     #endregion
