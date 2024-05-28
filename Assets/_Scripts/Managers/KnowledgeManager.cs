@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class KnowledgeManager : MonoBehaviour
 {
     bool isCheckKnowledge = true;
-    bool isResetKnowledge = false;
+    bool isResetKnowledge, isStartReset = false;
     Knowledge currentKnowledge;
 
     [Header("Knowledge Marker Management")]
@@ -60,10 +60,11 @@ public class KnowledgeManager : MonoBehaviour
             {
                 if (UserManager.Instance.User.knowledgeHasSpawn)
                 {
-                    if (IsMoreThanAnHour())
+                    if (IsMoreThanAnHour() && !isStartReset)
                     {
                         Debug.Log("Current knowledge is time over...");
-                        ResertKnowledge();
+                        ResetKnowledge();
+                        isStartReset = true;
                     }
                 }
             }
@@ -81,7 +82,7 @@ public class KnowledgeManager : MonoBehaviour
             {
                 Debug.Log("But time is over...");
 
-                ResertKnowledge();
+                ResetKnowledge();
             }
             else
             {
@@ -128,7 +129,6 @@ public class KnowledgeManager : MonoBehaviour
     #region KnowledgeMarker Handler
     public void GenerateKnowledge()
     {
-        isResetKnowledge = false;
         Debug.Log("Is generating knowledge now...");
         if (DataSystem.Instance.Knowledge != null)
         {
@@ -150,6 +150,9 @@ public class KnowledgeManager : MonoBehaviour
             UserManager.Instance.Save();
 
             currentKnowledge = DataSystem.Instance.Knowledge[randomIndex];
+
+            isResetKnowledge = false;
+            isStartReset = false;
 
             SpawnKnowledge(true);
         }
@@ -174,7 +177,7 @@ public class KnowledgeManager : MonoBehaviour
         else TransformNewKnowledge();
     }
 
-    void ResertKnowledge()
+    void ResetKnowledge()
     {
         if (NewKnowledgeObject != null) Destroy(NewKnowledgeObject);
 
@@ -326,7 +329,7 @@ public class KnowledgeManager : MonoBehaviour
         if (index != -1)
         {
             UserManager.Instance.User.currentKnowledge.isAnswered = true;
-            
+
             bool check = UserManager.Instance.User.listOfSaveKnowledge[index].isCollected;
 
             if (!check)

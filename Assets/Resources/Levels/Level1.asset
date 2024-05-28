@@ -21,8 +21,8 @@ MonoBehaviour:
   hint: Lihatlah meja di rumahmu. Ada kejutan yang lezat untukmu!
   levelSprite: {fileID: 21300000, guid: 7cab4ae1b4e339e419a5489275e88144, type: 3}
   levelSceneName: Level1
-  playCount: 0
-  maxTimeDuration: 30
+  playCount: 1
+  maxTimeDuration: 60
   isSolved: 1
   isRightInTime: 0
   isNoMistake: 0

@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: d461b1bf9c4ffb64092867b1625a63ed
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - levelData: {fileID: 11400000, guid: c9b555a742e7f5d4a877f65ab02dcc28, type: 2}
+  - whiteOverlay: {instanceID: 0}
+  - cutscenePlayer: {instanceID: 0}
+  - starIsSolved: {instanceID: 0}
+  - starIsRightInTime: {instanceID: 0}
+  - starIsNoMistake: {instanceID: 0}
+  - modalEnded: {instanceID: 0}
+  - model: {instanceID: 0}
+  - CandleContainer: {instanceID: 0}
+  - Candle: {instanceID: 0}
+  - DrawCanvas: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
