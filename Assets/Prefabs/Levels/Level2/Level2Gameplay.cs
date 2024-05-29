@@ -6,15 +6,14 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class Questions
-{
-    public string questionString;
-    public LevelSprite questionSprite;
-}
-
 public class Level2Gameplay : BaseGameplay
 {
+    [System.Serializable]
+    public class Questions
+    {
+        public string questionString;
+        public LevelSprite questionSprite;
+    }
 
     [Header("Level2")]
     [SerializeField] private List<Questions> questions;
@@ -109,6 +108,7 @@ public class Level2Gameplay : BaseGameplay
         base.HandlePassed();
 
         HideSprite(currentQuestionSprite);
+
         OnPassed?.Invoke();
 
         // Wait for a sec and delay answer to prevent user to access it
@@ -227,6 +227,11 @@ public class Level2Gameplay : BaseGameplay
         }
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="interStateDelay">In ms</param>
+    /// <returns></returns>
     private async Task DelayAnswer(float interStateDelay)
     {
         answerOptionText.transform.parent.GetComponent<Button>().interactable = false;
