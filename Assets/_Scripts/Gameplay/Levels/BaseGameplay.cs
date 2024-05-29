@@ -231,6 +231,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected void CalculateStars()
     {
         levelData.isSolved = true;
+        
         if (mistake > 0)
             levelData.isNoMistake = false;
         else
