@@ -51,6 +51,25 @@ public class SizeMeasure : BaseAnimation
 
     public void Close()
     {
+        int id = -1;
 
+        switch (scaleTarget)
+        {
+            case SizeToScale.x:
+                id = LeanTween.scaleX(gameObject, 0.0f, duration).id;
+                break;
+            case SizeToScale.y:
+                id = LeanTween.scaleY(gameObject, 0.0f, duration).id;
+                break;
+            case SizeToScale.z:
+                id = LeanTween.scaleZ(gameObject, 0.0f, duration).id;
+                break;
+            default:
+                break;
+        }
+
+        LTDescr d = LeanTween.descr(id);
+
+        d?.setOnComplete(() => gameObject.SetActive(false)).setEase(LeanTweenType.easeInOutQuart).setDelay(delay);
     }
 }
