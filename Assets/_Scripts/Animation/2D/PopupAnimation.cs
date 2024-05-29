@@ -14,7 +14,7 @@ public class PopupAnimation : BaseAnimation
         gameObject.SetActive(true);
 
         transform.localScale = Vector3.zero;
-        LeanTween.scale(gameObject, Vector3.one, duration).setEaseInOutQuart();
+        LeanTween.scale(gameObject, Vector3.one, duration).setEaseInOutQuart().setDelay(delay);
 
         if (isAnimateOnClose)
         {
