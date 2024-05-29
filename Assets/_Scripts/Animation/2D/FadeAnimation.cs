@@ -5,6 +5,7 @@ public class FadeAnimation : BaseAnimation
 {
     [Header("Fade")]
     [SerializeField] private CanvasGroup canvasGroup;
+    [SerializeField] float targetAlpha;
 
     private void Start()
     {
@@ -16,7 +17,7 @@ public class FadeAnimation : BaseAnimation
         gameObject.SetActive(true);
         canvasGroup.alpha = 0f;
 
-        canvasGroup.LeanAlpha(0.6f, duration);
+        canvasGroup.LeanAlpha(targetAlpha > 0.0f ? targetAlpha : 0.6f, duration).setDelay(delay);
 
         if (isAnimateOnClose)
         {

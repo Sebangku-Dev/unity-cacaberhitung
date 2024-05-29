@@ -9,6 +9,7 @@ using Unity.VisualScripting.Antlr3.Runtime;
 public class Level4Gameplay : BaseGameplay
 {
     [SerializeField] GameObject[] Phases;
+    [SerializeField] LevelSprite[] PhaseSprites;
 
     [SerializeField] GameObject[] StepToCompare;
     [SerializeField] private List<float> scales = new List<float> { 0.7f, 1.0f, 1.3f, 1.6f, 1.8f };
@@ -17,6 +18,7 @@ public class Level4Gameplay : BaseGameplay
 
     [SerializeField] GameObject StepToMeasure;
     [SerializeField] TMP_InputField InputMeasure;
+    [SerializeField] float basicMeasure;
     float measureAnswer;
 
     [SerializeField] int state, CompareFinishAtState, MeasureFinishAtState;
@@ -61,15 +63,23 @@ public class Level4Gameplay : BaseGameplay
     {
         base.HandlePrepare();
 
-        if (state == 0) foreach (GameObject phase in Phases) phase.SetActive(phase == Phases[0]);
+        if (state == 0) foreach (GameObject phase in Phases)
+            {
+                phase.SetActive(phase == Phases[0]);
+            }
         else if (state == CompareFinishAtState) foreach (GameObject phase in Phases) phase.SetActive(phase == Phases[1]);
 
         if (state < CompareFinishAtState)
         {
             ResizeStepsLength();
             SetIsLOngestOrShortest();
+            if (PhaseSprites.Length > 0) PhaseSprites[0].Load();
         }
-        else if (state < MeasureFinishAtState) SetRuler();
+        else if (state < MeasureFinishAtState)
+        {
+            SetRuler();
+            if (PhaseSprites.Length > 1) PhaseSprites[1].Load();
+        }
 
         await DelayAnswer(2000f);
 
@@ -192,6 +202,8 @@ public class Level4Gameplay : BaseGameplay
         {
             ChangeState(Mathf.Approximately(inputValue, measureAnswer) ? LevelState.Passed : LevelState.Fail);
         }
+        InputMeasure.Select();
+        InputMeasure.text = "";
     }
 
     #endregion
@@ -241,6 +253,8 @@ public class Level4Gameplay : BaseGameplay
 
         Shuffle(scales);
         StepToMeasure.transform.localScale = Vector3.one * scales[0];
+        measureAnswer = basicMeasure * scales[0];
+        Debug.Log(measureAnswer);
     }
 
     #endregion
