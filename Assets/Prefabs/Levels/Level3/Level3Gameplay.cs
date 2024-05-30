@@ -24,6 +24,7 @@ public class Level3Gameplay : BaseGameplay
     [SerializeField] private List<Questions> questions;
     [SerializeField] private Cake currentBigCake;
     [SerializeField] private Cake currentSmallCake;
+    [SerializeField] private Cake temporaryCake;
     [SerializeField] private Plate plateGameobject;
     [SerializeField] private Plate smallPlateGameobject;
 
@@ -34,15 +35,10 @@ public class Level3Gameplay : BaseGameplay
     /// <para>[1] Answer</para>
     /// </summary>
     private List<string> currentQuestion;
-    private int currentQuestionIndex = 4;
+    private int currentQuestionIndex = 0;
     private LevelSprite currentQuestionSprite;
-    private Cake temporaryCake;
     private float currentBigCakeFillAmount = 0f;
     private float currentSmallCakeFillAmount = 0f;
-
-
-
-
 
     #region MonoBehaviour
     protected override void Awake()
@@ -122,7 +118,6 @@ public class Level3Gameplay : BaseGameplay
 
         OnPassed?.Invoke();
 
-
         // Wait for passed animation
         int duration = 2000;
         await Task.WhenAll(
@@ -193,12 +188,18 @@ public class Level3Gameplay : BaseGameplay
 
     public void AddCakeFraction(Cake cake)
     {
-        cake.gameObject.GetComponent<Image>().fillAmount += float.Parse(currentQuestion[0]);
+        if (cake == currentBigCake)
+            currentBigCakeFillAmount += float.Parse(currentQuestion[0]);
+        else if (cake == currentSmallCake)
+            currentSmallCakeFillAmount += float.Parse(currentQuestion[0]);
     }
 
     public void SubstractCakeFraction(Cake cake)
     {
-        cake.gameObject.GetComponent<Image>().fillAmount -= float.Parse(currentQuestion[0]);
+        if (cake == currentBigCake)
+            currentBigCakeFillAmount -= float.Parse(currentQuestion[0]);
+        else if (cake == currentSmallCake)
+            currentSmallCakeFillAmount -= float.Parse(currentQuestion[0]);
     }
 
     public void SetSmallCake()
@@ -224,6 +225,7 @@ public class Level3Gameplay : BaseGameplay
     public void SetBigCake()
     {
         currentBigCake.gameObject.GetComponent<Image>().sprite = questions[currentQuestionIndex].cakeSprite;
+        temporaryCake.gameObject.GetComponent<Image>().sprite = questions[currentQuestionIndex].cakeSprite;
         currentBigCake.GetComponent<Draggable>().isNotSnapped = true;
 
         if (currentQuestionIndex < 4)
@@ -238,7 +240,6 @@ public class Level3Gameplay : BaseGameplay
             currentBigCakeFillAmount = 1f;
             currentBigCake.gameObject.GetComponent<Image>().fillAmount = currentBigCakeFillAmount;
             currentBigCake.GetComponent<Draggable>().isLocked = false;
-            currentBigCake.GetComponent<Draggable>().isNotSnapped = true;
         }
     }
 
@@ -248,14 +249,12 @@ public class Level3Gameplay : BaseGameplay
     /// </summary>
     public void CheckAnswer()
     {
-        Debug.Log(currentBigCake.gameObject.GetComponent<Image>().fillAmount);
-        Debug.Log(float.Parse(currentQuestion[1]));
-        
-        if (currentQuestionIndex < 4 && Mathf.Approximately(currentBigCake.gameObject.GetComponent<Image>().fillAmount, float.Parse(currentQuestion[1])))
+
+        if (currentQuestionIndex < 4 && Mathf.Approximately(currentBigCakeFillAmount, float.Parse(currentQuestion[1])))
         {
             ChangeState(LevelState.Passed);
         }
-        else if (Mathf.Approximately(currentBigCake.gameObject.GetComponent<Image>().fillAmount, float.Parse(currentQuestion[1])))
+        else if (Mathf.Approximately(currentBigCakeFillAmount, float.Parse(currentQuestion[1])))
         {
             ChangeState(LevelState.Passed);
         }
@@ -278,19 +277,25 @@ public class Level3Gameplay : BaseGameplay
 
     public void OnCakeBeginDrag()
     {
-        if (!(currentQuestionIndex < 4))
+        if (!(currentQuestionIndex < 4) && CurrentLevelState != LevelState.Passed)
         {
-            temporaryCake = Instantiate(currentSmallCake, plateGameobject.transform);
-            temporaryCake.GetComponent<Image>().fillAmount = currentBigCake.GetComponent<Image>().fillAmount -= float.Parse(currentQuestion[0]);
+            // Prepare and save latest state
+            temporaryCake.gameObject.SetActive(true);
+            currentBigCakeFillAmount = currentBigCake.GetComponent<Image>().fillAmount;
+            currentSmallCakeFillAmount = currentSmallCake.GetComponent<Image>().fillAmount;
 
+            // Temporary change fill amount when on drag
+            temporaryCake.GetComponent<Image>().fillAmount = currentBigCakeFillAmount - float.Parse(currentQuestion[0]);
             currentBigCake.GetComponent<Image>().fillAmount = float.Parse(currentQuestion[0]);
         }
     }
 
     public void OnCakeEndDrag()
     {
-        currentBigCake.GetComponent<Image>().fillAmount = temporaryCake.GetComponent<Image>().fillAmount += float.Parse(currentQuestion[0]);
-        Destroy(temporaryCake.gameObject);
+        currentSmallCake.gameObject.GetComponent<Image>().fillAmount = currentSmallCakeFillAmount;
+        currentBigCake.gameObject.GetComponent<Image>().fillAmount = currentBigCakeFillAmount;
+
+        temporaryCake.gameObject.SetActive(false);
     }
 
     #endregion

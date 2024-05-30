@@ -165,7 +165,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// <summary>
     /// Variable that holds cutscene duration
     /// </summary>
-    protected float cutsceneDuration = 4f;
+    protected float cutsceneDuration = 4.5f;
 
     /// <summary>
     /// Method to play cutscene. Strongly related to <see cref="cutscenePlayer"/> to play the <see cref="levelData.cutSceneClip"/>
