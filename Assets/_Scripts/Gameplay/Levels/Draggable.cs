@@ -1,16 +1,21 @@
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public bool isNotSnapped = false;
+    public bool isDestroyable = false;
+    public bool isLocked = false;
 
-
-    [SerializeField] private bool isDestroyable = false;
+    public static Action OnItemBeginDrag;
+    public static Action OnItemEndDrag;
 
     private Image image;
     [HideInInspector]
     public Transform parentAfterDrag;
+    public Transform parentBeforeDrag;
 
     private void Start()
     {
@@ -20,25 +25,33 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnBeginDrag(PointerEventData eventData)
     {
         parentAfterDrag = transform.parent;
+        parentBeforeDrag = transform.parent;
+
         transform.SetParent(transform.parent.parent);
         transform.SetAsLastSibling();
         image.raycastTarget = false;
+
+        OnItemBeginDrag?.Invoke();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (isLocked) return;
+
         RectTransform rt = (RectTransform)transform;
         transform.localPosition = Input.mousePosition + new Vector3(-rt.rect.width / 4, rt.rect.height / 4, 0);
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        OnItemEndDrag?.Invoke();
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;
 
-        if (isDestroyable && transform.parent.name == "Plate")
+        if (isDestroyable && transform.parent != parentBeforeDrag && !isLocked)
         {
             Destroy(gameObject);
         }
+
     }
 }

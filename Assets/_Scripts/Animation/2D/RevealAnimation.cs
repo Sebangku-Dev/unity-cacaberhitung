@@ -42,12 +42,3 @@ public class RevealAnimation : BaseAnimation
     }
 
 }
-
-[System.Serializable]
-public enum Direction
-{
-    Left,
-    Right,
-    Top,
-    Bottom
-}

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3781205383503289523}
   - component: {fileID: 3781205383503289522}
   - component: {fileID: 3781205383503289520}
+  - component: {fileID: 2530727532733848061}
   m_Layer: 0
   m_Name: Big Cake
   m_TagString: Untagged
@@ -61,7 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -89,3 +90,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f1f4028f4cec234f9c85ee702e77997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2530727532733848061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3781205383503289516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c35fc9fdb4ea64c9c2ff111ab371eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDestroyable: 1
+  isLocked: 0
+  parentAfterDrag: {fileID: 0}
