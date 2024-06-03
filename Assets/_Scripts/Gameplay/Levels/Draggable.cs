@@ -19,10 +19,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        parentAfterDrag = transform.parent;
-        transform.SetParent(transform.parent.parent);
-        transform.SetAsLastSibling();
-        image.raycastTarget = false;
+            parentAfterDrag = transform.parent;
+            transform.SetParent(transform.parent.parent);
+            transform.SetAsLastSibling();
+            image.raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -33,12 +33,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.SetParent(parentAfterDrag);
-        image.raycastTarget = true;
+            transform.SetParent(parentAfterDrag);
+            image.raycastTarget = true;
 
-        if (isDestroyable && transform.parent.name == "Plate")
-        {
-            Destroy(gameObject);
-        }
+            if (isDestroyable && transform.parent.name == "Plate")
+            {
+                Destroy(gameObject);
+            }
     }
 }
