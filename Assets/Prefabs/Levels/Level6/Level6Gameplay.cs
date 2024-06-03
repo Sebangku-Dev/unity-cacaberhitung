@@ -11,6 +11,7 @@ public class Level6Gameplay : BaseGameplay
 {
     [SerializeField] GameObject[] Planes;
     [SerializeField] GameObject PlaneContainer, DragablePlaneContainer, BasicPlane, Dot;
+    [SerializeField] Canvas canvas;
     GameObject DotContainer;
     TextMeshProUGUI TextNumber;
     bool IsToLargest;
@@ -169,6 +170,7 @@ public class Level6Gameplay : BaseGameplay
         switch (step)
         {
             case PlaneStepType.Compare:
+                GeneratePlaneToCompare();
                 break;
             case PlaneStepType.Dot:
                 break;
@@ -194,9 +196,11 @@ public class Level6Gameplay : BaseGameplay
 
     void SetAsDragable(GameObject BasePlane)
     {
-        BasePlane.GetComponent<CanvasGroup>().alpha = 0.0f;
-        
         GameObject Dragable = Instantiate(BasePlane, DragablePlaneContainer.transform);
+        // Dragable.GetComponent<Draggable>().isDraggable = true;
+
+        BasePlane.GetComponent<CanvasGroup>().alpha = 0.0f;
+        // BasePlane.GetComponent<SlotItem>().isActive = true;
     }
 
     void GeneratePlaneToCompare()

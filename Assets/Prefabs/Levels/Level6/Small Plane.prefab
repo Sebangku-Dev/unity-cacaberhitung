@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 3145901772228556303}
   - component: {fileID: 3808466228890867965}
   - component: {fileID: 52730981486103706}
+  - component: {fileID: 3226985360208752595}
+  - component: {fileID: 2406507112303184098}
+  - component: {fileID: -8454996673193681574}
   m_Layer: 5
   m_Name: Small Plane
   m_TagString: Untagged
@@ -76,3 +79,50 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!225 &3226985360208752595
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250689897507891018}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &2406507112303184098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250689897507891018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec1da4bcf4377014cafca80b574622e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canvas: {fileID: 0}
+  image: {fileID: 0}
+  parentAfterDrag: {fileID: 0}
+  item: {fileID: 0}
+  itemTarget: {fileID: 0}
+  minDistance: 0
+  isResetPosition: 0
+  isHasTarget: 1
+  isChangeRotate: 0
+  isChangeScale: 0
+--- !u!114 &-8454996673193681574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1250689897507891018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61bdb33581d5d6940b700793c075e7d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerObject: 
