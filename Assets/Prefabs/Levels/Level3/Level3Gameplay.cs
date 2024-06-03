@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TMPro;
 
 public class Level3Gameplay : BaseGameplay
 {
@@ -25,14 +26,14 @@ public class Level3Gameplay : BaseGameplay
     [SerializeField] private Cake currentBigCake;
     [SerializeField] private Cake currentSmallCake;
     [SerializeField] private Cake temporaryCake;
-    [SerializeField] private Plate plateGameobject;
-    [SerializeField] private Plate smallPlateGameobject;
+    [SerializeField] private TextMeshProUGUI hintText;
 
 
     /// <summary>
     /// Format:
     /// <para>[0] Question</para> 
     /// <para>[1] Answer</para>
+    /// <para>[2] Hint Text</para>
     /// </summary>
     private List<string> currentQuestion;
     private int currentQuestionIndex = 0;
@@ -45,6 +46,7 @@ public class Level3Gameplay : BaseGameplay
     {
         base.Awake();
         OnBeforeLevelStateChanged += OnBeforeStateChanged;
+        OnAfterLevelStateChanged += OnAfterStateChanged;
         Draggable.OnItemBeginDrag += OnCakeBeginDrag;
         Draggable.OnItemEndDrag += OnCakeEndDrag;
     }
@@ -63,6 +65,7 @@ public class Level3Gameplay : BaseGameplay
     private void OnDestroy()
     {
         OnBeforeLevelStateChanged -= OnBeforeStateChanged;
+        OnAfterLevelStateChanged -= OnAfterStateChanged;
         Draggable.OnItemBeginDrag -= OnCakeBeginDrag;
         Draggable.OnItemEndDrag -= OnCakeEndDrag;
     }
@@ -87,7 +90,15 @@ public class Level3Gameplay : BaseGameplay
         GenerateQuestion();
         ShowSprite(currentQuestionSprite);
 
-        await Task.Delay(2000);
+
+        await Task.WhenAll(new Task[] {
+            Task.Delay(2000),
+            LockDraggable(2000)
+            }
+        );
+
+        // Invoke OnPrepare
+        OnPrepare?.Invoke();
 
         // Prepare Timer
         StartTimer();
@@ -119,9 +130,9 @@ public class Level3Gameplay : BaseGameplay
         OnPassed?.Invoke();
 
         // Wait for passed animation
-        int duration = 2000;
+        int duration = 1000;
         await Task.WhenAll(
-            new Task[] { Task.Delay(duration), LockDraggable() }
+            new Task[] { Task.Delay(duration), LockDraggable(duration * 3) }
         );
 
         // Next question
@@ -174,6 +185,11 @@ public class Level3Gameplay : BaseGameplay
     {
 
     }
+
+    private void OnAfterStateChanged(LevelState changedState)
+    {
+
+    }
     #endregion
 
     #region Utilities
@@ -184,6 +200,9 @@ public class Level3Gameplay : BaseGameplay
 
         SetBigCake();
         SetSmallCake();
+
+        // Set question
+        hintText.text = $"Caca ingin {currentQuestion[2]} kue";
     }
 
     public void AddCakeFraction(Cake cake)
@@ -264,12 +283,12 @@ public class Level3Gameplay : BaseGameplay
         }
     }
 
-    private async Task LockDraggable()
+    private async Task LockDraggable(int delayMs)
     {
         currentSmallCake.GetComponent<Draggable>().isLocked = true;
         currentBigCake.GetComponent<Draggable>().isLocked = true;
 
-        await Task.Delay(2000);
+        await Task.Delay(delayMs);
 
         currentSmallCake.GetComponent<Draggable>().isLocked = false;
         currentBigCake.GetComponent<Draggable>().isLocked = false;
