@@ -69,15 +69,15 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Vector2 ClampToCanvas(Vector2 position)
     {
         // Hitung batas-batas di mana objek bisa berada
-        float minX = (canvasRectTransform.rect.width * 0) + (rectTransform.rect.width * rectTransform.pivot.x);
-        float maxX = (canvasRectTransform.rect.width * 1) - (rectTransform.rect.width * (1 - rectTransform.pivot.x));
+        float minX = (canvasRectTransform.rect.width * -rectTransform.pivot.x) + (rectTransform.rect.width * rectTransform.pivot.x);
+        float maxX = (canvasRectTransform.rect.width * (1 - rectTransform.pivot.x)) - (rectTransform.rect.width * (1 - rectTransform.pivot.x));
 
         Debug.Log(minX);
         Debug.Log(maxX);
 
         // Perbaikan: Menggunakan pivot.y untuk menghitung minY dan maxY
-        float minY = (canvasRectTransform.rect.height * -1) + (rectTransform.rect.height * rectTransform.pivot.y);
-        float maxY = (canvasRectTransform.rect.height * 0) - (rectTransform.rect.height * (1 - rectTransform.pivot.y));
+        float minY = (canvasRectTransform.rect.height * -rectTransform.pivot.y) + (rectTransform.rect.height * rectTransform.pivot.y);
+        float maxY = (canvasRectTransform.rect.height * (1 - rectTransform.pivot.y)) - (rectTransform.rect.height * (1 - rectTransform.pivot.y));
 
         // Batasi posisi objek agar tidak keluar dari Canvas
         Vector2 clampedPosition = new Vector2(
