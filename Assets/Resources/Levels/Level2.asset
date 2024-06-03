@@ -19,7 +19,7 @@ MonoBehaviour:
   description: Di hari ulang tahunnya, Caca mendapat banyak sekali hadiah. Bantu
     Caca untuk membuka kotak hadiah!
   hint: Kamu telah merayakan hari ulang tahunmu! Sekarang cari meja berisi kado untukmu!
-  levelSprite: {fileID: 21300000, guid: 4ef5bcde33bff9045a043617afa7eb0b, type: 3}
+  levelSprite: {fileID: 21300000, guid: 153481635e8eb30438410aa37d9c76f8, type: 3}
   levelSceneName: Level2
   playCount: 0
   maxTimeDuration: 60

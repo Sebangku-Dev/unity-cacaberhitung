@@ -1,23 +1,62 @@
+
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class DraggableSlot : MonoBehaviour, IDropHandler
 {
+    [SerializeField] private bool LockAtFirst;
+    [SerializeField] public Draggable relatedDraggable;
+
+    private bool isLocked;
+
     public UnityEvent OnDropItem;
+
+    private void Start()
+    {
+        if (LockAtFirst)
+            Lock();
+        else
+            Unlock();
+    }
 
     public void OnDrop(PointerEventData eventData)
     {
-        GameObject dropped = eventData.pointerDrag;
-        Draggable draggableItem = dropped.GetComponent<Draggable>();
+        if (isLocked)
+        {
+            if (relatedDraggable != null)
+            {
+                // One slot for one child
+                if (transform.childCount == 0 && relatedDraggable == eventData.pointerDrag.gameObject.GetComponent<Draggable>())
+                {
+                    GameObject dropped = eventData.pointerDrag;
+                    Draggable draggableItem = dropped.GetComponent<Draggable>();
 
-        // Cancel drag and drop if draggable is locked
-        if (draggableItem.isLocked) return;
+                    // Cancel drag and drop if draggable is locked
+                    if (draggableItem.isLocked) return;
 
-        if (!draggableItem.isNotSnapped)
-            draggableItem.parentAfterDrag = transform;
+                    if (!draggableItem.isNotSnapped)
+                        draggableItem.parentAfterDrag = transform;
 
-        if (draggableItem.parentBeforeDrag != transform)
-            OnDropItem?.Invoke();
+                    if (draggableItem.parentBeforeDrag != transform)
+                        OnDropItem?.Invoke();
+                }
+            }
+        }
     }
+
+    public void Unlock()
+    {
+        isLocked = false;
+        GetComponent<Image>().raycastTarget = true;
+    }
+
+    public void Lock()
+    {
+        isLocked = true;
+        GetComponent<Image>().raycastTarget = false;
+    }
+
+    protected bool IsLocked() => !GetComponent<Image>().raycastTarget;
 }

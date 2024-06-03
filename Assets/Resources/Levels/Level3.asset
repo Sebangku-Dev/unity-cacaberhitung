@@ -18,7 +18,7 @@ MonoBehaviour:
   isUnlocked: 1
   description: 
   hint: 
-  levelSprite: {fileID: 21300000, guid: 3f29a5506bb55694c9b88295eb8e0362, type: 3}
+  levelSprite: {fileID: 21300000, guid: ecb6aaada46c4c94195aa021daa18e0a, type: 3}
   levelSceneName: Level3
   playCount: 1
   maxTimeDuration: 30

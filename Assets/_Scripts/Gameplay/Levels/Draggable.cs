@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public bool isNotSnapped = false;
-    public bool isDestroyable = false;
-    public bool isLocked = false;
+    [SerializeField] public bool isNotSnapped = false;
+    [SerializeField] public bool isDestroyable = false;
+    [SerializeField] public bool isLocked = false;
 
     public static Action OnItemBeginDrag;
     public static Action OnItemEndDrag;
@@ -15,6 +15,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Image image;
     [HideInInspector]
     public Transform parentAfterDrag;
+    [HideInInspector]
     public Transform parentBeforeDrag;
 
     private void Start()
