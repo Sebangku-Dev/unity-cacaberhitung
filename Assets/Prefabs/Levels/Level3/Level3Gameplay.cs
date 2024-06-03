@@ -36,7 +36,7 @@ public class Level3Gameplay : BaseGameplay
     /// <para>[2] Hint Text</para>
     /// </summary>
     private List<string> currentQuestion;
-    private int currentQuestionIndex = 0;
+    private int currentQuestionIndex = 7;
     private LevelSprite currentQuestionSprite;
     private float currentBigCakeFillAmount = 0f;
     private float currentSmallCakeFillAmount = 0f;
