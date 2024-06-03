@@ -44,11 +44,4 @@ public class MarkerController : MonoBehaviour
             BarrierToUnlock.SetActive(false);
         }
     }
-
-
-    void ToggleMissionPanel()
-    {
-        NavigationSystem.Instance.TogglePanel(1);
-        MarkerController.isOnMarkerArea = !MarkerController.isOnMarkerArea;
-    }
 }

@@ -13,18 +13,18 @@ MonoBehaviour:
   m_Name: Level4
   m_EditorClassIdentifier: 
   id: 4
-  title: 
+  title: Jejak Misterius
   type: 0
   isUnlocked: 0
   description: 
   hint: 
-  levelSprite: {fileID: 21300000, guid: 5afb4b01c6884ae4998497de1239395a, type: 3}
+  levelSprite: {fileID: 21300000, guid: 393eb756a2188ba4fbca3266ef28bf67, type: 3}
   levelSceneName: 
   playCount: 0
   maxTimeDuration: 120
-  isSolved: 1
-  isRightInTime: 1
-  isNoMistake: 1
+  isSolved: 0
+  isRightInTime: 0
+  isNoMistake: 0
   isToBePlayed: 0
   cutsceneClip: {fileID: 32900000, guid: 376b7546cfaf9834dad37e11fdc9b356, type: 3}
   marker: {fileID: 7886398287588192282, guid: 02cefdd595bccee4bba608bd4af3a861, type: 3}

@@ -13,3 +13,12 @@ public class BaseAnimation : MonoBehaviour
 
 }
 
+[System.Serializable]
+public enum Direction
+{
+    Left,
+    Right,
+    Top,
+    Bottom
+}
+

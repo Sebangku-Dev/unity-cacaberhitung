@@ -19,7 +19,7 @@ MonoBehaviour:
   description: Caca berulang tahun yang ke-x tahun. Ayo bantu Caca menulis umurnya
     di kue!
   hint: Lihatlah meja di rumahmu. Ada kejutan yang lezat untukmu!
-  levelSprite: {fileID: 21300000, guid: 821932398f222b747aff8aa8e9390f31, type: 3}
+  levelSprite: {fileID: 21300000, guid: b23e33380118e9a40a32293721adc60a, type: 3}
   levelSceneName: Level1
   playCount: 1
   maxTimeDuration: 60

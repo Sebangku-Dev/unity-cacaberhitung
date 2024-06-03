@@ -15,6 +15,8 @@ public class BaseGameplay : Singleton<BaseGameplay>
     [Header("Cutscene")]
     [SerializeField] protected Image whiteOverlay;
     [SerializeField] protected VideoPlayer cutscenePlayer;
+    [Header("Prepare")]
+    [SerializeField] protected UnityEvent OnPrepare;
     [Header("Passed")]
     [SerializeField] protected Star starIsSolved;
     [SerializeField] protected Star starIsRightInTime;
@@ -27,6 +29,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     [SerializeField] protected LevelEndedModal modalEnded;
 
     public static event Action<LevelState> OnBeforeLevelStateChanged;
+    public static event Action<LevelState> OnAfterLevelStateChanged;
 
     public enum LevelState
     {
@@ -71,6 +74,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
                 break;
         }
 
+        OnAfterLevelStateChanged?.Invoke(newState);
     }
 
 
@@ -165,7 +169,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// <summary>
     /// Variable that holds cutscene duration
     /// </summary>
-    protected float cutsceneDuration = 4f;
+    protected float cutsceneDuration = 4.5f;
 
     /// <summary>
     /// Method to play cutscene. Strongly related to <see cref="cutscenePlayer"/> to play the <see cref="levelData.cutSceneClip"/>
@@ -231,7 +235,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected void CalculateStars()
     {
         levelData.isSolved = true;
-        
+
         if (mistake > 0)
             levelData.isNoMistake = false;
         else
