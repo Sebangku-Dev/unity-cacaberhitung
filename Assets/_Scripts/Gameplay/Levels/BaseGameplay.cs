@@ -143,6 +143,13 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// <param name="sprite">Sprite which you want to hide</param>
     protected void HideSprite(LevelSprite sprite) => sprite.Close();
 
+    protected LevelSprite GenerateSprite(LevelSprite sprite, Transform parent, Vector3 initialPosition)
+    {
+        return Instantiate(sprite, initialPosition, Quaternion.identity, parent);
+    }
+
+    protected void DestroySprite(LevelSprite sprite) => Destroy(sprite.gameObject);
+
     /// <summary>
     /// Method to show EndedModal at <see cref="LevelState.Ended"/>
     /// </summary>

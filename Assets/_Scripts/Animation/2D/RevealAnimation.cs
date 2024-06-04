@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Threading.Tasks;
 
-public class RevealAnimation : BaseAnimation
+public class RevealAnimation : BaseAnimation, IAnimate
 {
     [SerializeField] Vector3 startingLocation;
     [SerializeField] Direction direction;

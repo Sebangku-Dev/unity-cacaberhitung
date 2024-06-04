@@ -10,7 +10,6 @@ public class BaseAnimation : MonoBehaviour
     [Header("Close")]
     [SerializeField] protected bool isAnimateOnClose;
     [SerializeField] protected float delayAfterOnLoad = 2f;
-
 }
 
 [System.Serializable]
@@ -20,5 +19,11 @@ public enum Direction
     Right,
     Top,
     Bottom
+}
+
+internal interface IAnimate
+{
+    void Load();
+    void Close();
 }
 

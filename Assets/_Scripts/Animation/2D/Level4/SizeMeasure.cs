@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum SizeToScale { x, y, z }
-public class SizeMeasure : BaseAnimation
+public class SizeMeasure : BaseAnimation, IAnimate
 {
     [Header("SizeScale")]
     [SerializeField] SizeToScale scaleTarget;

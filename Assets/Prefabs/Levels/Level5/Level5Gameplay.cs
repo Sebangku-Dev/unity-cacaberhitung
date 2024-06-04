@@ -14,25 +14,24 @@ public class Level5Gameplay : BaseGameplay
         public LevelSprite questionSprite;
     }
 
-    [System.Serializable]
-    public enum CakeType
-    {
-        Small, Big
-    }
-
     [Header("Level3")]
     [SerializeField] private List<Questions> questions;
-
+    [SerializeField] LevelSprite hint;
+    [SerializeField] DraggableSlot hundredDraggableSlot, tenDraggabeSlot, oneDraggableSlot;
+    [SerializeField] CacaHintAnimation caca;
 
     /// <summary>
     /// Format:
     /// <para>[0] Question</para> 
-    /// <para>[1] Answer</para>
-    /// <para>[2] Hint Text</para>
+    /// <para>[1] Hundred</para>
+    /// <para>[2] Ten</para>
+    /// <para>[2] One</para>
     /// </summary>
     private List<string> currentQuestion;
     private int currentQuestionIndex = 0;
+    private LevelSprite currentQuestionSpriteRef;
     private LevelSprite currentQuestionSprite;
+    private List<NumberBlock> numberBlocks = new List<NumberBlock>();
 
     #region MonoBehaviour
     protected override void Awake()
@@ -76,17 +75,21 @@ public class Level5Gameplay : BaseGameplay
     {
         base.HandlePrepare();
 
-        GenerateQuestion();
-        ShowSprite(currentQuestionSprite);
-
-
-        await Task.WhenAll(new Task[] {
-            Task.Delay(2000)
-            }
-        );
+        GenerateQuestionAndSprites();
+        ShowSprite(hint);
 
         // Invoke OnPrepare
         OnPrepare?.Invoke();
+
+        if (currentQuestionIndex == 0)
+        {
+            caca.Load();
+            await LockNumberBlocks(8000);
+        }
+        else
+        {
+            await LockNumberBlocks(2000);
+        }
 
         // Prepare Timer
         StartTimer();
@@ -113,15 +116,21 @@ public class Level5Gameplay : BaseGameplay
     {
         base.HandlePassed();
 
-        HideSprite(currentQuestionSprite);
-
         OnPassed?.Invoke();
+        HideSprite(hint);
+
+        // Hide all number blocks
+        foreach (var numberBlock in numberBlocks)
+        {
+            numberBlock.GetComponent<IAnimate>().Close();
+        }
 
         // Wait for passed animation
-        int duration = 1000;
-        await Task.WhenAll(
-            new Task[] { Task.Delay(duration) }
-        );
+
+        await LockNumberBlocks(3000);
+
+        DestroySprite(currentQuestionSprite); // Destroy the number blocks envelope
+        DestroyAllNumberBlocks(); // Destroy the actual number blocks
 
         // Next question
         if (currentQuestionIndex < questions.Count() - 1)
@@ -179,11 +188,83 @@ public class Level5Gameplay : BaseGameplay
     #endregion
 
     #region Utilities
-    private void GenerateQuestion()
+    private void GenerateQuestionAndSprites()
     {
         currentQuestion = questions[currentQuestionIndex].questionString.Split(";").ToList();
-        currentQuestionSprite = questions[currentQuestionIndex].questionSprite;
+        currentQuestionSpriteRef = questions[currentQuestionIndex].questionSprite;
+
+        currentQuestionSprite = GenerateSprite(currentQuestionSpriteRef, currentQuestionSpriteRef.transform.parent, currentQuestionSpriteRef.transform.position);
+
+        // Set question text
+        // Set specific draggable slot to each number block
+        hint.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[0];
+        foreach (var numberBlock in currentQuestionSprite.GetComponentsInChildren<NumberBlock>())
+        {
+            if (numberBlock.numberBlockType == NumberBlock.Type.Hundred)
+            {
+                numberBlock.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[1];
+                hundredDraggableSlot.relatedDraggable = numberBlock.GetComponent<Draggable>();
+            }
+
+            if (numberBlock.numberBlockType == NumberBlock.Type.Ten)
+            {
+                numberBlock.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[2];
+                tenDraggabeSlot.relatedDraggable = numberBlock.GetComponent<Draggable>();
+            }
+
+            if (numberBlock.numberBlockType == NumberBlock.Type.One)
+            {
+                numberBlock.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[3];
+                oneDraggableSlot.relatedDraggable = numberBlock.GetComponent<Draggable>();
+            }
+
+            numberBlocks.Add(numberBlock);
+        }
+
+        ShowSprite(currentQuestionSprite);
     }
+
+    private void DestroyAllNumberBlocks()
+    {
+        if (hundredDraggableSlot.transform.childCount > 0) Destroy(hundredDraggableSlot.transform.GetChild(0).gameObject);
+        if (tenDraggabeSlot.transform.childCount > 0) Destroy(tenDraggabeSlot.transform.GetChild(0).gameObject);
+        if (oneDraggableSlot.transform.childCount > 0) Destroy(oneDraggableSlot.transform.GetChild(0).gameObject);
+
+        numberBlocks.RemoveAll((NumberBlock _) => true);
+    }
+
+    private async Task LockNumberBlocks(int delayMs)
+    {
+        foreach (var numberBlock in numberBlocks)
+        {
+            numberBlock.SetAlpha(0.5f);
+            numberBlock.GetComponent<Draggable>().isLocked = true;
+        }
+
+        await Task.Delay(delayMs);
+
+        foreach (var numberBlock in numberBlocks)
+        {
+            numberBlock.SetAlpha(1f);
+            numberBlock.GetComponent<Draggable>().isLocked = false;
+        }
+    }
+
+
+    /// <summary>
+    /// Used by <see cref="MultipleDraggableSlot"/>
+    /// </summary>
+    public async void NumberBlockChecker()
+    {
+        if (currentQuestionSprite.transform.childCount < 1)
+        {
+            // Wait draggable object until it snapped
+            await Task.Delay(100);
+
+            ChangeState(LevelState.Passed);
+        }
+    }
+
     #endregion
 
 }

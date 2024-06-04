@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 
-public class GiftBox : BaseAnimation
+public class GiftBox : BaseAnimation, IAnimate
 {
     [Header("Main")]
     [SerializeField] Transform lid;

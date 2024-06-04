@@ -32,6 +32,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (isLocked) return;
+
         parentAfterDrag = transform.parent;
         parentBeforeDrag = transform.parent;
 
@@ -52,6 +54,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (isLocked) return;
+
         OnItemEndDrag?.Invoke();
 
         transform.SetParent(parentAfterDrag);
@@ -72,8 +76,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         float minX = (canvasRectTransform.rect.width * -rectTransform.pivot.x) + (rectTransform.rect.width * rectTransform.pivot.x);
         float maxX = (canvasRectTransform.rect.width * (1 - rectTransform.pivot.x)) - (rectTransform.rect.width * (1 - rectTransform.pivot.x));
 
-        Debug.Log(minX);
-        Debug.Log(maxX);
+        // Debug.Log(minX);
+        // Debug.Log(maxX);
 
         // Perbaikan: Menggunakan pivot.y untuk menghitung minY dan maxY
         float minY = (canvasRectTransform.rect.height * -rectTransform.pivot.y) + (rectTransform.rect.height * rectTransform.pivot.y);
