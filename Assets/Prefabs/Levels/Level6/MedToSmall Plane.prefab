@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 4779667208074207126}
   - component: {fileID: 5873305754935286229}
   - component: {fileID: 8201870553546056181}
-  - component: {fileID: 6628113609144686891}
-  - component: {fileID: 1132378380971511688}
+  - component: {fileID: -8367219535493772273}
+  - component: {fileID: -6631094099410006155}
   m_Layer: 5
   m_Name: MedToSmall Plane
   m_TagString: Untagged
@@ -91,7 +91,7 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
---- !u!114 &6628113609144686891
+--- !u!114 &-8367219535493772273
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,20 +100,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3894641121126081230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec1da4bcf4377014cafca80b574622e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 24c35fc9fdb4ea64c9c2ff111ab371eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvas: {fileID: 0}
-  image: {fileID: 0}
+  isNotSnapped: 0
+  isDestroyable: 1
+  isLocked: 1
   parentAfterDrag: {fileID: 0}
-  item: {fileID: 0}
-  itemTarget: {fileID: 0}
-  minDistance: 0
-  isResetPosition: 0
-  isHasTarget: 1
-  isChangeRotate: 0
-  isChangeScale: 0
---- !u!114 &1132378380971511688
+  parentBeforeDrag: {fileID: 0}
+--- !u!114 &-6631094099410006155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -122,7 +117,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3894641121126081230}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61bdb33581d5d6940b700793c075e7d6, type: 3}
+  m_Script: {fileID: 11500000, guid: a6012958891f77145ac71c2be52320f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  triggerObject: 
+  LockAtFirst: 0
+  relatedDraggable: {fileID: 0}
+  OnDropItem:
+    m_PersistentCalls:
+      m_Calls: []

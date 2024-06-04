@@ -25,6 +25,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (isLocked) return;
+
         parentAfterDrag = transform.parent;
         parentBeforeDrag = transform.parent;
 
@@ -45,6 +47,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (isLocked) return;
+        
         OnItemEndDrag?.Invoke();
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;

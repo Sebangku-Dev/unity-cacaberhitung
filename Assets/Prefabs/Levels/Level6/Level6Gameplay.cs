@@ -197,10 +197,10 @@ public class Level6Gameplay : BaseGameplay
     void SetAsDragable(GameObject BasePlane)
     {
         GameObject Dragable = Instantiate(BasePlane, DragablePlaneContainer.transform);
-        // Dragable.GetComponent<Draggable>().isDraggable = true;
+        Dragable.GetComponent<Draggable>().isLocked = false;
 
         BasePlane.GetComponent<CanvasGroup>().alpha = 0.0f;
-        // BasePlane.GetComponent<SlotItem>().isActive = true;
+        BasePlane.GetComponent<DraggableSlot>().relatedDraggable = Dragable.GetComponent<Draggable>();
     }
 
     void GeneratePlaneToCompare()
