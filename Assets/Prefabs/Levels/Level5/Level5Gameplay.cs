@@ -28,7 +28,7 @@ public class Level5Gameplay : BaseGameplay
     /// <para>[2] One</para>
     /// </summary>
     private List<string> currentQuestion;
-    private int currentQuestionIndex = 0;
+    private int currentQuestionIndex = 4;
     private LevelSprite currentQuestionSpriteRef;
     private LevelSprite currentQuestionSprite;
     private List<NumberBlock> numberBlocks = new List<NumberBlock>();
