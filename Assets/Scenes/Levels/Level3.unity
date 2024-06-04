@@ -366,11 +366,11 @@ RectTransform:
   m_Father: {fileID: 1011043504}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 546, y: 1659}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 171, y: 2034}
   m_SizeDelta: {x: 750, y: 750}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &78313451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,6 +445,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6012958891f77145ac71c2be52320f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LockAtFirst: 0
+  maximumChildCount: 5
+  relatedDraggable: {fileID: 0}
   OnDropItem:
     m_PersistentCalls:
       m_Calls:
@@ -1462,7 +1465,7 @@ PrefabInstance:
       objectReference: {fileID: 1011043505}
     - target: {fileID: -4518936348108264121, guid: 6d2f8840e03381f4da4a8e8fe5d98b77, type: 3}
       propertyPath: questions.Array.data[5].questionString
-      value: 0.25;0.25;1/4
+      value: 0.25;0.25;3/4
       objectReference: {fileID: 0}
     - target: {fileID: -4518936348108264121, guid: 6d2f8840e03381f4da4a8e8fe5d98b77, type: 3}
       propertyPath: questions.Array.data[6].questionSprite
@@ -1470,7 +1473,7 @@ PrefabInstance:
       objectReference: {fileID: 1011043505}
     - target: {fileID: -4518936348108264121, guid: 6d2f8840e03381f4da4a8e8fe5d98b77, type: 3}
       propertyPath: questions.Array.data[6].questionString
-      value: 0.2;0.4;2/5
+      value: 0.2;0.4;3/5
       objectReference: {fileID: 0}
     - target: {fileID: -4518936348108264121, guid: 6d2f8840e03381f4da4a8e8fe5d98b77, type: 3}
       propertyPath: questions.Array.data[7].questionSprite
@@ -1478,7 +1481,7 @@ PrefabInstance:
       objectReference: {fileID: 1011043505}
     - target: {fileID: -4518936348108264121, guid: 6d2f8840e03381f4da4a8e8fe5d98b77, type: 3}
       propertyPath: questions.Array.data[7].questionString
-      value: 0.2;0.8;4/5
+      value: 0.2;0.8;1/5
       objectReference: {fileID: 0}
     - target: {fileID: -4518936348108264121, guid: 6d2f8840e03381f4da4a8e8fe5d98b77, type: 3}
       propertyPath: OnFail.m_PersistentCalls.m_Calls.Array.size
@@ -7759,11 +7762,11 @@ RectTransform:
   m_Father: {fileID: 1011043504}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 546, y: 839}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 171, y: 1214}
   m_SizeDelta: {x: 750, y: 750}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &2068923974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7857,6 +7860,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6012958891f77145ac71c2be52320f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  LockAtFirst: 0
+  maximumChildCount: 5
+  relatedDraggable: {fileID: 0}
   OnDropItem:
     m_PersistentCalls:
       m_Calls:

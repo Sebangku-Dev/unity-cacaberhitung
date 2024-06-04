@@ -7,9 +7,10 @@ using UnityEngine.UI;
 public class DraggableSlot : MonoBehaviour, IDropHandler
 {
     [SerializeField] private bool LockAtFirst;
+    [SerializeField] private int maximumChildCount = 1;
     [SerializeField] public Draggable relatedDraggable;
 
-    private bool isLocked;
+    private bool isLocked = false;
 
     public UnityEvent OnDropItem;
 
@@ -23,25 +24,24 @@ public class DraggableSlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
-        if (isLocked)
+        if (!isLocked)
         {
-            if (relatedDraggable != null)
+            if (relatedDraggable != null && !(relatedDraggable == eventData.pointerDrag.gameObject?.GetComponent<Draggable>())) return;
+
+            // One slot for one child
+            if (transform.childCount <= maximumChildCount)
             {
-                // One slot for one child
-                if (transform.childCount == 0 && relatedDraggable == eventData.pointerDrag.gameObject.GetComponent<Draggable>())
-                {
-                    GameObject dropped = eventData.pointerDrag;
-                    Draggable draggableItem = dropped.GetComponent<Draggable>();
+                GameObject dropped = eventData.pointerDrag;
+                Draggable draggableItem = dropped.GetComponent<Draggable>();
 
-                    // Cancel drag and drop if draggable is locked
-                    if (draggableItem.isLocked) return;
+                // Cancel drag and drop if draggable is locked
+                if (draggableItem.isLocked) return;
 
-                    if (!draggableItem.isNotSnapped)
-                        draggableItem.parentAfterDrag = transform;
+                if (!draggableItem.isNotSnapped)
+                    draggableItem.parentAfterDrag = transform;
 
-                    if (draggableItem.parentBeforeDrag != transform)
-                        OnDropItem?.Invoke();
-                }
+                if (draggableItem.parentBeforeDrag != transform)
+                    OnDropItem?.Invoke();
             }
         }
     }

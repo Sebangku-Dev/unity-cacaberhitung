@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -11,7 +8,8 @@ public class MultipleDraggableSlot : MonoBehaviour, IDropHandler
 
     private void Awake()
     {
-        Draggable.OnItemBeginDrag += UnlockDraggableRaycast;
+        Draggable.OnItemBeginDrag += LockDraggableRaycast;
+        Draggable.OnItemEndDrag += UnlockDraggableRaycast;
     }
 
     private void Start()
@@ -36,14 +34,30 @@ public class MultipleDraggableSlot : MonoBehaviour, IDropHandler
 
     private void OnDestroy()
     {
-        Draggable.OnItemBeginDrag -= UnlockDraggableRaycast;
+        Draggable.OnItemBeginDrag -= LockDraggableRaycast;
+        Draggable.OnItemEndDrag -= UnlockDraggableRaycast;
     }
 
-    private void UnlockDraggableRaycast()
+    private void LockDraggableRaycast()
     {
+        GetComponent<Image>().raycastTarget = true;
         foreach (var draggableSlot in draggableSlots)
         {
-            draggableSlot.transform.GetChild(0).GetComponent<Image>().raycastTarget = false;
+            if (draggableSlot.transform.childCount > 0)
+            {
+                draggableSlot.transform.GetChild(0).GetComponent<Image>().raycastTarget = false;
+            }
+        }
+    }
+    private void UnlockDraggableRaycast()
+    {
+        GetComponent<Image>().raycastTarget = false;
+        foreach (var draggableSlot in draggableSlots)
+        {
+            if (draggableSlot.transform.childCount > 0)
+            {
+                draggableSlot.transform.GetChild(0).GetComponent<Image>().raycastTarget = true;
+            }
         }
     }
 }
