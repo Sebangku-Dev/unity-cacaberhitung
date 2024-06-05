@@ -3,14 +3,19 @@ using System.Threading.Tasks;
 
 public class RevealAnimation : BaseAnimation, IAnimate
 {
-    [SerializeField] Vector3 startingLocation;
-    [SerializeField] Direction direction;
+    [SerializeField] Vector3 delta;
 
-    private Vector3 currentPosition;
+    private void Awake()
+    {
+        // Set initial state
+        transform.LeanMoveLocal(transform.localPosition + delta, 0f);
+    }
 
     private void Start()
     {
+
         if (isAnimateOnLoad) Load();
+
     }
 
     public void Load()
@@ -18,10 +23,7 @@ public class RevealAnimation : BaseAnimation, IAnimate
 
         gameObject.SetActive(true);
 
-        currentPosition = transform.position;
-        transform.position = startingLocation;
-
-        transform.LeanMoveLocalY(currentPosition.y, duration).setEaseOutExpo();
+        transform.LeanMoveLocal(transform.localPosition - delta, duration).setEaseOutExpo().setDelay(delay);
 
         if (isAnimateOnClose)
         {
@@ -32,7 +34,7 @@ public class RevealAnimation : BaseAnimation, IAnimate
     public void Close()
     {
 
-        int id = LeanTween.moveLocalY(gameObject, startingLocation.y, duration).id;
+        int id = transform.LeanMoveLocal(transform.localPosition + delta, duration).id;
         LTDescr d = LeanTween.descr(id);
 
         if (d != null)
