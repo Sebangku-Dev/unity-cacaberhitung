@@ -93,7 +93,7 @@ public class Level6Gameplay : BaseGameplay
         // Wait for a sec and delay answer to prevent user to access it
         await Task.WhenAll(new Task[] { Task.Delay(1500), DelayAnswer(2000) });
 
-        if (state < 99)
+        if (state < FibSeqFinishAtState)
         {
             // change gameplay index
             state++;
@@ -317,7 +317,7 @@ public class Level6Gameplay : BaseGameplay
         else if(count==1) return SecondNumber;
         else
         {
-             for(int i = 2; i < count; i++)
+             for(int i = 2; i <= count; i++)
                 {
                     fib = FirstNumber + SecondNumber;
                     FirstNumber = SecondNumber;

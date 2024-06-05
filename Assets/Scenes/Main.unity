@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18669656, g: 0.42571095, b: 0.64493835, a: 1}
+  m_IndirectSpecularColor: {r: 0.18670511, g: 0.42570668, b: 0.6447095, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -32786,6 +32786,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -660386313317340835, guid: 8c4d3ef8b09307242ba5ffcbf2681c6e, type: 3}
+      propertyPath: MissionTitle
+      value: 
+      objectReference: {fileID: 396469199}
+    - target: {fileID: -660386313317340835, guid: 8c4d3ef8b09307242ba5ffcbf2681c6e, type: 3}
+      propertyPath: MissionDetail
+      value: 
+      objectReference: {fileID: 1309105651}
     - target: {fileID: 5473991615343479977, guid: 8c4d3ef8b09307242ba5ffcbf2681c6e, type: 3}
       propertyPath: m_Name
       value: Level Manager
