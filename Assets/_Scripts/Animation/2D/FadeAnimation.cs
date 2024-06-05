@@ -28,7 +28,7 @@ public class FadeAnimation : BaseAnimation, IAnimate
     public void Close()
     {
         transform.localScale = Vector3.one;
-        int id = LeanTween.alpha(gameObject, 0f, duration).id;
+        int id = canvasGroup.LeanAlpha(0f, duration).id;
         LTDescr d = LeanTween.descr(id);
 
         if (d != null)

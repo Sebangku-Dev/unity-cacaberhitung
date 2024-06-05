@@ -31,10 +31,13 @@ public class CacaHintAnimation : BaseAnimation, IAnimate
         int id = transform.LeanMoveLocalY(transform.localPosition.y + -500, duration).setEaseInOutQuart().setDelay(delay).id;
         LTDescr d = LeanTween.descr(id);
 
+        panelQuestion.transform.LeanScale(Vector3.zero, duration).setEaseInOutQuart().setDelay(delay + duration);
+
         if (d != null)
         {
             d.setOnComplete(() => gameObject.SetActive(false)).setEase(LeanTweenType.easeInOutQuart).setDelay(delay);
         }
+
     }
 
 }
