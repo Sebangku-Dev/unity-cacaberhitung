@@ -1,7 +1,7 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class Plate : BaseAnimation
+public class Plate : BaseAnimation, IAnimate
 {
     [Header("Main")]
     [SerializeField] Direction animationDirection;

@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
 using UnityEngine;
 
-public class PopupAnimation : BaseAnimation
+public class PopupAnimation : BaseAnimation, IAnimate
 {
     private void Start()
     {
@@ -11,6 +10,7 @@ public class PopupAnimation : BaseAnimation
 
     public void Load()
     {
+
         gameObject.SetActive(true);
 
         transform.localScale = Vector3.zero;
@@ -24,6 +24,7 @@ public class PopupAnimation : BaseAnimation
 
     public void Close()
     {
+
         if (transform) transform.localScale = Vector3.one;
         int id = LeanTween.scale(gameObject, Vector3.zero, duration - 0.1f).id;
         LTDescr d = LeanTween.descr(id);

@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MultipleDraggableSlot : MonoBehaviour, IDropHandler
 {
-    [SerializeField] DraggableSlot[] draggableSlots;
+    [SerializeField] public DraggableSlot[] draggableSlots;
+
+    [SerializeField] private UnityEvent OnDropItem;
 
     private void Awake()
     {
@@ -30,6 +33,8 @@ public class MultipleDraggableSlot : MonoBehaviour, IDropHandler
                 eventData.pointerDrag.gameObject.GetComponent<Draggable>().parentAfterDrag = draggableSlot.transform;
             }
         }
+
+        OnDropItem?.Invoke();
     }
 
     private void OnDestroy()

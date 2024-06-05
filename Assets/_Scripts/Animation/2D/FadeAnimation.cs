@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class FadeAnimation : BaseAnimation
+public class FadeAnimation : BaseAnimation, IAnimate
 {
     [Header("Fade")]
     [SerializeField] private CanvasGroup canvasGroup;
