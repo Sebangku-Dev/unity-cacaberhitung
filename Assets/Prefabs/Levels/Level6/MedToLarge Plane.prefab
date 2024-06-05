@@ -104,7 +104,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isNotSnapped: 0
-  isDestroyable: 1
+  isDestroyable: 0
   isLocked: 1
   parentAfterDrag: {fileID: 0}
   parentBeforeDrag: {fileID: 0}
@@ -121,7 +121,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LockAtFirst: 0
+  maximumChildCount: 1
   relatedDraggable: {fileID: 0}
+  isDisabled: 1
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []

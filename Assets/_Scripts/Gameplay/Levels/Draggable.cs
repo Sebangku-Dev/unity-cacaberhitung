@@ -76,8 +76,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         float minX = (canvasRectTransform.rect.width * -rectTransform.pivot.x) + (rectTransform.rect.width * rectTransform.pivot.x);
         float maxX = (canvasRectTransform.rect.width * (1 - rectTransform.pivot.x)) - (rectTransform.rect.width * (1 - rectTransform.pivot.x));
 
-        Debug.Log(minX);
-        Debug.Log(maxX);
+        // Debug.Log(minX);
+        // Debug.Log(maxX);
 
         // Perbaikan: Menggunakan pivot.y untuk menghitung minY dan maxY
         float minY = (canvasRectTransform.rect.height * -rectTransform.pivot.y) + (rectTransform.rect.height * rectTransform.pivot.y);

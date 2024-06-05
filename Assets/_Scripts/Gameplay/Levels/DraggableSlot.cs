@@ -12,6 +12,8 @@ public class DraggableSlot : MonoBehaviour, IDropHandler
 
     private bool isLocked = false;
 
+    [SerializeField] public bool isDisabled;
+
     public UnityEvent OnDropItem;
 
     private void Start()
@@ -24,6 +26,8 @@ public class DraggableSlot : MonoBehaviour, IDropHandler
 
     public void OnDrop(PointerEventData eventData)
     {
+        if(isDisabled) return;
+
         if (!isLocked)
         {
             if (relatedDraggable != null && !(relatedDraggable == eventData.pointerDrag.gameObject?.GetComponent<Draggable>())) return;
@@ -49,13 +53,13 @@ public class DraggableSlot : MonoBehaviour, IDropHandler
     public void Unlock()
     {
         isLocked = false;
-        GetComponent<Image>().raycastTarget = true;
+        gameObject.GetComponent<Image>().raycastTarget = true;
     }
 
     public void Lock()
     {
         isLocked = true;
-        GetComponent<Image>().raycastTarget = false;
+        gameObject.GetComponent<Image>().raycastTarget = false;
     }
 
     protected bool IsLocked() => !GetComponent<Image>().raycastTarget;

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
+using UnityEngine.UI;
 
 public enum PlaneStepType { Compare, Dot, BasicSeq, OddSeq, EvenSeq, AddSeq, Fibonacci }
 
@@ -11,9 +12,6 @@ public class Level6Gameplay : BaseGameplay
 {
     [SerializeField] GameObject[] Planes;
     [SerializeField] GameObject PlaneContainer, DragablePlaneContainer, BasicPlane, Dot;
-    [SerializeField] Canvas canvas;
-    GameObject DotContainer;
-    TextMeshProUGUI TextNumber;
     bool IsToLargest;
 
     [SerializeField] int CompareFinishAtState, DotFinishAtState, BasicSeqFinishAtState, OddSeqFinishAtState, EvenSeqFinishAtState, AddSeqFinishAtState, FibSeqFinishAtState;
@@ -60,6 +58,7 @@ public class Level6Gameplay : BaseGameplay
         base.HandlePrepare();
 
         GenerateIsToLargestOrSmallest();
+        ResetPlane();
         HandleStepState(state < CompareFinishAtState ? PlaneStepType.Compare : state < DotFinishAtState ? PlaneStepType.Dot : state < BasicSeqFinishAtState ? PlaneStepType.BasicSeq : state < OddSeqFinishAtState ? PlaneStepType.OddSeq : state < EvenSeqFinishAtState ? PlaneStepType.EvenSeq : state < AddSeqFinishAtState ? PlaneStepType.AddSeq : PlaneStepType.Fibonacci);
 
         await DelayAnswer(2000f);
@@ -159,11 +158,33 @@ public class Level6Gameplay : BaseGameplay
 
     #region User Interaction
 
+    public void OnCheckPlane()
+    {
+        for (int i = 0; i < PlaneContainer.transform.childCount; i++)
+        {
+            if (!Mathf.Approximately(PlaneContainer.transform.GetChild(i).gameObject.GetComponent<CanvasGroup>().alpha, 1.0f))
+            {
+                return;
+            }
+        }
 
+        ChangeState(LevelState.Passed);
+    }
 
     #endregion
 
     #region Utilities
+
+    void ResetPlane()
+    {
+        if (PlaneContainer.transform.childCount > 0)
+        {
+            for (int i = 0; i < PlaneContainer.transform.childCount; i++)
+            {
+                Destroy(PlaneContainer.transform.GetChild(i).gameObject);
+            }
+        }
+    }
 
     void HandleStepState(PlaneStepType step)
     {
@@ -172,19 +193,8 @@ public class Level6Gameplay : BaseGameplay
             case PlaneStepType.Compare:
                 GeneratePlaneToCompare();
                 break;
-            case PlaneStepType.Dot:
-                break;
-            case PlaneStepType.BasicSeq:
-                break;
-            case PlaneStepType.OddSeq:
-                break;
-            case PlaneStepType.EvenSeq:
-                break;
-            case PlaneStepType.AddSeq:
-                break;
-            case PlaneStepType.Fibonacci:
-                break;
             default:
+                GenerateBasicPlane(step);
                 break;
         }
     }
@@ -200,12 +210,22 @@ public class Level6Gameplay : BaseGameplay
         Dragable.GetComponent<Draggable>().isLocked = false;
 
         BasePlane.GetComponent<CanvasGroup>().alpha = 0.0f;
+        BasePlane.GetComponent<DraggableSlot>().isDisabled = false;
         BasePlane.GetComponent<DraggableSlot>().relatedDraggable = Dragable.GetComponent<Draggable>();
+        BasePlane.GetComponent<DraggableSlot>().OnDropItem.AddListener(() => OnDraggableDropped(BasePlane, Dragable));
+    }
+
+    public void OnDraggableDropped(GameObject basePlane, GameObject draggable)
+    {
+        basePlane.GetComponent<CanvasGroup>().alpha = 1.0f;
+        Destroy(draggable);
+
+        OnCheckPlane();
     }
 
     void GeneratePlaneToCompare()
     {
-        int index = 0, blankCount = 0;
+        int blankCount = 0;
         int i = IsToLargest ? 0 : Planes.Length - 1;
         int maxBlank = UnityEngine.Random.Range(1, 3);
 
@@ -221,9 +241,90 @@ public class Level6Gameplay : BaseGameplay
                 blankCount++;
             }
 
+            if (blankCount == 0 && i == (IsToLargest ? Planes.Length - 1 : 0)) SetAsDragable(plane);
+
             i += (IsToLargest ? 1 : -1);
-            index++;
         }
+    }
+
+    void GenerateBasicPlane(PlaneStepType step)
+    {
+        int blankCount = 0, maxBlank = UnityEngine.Random.Range(1, 3);
+
+        int initNumber = UnityEngine.Random.Range(IsToLargest ? 1 : 5, IsToLargest ? 17 : 21);
+
+        for (int i = 0; i < 5; i++)
+        {
+            GameObject plane = Instantiate(BasicPlane, PlaneContainer.transform);
+
+            switch (step)
+            {
+                case PlaneStepType.Dot:
+                    GenerateDot(i, plane);
+                    break;
+                default:
+                    GenerateNumber(step, i, initNumber, plane);
+                    break;
+            }
+
+            bool isBlankPlane = UnityEngine.Random.Range(0, 2) == 0;
+
+            if (isBlankPlane && blankCount < maxBlank)
+            {
+                SetAsDragable(plane);
+                blankCount++;
+            }
+        }
+    }
+
+    void GenerateDot(int index, GameObject plane)
+    {
+        for (int i = IsToLargest ? 0 : 5; IsToLargest ? i <= index : i > index; i += IsToLargest ? 1 : -1)
+        {
+            Instantiate(Dot, plane.transform.GetChild(1));
+        }
+    }
+
+    void GenerateNumber(PlaneStepType step, int index, int initNumber, GameObject plane)
+    {
+        switch (step)
+        {
+            case PlaneStepType.BasicSeq:
+                plane.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = (initNumber + index).ToString();
+                break;
+            case PlaneStepType.OddSeq:
+                plane.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = ((initNumber % 2 == 1 ? initNumber : initNumber + 1) + index * 2).ToString();
+                break;
+            case PlaneStepType.EvenSeq:
+                plane.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = ((initNumber % 2 == 0 ? initNumber : initNumber + 1) + index * 2).ToString();
+                break;
+            case PlaneStepType.AddSeq:
+                plane.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = (initNumber + (index * 2)).ToString();
+                break;
+            case PlaneStepType.Fibonacci:
+                int fib = FibonacciSeries(index, initNumber);
+                plane.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text = fib.ToString();
+                break;
+            default:
+                break;
+        }
+    }
+
+    int FibonacciSeries(int count, int initNumber)
+    {
+        int fib = 0, FirstNumber = 0, SecondNumber = initNumber;
+        if (count == 0) return FirstNumber;
+        else if(count==1) return SecondNumber;
+        else
+        {
+             for(int i = 2; i < count; i++)
+                {
+                    fib = FirstNumber + SecondNumber;
+                    FirstNumber = SecondNumber;
+                    SecondNumber = fib;
+                }
+        }
+        return fib;
     }
 
     #endregion
