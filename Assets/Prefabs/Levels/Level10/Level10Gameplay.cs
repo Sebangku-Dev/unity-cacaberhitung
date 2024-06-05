@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 
-public class Level5Gameplay : BaseGameplay
+public class Level10Gameplay : BaseGameplay
 {
     [System.Serializable]
     public class Questions
@@ -14,24 +14,28 @@ public class Level5Gameplay : BaseGameplay
         public LevelSprite questionSprite;
     }
 
-    [Header("Level3")]
+    [Header("Level 10")]
     [SerializeField] private List<Questions> questions;
+    [SerializeField] CharacterHintAnimation caca;
+    [SerializeField] CharacterHintAnimation otherCharacter;
+    [SerializeField] PanAnimation background;
+    [SerializeField] LevelSprite draggableSlots;
     [SerializeField] LevelSprite hint;
-    [SerializeField] DraggableSlot hundredDraggableSlot, tenDraggabeSlot, oneDraggableSlot;
-    [SerializeField] CacaHintAnimation caca;
 
     /// <summary>
     /// Format:
     /// <para>[0] Question</para> 
-    /// <para>[1] Hundred</para>
-    /// <para>[2] Ten</para>
-    /// <para>[2] One</para>
+    /// <para>[1] <see cref="ArithmethicBlock"/> (0)</para>
+    /// <para>[2] <see cref="ArithmethicBlock"/> (1)</para>
+    /// <para>[3] <see cref="ArithmethicBlock"/> (2)</para>
+    /// <para>[4] <see cref="ArithmethicBlock"/> (3)</para>
+    /// <para>[5] <see cref="ArithmethicBlock"/> (4)</para>
     /// </summary>
     private List<string> currentQuestion;
     private int currentQuestionIndex = 0;
     private LevelSprite currentQuestionSpriteRef;
     private LevelSprite currentQuestionSprite;
-    private List<NumberBlock> numberBlocks = new List<NumberBlock>();
+    private List<ArithmethicBlock> arithmethicBlocks = new List<ArithmethicBlock>();
 
     #region MonoBehaviour
     protected override void Awake()
@@ -75,27 +79,38 @@ public class Level5Gameplay : BaseGameplay
     {
         base.HandlePrepare();
 
+        // Generate everything: question and hint sprite, draggable, slot, etc
         GenerateQuestionAndSprites();
-        ShowSprite(hint);
 
         // Invoke OnPrepare
         OnPrepare?.Invoke();
 
+        // In-game cutscene
         if (currentQuestionIndex == 0)
         {
             caca.Load();
+            otherCharacter.Load();
             await LockNumberBlocks(8000);
+            background.Pan(420);
+            await Task.Delay(1000);
+
         }
         else
         {
             await LockNumberBlocks(2000);
         }
 
+        // Show question sprites and hint
+        ShowSprite(hint);
+        ShowSprite(currentQuestionSprite);
+        ShowSprite(draggableSlots);
+
         // Prepare Timer
         StartTimer();
 
         ChangeState(LevelState.UserInteraction);
     }
+
 
     protected override void HandleUserInteraction()
     {
@@ -120,9 +135,9 @@ public class Level5Gameplay : BaseGameplay
         HideSprite(hint);
 
         // Hide all number blocks
-        foreach (var numberBlock in numberBlocks)
+        foreach (var arithmethicBlock in arithmethicBlocks)
         {
-            numberBlock.GetComponent<IAnimate>().Close();
+            arithmethicBlock.GetComponent<IAnimate>().Close();
         }
 
         // Wait for passed animation
@@ -187,70 +202,7 @@ public class Level5Gameplay : BaseGameplay
     }
     #endregion
 
-    #region Utilities
-    private void GenerateQuestionAndSprites()
-    {
-        currentQuestion = questions[currentQuestionIndex].questionString.Split(";").ToList();
-        currentQuestionSpriteRef = questions[currentQuestionIndex].questionSprite;
-
-        currentQuestionSprite = GenerateSprite(currentQuestionSpriteRef, currentQuestionSpriteRef.transform.parent, currentQuestionSpriteRef.transform.position);
-
-        // Set question text
-        // Set specific draggable slot to each number block
-        hint.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[0];
-        foreach (var numberBlock in currentQuestionSprite.GetComponentsInChildren<NumberBlock>())
-        {
-            if (numberBlock.numberBlockType == NumberBlock.Type.Hundred)
-            {
-                numberBlock.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[1];
-                hundredDraggableSlot.relatedDraggable = numberBlock.GetComponent<Draggable>();
-            }
-
-            if (numberBlock.numberBlockType == NumberBlock.Type.Ten)
-            {
-                numberBlock.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[2];
-                tenDraggabeSlot.relatedDraggable = numberBlock.GetComponent<Draggable>();
-            }
-
-            if (numberBlock.numberBlockType == NumberBlock.Type.One)
-            {
-                numberBlock.GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[3];
-                oneDraggableSlot.relatedDraggable = numberBlock.GetComponent<Draggable>();
-            }
-
-            numberBlocks.Add(numberBlock);
-        }
-
-        ShowSprite(currentQuestionSprite);
-    }
-
-    private void DestroyAllNumberBlocks()
-    {
-        if (hundredDraggableSlot.transform.childCount > 0) Destroy(hundredDraggableSlot.transform.GetChild(0).gameObject);
-        if (tenDraggabeSlot.transform.childCount > 0) Destroy(tenDraggabeSlot.transform.GetChild(0).gameObject);
-        if (oneDraggableSlot.transform.childCount > 0) Destroy(oneDraggableSlot.transform.GetChild(0).gameObject);
-
-        numberBlocks.RemoveAll((NumberBlock _) => true);
-    }
-
-    private async Task LockNumberBlocks(int delayMs)
-    {
-        foreach (var numberBlock in numberBlocks)
-        {
-            numberBlock.SetAlpha(0.5f);
-            numberBlock.GetComponent<Draggable>().isLocked = true;
-        }
-
-        await Task.Delay(delayMs);
-
-        foreach (var numberBlock in numberBlocks)
-        {
-            numberBlock.SetAlpha(1f);
-            numberBlock.GetComponent<Draggable>().isLocked = false;
-        }
-    }
-
-
+    #region User Interaction
     /// <summary>
     /// Used by <see cref="MultipleDraggableSlot"/>
     /// </summary>
@@ -264,6 +216,59 @@ public class Level5Gameplay : BaseGameplay
             ChangeState(LevelState.Passed);
         }
     }
+    #endregion
+
+
+    #region Utilities
+    private void GenerateQuestionAndSprites()
+    {
+        currentQuestion = questions[currentQuestionIndex].questionString.Split(";").ToList();
+        currentQuestionSpriteRef = questions[currentQuestionIndex].questionSprite;
+
+        currentQuestionSprite = GenerateSprite(currentQuestionSpriteRef, currentQuestionSpriteRef.transform.parent, currentQuestionSpriteRef.transform.position);
+
+        // Set question text
+        // (Not recommended due to too many specified nested children)
+        hint
+        .GetComponent<CharacterHintAnimation>()
+        .child
+        .GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[0];
+
+        // Draggable slots and draggables must have the same count
+        for (int i = 0; i < currentQuestionSprite.transform.childCount; i++)
+        {
+            currentQuestionSprite.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text = currentQuestion[i + 1];
+            arithmethicBlocks.Add(currentQuestionSprite.transform.GetChild(i).GetComponent<ArithmethicBlock>());
+            // draggableSlots.transform.GetChild(i).GetComponent<DraggableSlot>().relatedDraggable = arithmethicBlocks[i].GetComponent<Draggable>();
+        }
+    }
+
+    private void DestroyAllNumberBlocks()
+    {
+        // if (hundredDraggableSlot.transform.childCount > 0) Destroy(hundredDraggableSlot.transform.GetChild(0).gameObject);
+        // if (tenDraggabeSlot.transform.childCount > 0) Destroy(tenDraggabeSlot.transform.GetChild(0).gameObject);
+        // if (oneDraggableSlot.transform.childCount > 0) Destroy(oneDraggableSlot.transform.GetChild(0).gameObject);
+
+        arithmethicBlocks.RemoveAll((ArithmethicBlock _) => true);
+    }
+
+    private async Task LockNumberBlocks(int delayMs)
+    {
+        // foreach (var arithmethicBlock in arithmethicBlocks)
+        // {
+        //     arithmethicBlock.SetAlpha(0.5f);
+        //     arithmethicBlock.GetComponent<Draggable>().isLocked = true;
+        // }
+
+        await Task.Delay(delayMs);
+
+        // foreach (var arithmethicBlock in arithmethicBlocks)
+        // {
+        //     arithmethicBlock.SetAlpha(1f);
+        //     arithmethicBlock.GetComponent<Draggable>().isLocked = false;
+        // }
+    }
+
 
     #endregion
 

@@ -1,23 +1,13 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class NumberBlock : BaseAnimation, IAnimate
+public class ArithmethicBlock : BaseAnimation, IAnimate
 {
-    [Serializable]
-    public enum Type
-    {
-        Hundred, Ten, One
-    }
-
     [Header("Main")]
-    [SerializeField] public Type numberBlockType;
 
-    private CanvasGroup canvasGroup;
-
-    private void Awake()
-    {
-        canvasGroup = gameObject.GetComponent<CanvasGroup>();
-    }
+    [SerializeField] private CanvasGroup canvasGroup;
 
     public void SetAlpha(float alphaAmount)
     {
