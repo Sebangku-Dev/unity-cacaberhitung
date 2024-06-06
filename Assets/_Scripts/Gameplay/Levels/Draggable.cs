@@ -61,7 +61,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (isLocked) return;
 
-        OnItemEndDrag?.Invoke();
 
         transform.SetParent(parentAfterDrag);
 
@@ -70,6 +69,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (GetComponent<CanvasGroup>() != null)
             GetComponent<CanvasGroup>().blocksRaycasts = true;
 
+        OnItemEndDrag?.Invoke();
+        
         if (isDestroyable && transform.parent != parentBeforeDrag && !isLocked)
         {
             Destroy(gameObject);

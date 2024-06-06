@@ -8609,7 +8609,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LockAtFirst: 0
-  maximumChildCount: 2
+  maximumChildCount: 1
   relatedDraggable: {fileID: 0}
   isDisabled: 0
   OnDropItem:
@@ -8980,8 +8980,8 @@ PrefabInstance:
       objectReference: {fileID: 1428040600}
     - target: {fileID: -3263229768541552129, guid: 1c07b0bf544b01b4e8b96bbbf442d3e3, type: 3}
       propertyPath: questions.Array.data[1].questionString
-      value: Adit membeli tiga telur, lalu membeli lagi tiga telur lagi sehingga
-        berjumlah enam telur;3;+;3;=;6
+      value: Adit membeli dua telur, lalu membeli lagi tiga telur lagi sehingga berjumlah
+        enam telur;2;+;3;=;6
       objectReference: {fileID: 0}
     - target: {fileID: -3263229768541552129, guid: 1c07b0bf544b01b4e8b96bbbf442d3e3, type: 3}
       propertyPath: OnFail.m_PersistentCalls.m_Calls.Array.size

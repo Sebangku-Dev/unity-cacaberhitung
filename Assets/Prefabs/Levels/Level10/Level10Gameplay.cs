@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
+using Unity.VisualScripting;
 
 public class Level10Gameplay : BaseGameplay
 {
@@ -43,6 +44,7 @@ public class Level10Gameplay : BaseGameplay
         base.Awake();
         OnBeforeLevelStateChanged += OnBeforeStateChanged;
         OnAfterLevelStateChanged += OnAfterStateChanged;
+        Draggable.OnItemEndDrag += ArithmethicBlockChecker;
     }
 
     private void Start()
@@ -60,6 +62,7 @@ public class Level10Gameplay : BaseGameplay
     {
         OnBeforeLevelStateChanged -= OnBeforeStateChanged;
         OnAfterLevelStateChanged -= OnAfterStateChanged;
+        Draggable.OnItemEndDrag -= ArithmethicBlockChecker;
     }
     #endregion
 
@@ -97,7 +100,7 @@ public class Level10Gameplay : BaseGameplay
         }
         else
         {
-            await LockNumberBlocks(2000);
+            await LockNumberBlocks(500);
         }
 
         // Show question sprites and hint
@@ -133,6 +136,7 @@ public class Level10Gameplay : BaseGameplay
 
         OnPassed?.Invoke();
         HideSprite(hint);
+        HideSprite(draggableSlots);
 
         // Hide all number blocks
         foreach (var arithmethicBlock in arithmethicBlocks)
@@ -141,8 +145,7 @@ public class Level10Gameplay : BaseGameplay
         }
 
         // Wait for passed animation
-
-        await LockNumberBlocks(3000);
+        await LockNumberBlocks(2000);
 
         DestroySprite(currentQuestionSprite); // Destroy the number blocks envelope
         DestroyAllNumberBlocks(); // Destroy the actual number blocks
@@ -203,18 +206,37 @@ public class Level10Gameplay : BaseGameplay
     #endregion
 
     #region User Interaction
-    /// <summary>
-    /// Used by <see cref="MultipleDraggableSlot"/>
-    /// </summary>
-    public async void NumberBlockChecker()
-    {
-        if (currentQuestionSprite.transform.childCount < 1)
-        {
-            // Wait draggable object until it snapped
-            await Task.Delay(100);
 
-            ChangeState(LevelState.Passed);
+    private bool[] isAnswerTrues = new bool[5];
+    private bool isFulfilled = false;
+
+    /// <summary>
+    /// Used in each <see cref="DraggableSlot"/>
+    /// </summary>
+    public async void ArithmethicBlockChecker()
+    {
+        for (int i = 0; i < draggableSlots.transform.childCount; i++)
+        {
+            isAnswerTrues[i] = draggableSlots.transform.GetChild(i).GetComponent<DraggableSlot>()?.GetComponentInChildren<Draggable>()?.GetComponentInChildren<TextMeshProUGUI>()?.text == currentQuestion[i + 1];
         }
+
+        await Task.Delay(100);
+
+        // If draggables parent has no child then all must be fulfilled
+        isFulfilled = currentQuestionSprite.transform.childCount == 0;
+
+        if (isFulfilled)
+        {
+            if (!isAnswerTrues.Contains(false))
+            {
+                ChangeState(LevelState.Passed);
+            }
+            else
+            {
+                ChangeState(LevelState.Fail);
+            }
+        }
+
     }
     #endregion
 
@@ -243,30 +265,27 @@ public class Level10Gameplay : BaseGameplay
         }
     }
 
+
     private void DestroyAllNumberBlocks()
     {
-        // if (hundredDraggableSlot.transform.childCount > 0) Destroy(hundredDraggableSlot.transform.GetChild(0).gameObject);
-        // if (tenDraggabeSlot.transform.childCount > 0) Destroy(tenDraggabeSlot.transform.GetChild(0).gameObject);
-        // if (oneDraggableSlot.transform.childCount > 0) Destroy(oneDraggableSlot.transform.GetChild(0).gameObject);
-
         arithmethicBlocks.RemoveAll((ArithmethicBlock _) => true);
     }
 
     private async Task LockNumberBlocks(int delayMs)
     {
-        // foreach (var arithmethicBlock in arithmethicBlocks)
-        // {
-        //     arithmethicBlock.SetAlpha(0.5f);
-        //     arithmethicBlock.GetComponent<Draggable>().isLocked = true;
-        // }
+        foreach (var arithmethicBlock in arithmethicBlocks)
+        {
+            arithmethicBlock.SetAlpha(0.5f);
+            arithmethicBlock.GetComponent<Draggable>().isLocked = true;
+        }
 
         await Task.Delay(delayMs);
 
-        // foreach (var arithmethicBlock in arithmethicBlocks)
-        // {
-        //     arithmethicBlock.SetAlpha(1f);
-        //     arithmethicBlock.GetComponent<Draggable>().isLocked = false;
-        // }
+        foreach (var arithmethicBlock in arithmethicBlocks)
+        {
+            arithmethicBlock.SetAlpha(1f);
+            arithmethicBlock.GetComponent<Draggable>().isLocked = false;
+        }
     }
 
 
