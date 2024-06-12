@@ -14352,11 +14352,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4202130902894980, guid: 6910e2407cd484a42a0c2598114751a0, type: 3}
   m_PrefabInstance: {fileID: 317043046}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &317744304 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 254782480682418779, guid: cd729db36697e3a43b27770cd0b1cf64, type: 3}
-  m_PrefabInstance: {fileID: 1101203231314256339}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &321271032
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -24305,7 +24300,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 870881832}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &565537481
 PrefabInstance:
@@ -46416,32 +46411,6 @@ Transform:
   m_Father: {fileID: 701909670}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &1071849181 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 631343959190395105, guid: cd729db36697e3a43b27770cd0b1cf64, type: 3}
-  m_PrefabInstance: {fileID: 1101203231314256339}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1071849182
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 317744304}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 37468d6b07d1b954baf52f9b7e5be04e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1071890955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47020,7 +46989,7 @@ RectTransform:
   m_Children:
   - {fileID: 818262085}
   m_Father: {fileID: 870881832}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -56739,6 +56708,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4202130902894980, guid: 6910e2407cd484a42a0c2598114751a0, type: 3}
   m_PrefabInstance: {fileID: 1315115420}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1316654607 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3165899884358635438, guid: cd729db36697e3a43b27770cd0b1cf64, type: 3}
+  m_PrefabInstance: {fileID: 1101203231314256339}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1319438806
 PrefabInstance:
@@ -80843,7 +80817,7 @@ Transform:
   m_Children:
   - {fileID: 1794009362}
   m_Father: {fileID: 870881832}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1951415891
 MonoBehaviour:
@@ -87829,7 +87803,7 @@ PrefabInstance:
     - target: {fileID: 859796812115636908, guid: cd729db36697e3a43b27770cd0b1cf64, type: 3}
       propertyPath: animator
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1316654607}
     - target: {fileID: 859796812115636908, guid: cd729db36697e3a43b27770cd0b1cf64, type: 3}
       propertyPath: joystick
       value: 
@@ -87961,6 +87935,10 @@ PrefabInstance:
     - target: {fileID: 8867371907086617043, guid: cd729db36697e3a43b27770cd0b1cf64, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8971464546927987160, guid: cd729db36697e3a43b27770cd0b1cf64, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd729db36697e3a43b27770cd0b1cf64, type: 3}
@@ -88284,7 +88262,7 @@ PrefabInstance:
     - target: {fileID: 1796384139458504153, guid: d9094a735fc45ab46a63aaee7f3ac774, type: 3}
       propertyPath: m_LookAt
       value: 
-      objectReference: {fileID: 1071849181}
+      objectReference: {fileID: 0}
     - target: {fileID: 1796384139458504153, guid: d9094a735fc45ab46a63aaee7f3ac774, type: 3}
       propertyPath: m_Lens.FarClipPlane
       value: 5000
