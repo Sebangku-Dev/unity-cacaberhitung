@@ -43,6 +43,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         transform.SetAsLastSibling();
         image.raycastTarget = false;
 
+        if (GetComponent<CanvasGroup>() != null)
+            GetComponent<CanvasGroup>().blocksRaycasts = false;
+
         OnItemBeginDrag?.Invoke();
     }
 
@@ -58,12 +61,16 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (isLocked) return;
 
-        OnItemEndDrag?.Invoke();
 
         transform.SetParent(parentAfterDrag);
 
         image.raycastTarget = true;
 
+        if (GetComponent<CanvasGroup>() != null)
+            GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+        OnItemEndDrag?.Invoke();
+        
         if (isDestroyable && transform.parent != parentBeforeDrag && !isLocked)
         {
             Destroy(gameObject);
@@ -77,9 +84,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // Hitung batas-batas di mana objek bisa berada
         float minX = (canvasRectTransform.rect.width * -rectTransform.pivot.x) + (rectTransform.rect.width * rectTransform.pivot.x);
         float maxX = (canvasRectTransform.rect.width * (1 - rectTransform.pivot.x)) - (rectTransform.rect.width * (1 - rectTransform.pivot.x));
-
-        // Debug.Log(minX);
-        // Debug.Log(maxX);
 
         // Perbaikan: Menggunakan pivot.y untuk menghitung minY dan maxY
         float minY = (canvasRectTransform.rect.height * -rectTransform.pivot.y) + (rectTransform.rect.height * rectTransform.pivot.y);

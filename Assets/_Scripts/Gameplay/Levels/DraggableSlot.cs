@@ -25,28 +25,26 @@ public class DraggableSlot : MonoBehaviour, IDropHandler
     }
 
     public void OnDrop(PointerEventData eventData)
-    {
-        if(isDisabled) return;
+    {   
+        if (isDisabled || isLocked) return;
 
-        if (!isLocked)
+        if (relatedDraggable != null && !(relatedDraggable == eventData.pointerDrag.gameObject?.GetComponent<Draggable>())) return;
+
+        // One slot for one child
+        if (transform.childCount <= maximumChildCount)
         {
-            if (relatedDraggable != null && !(relatedDraggable == eventData.pointerDrag.gameObject?.GetComponent<Draggable>())) return;
+            GameObject dropped = eventData.pointerDrag;
+            Draggable draggableItem = dropped.GetComponent<Draggable>();
 
-            // One slot for one child
-            if (transform.childCount <= maximumChildCount)
-            {
-                GameObject dropped = eventData.pointerDrag;
-                Draggable draggableItem = dropped.GetComponent<Draggable>();
+            // Cancel drag and drop if draggable is locked
+            if (draggableItem.isLocked) return;
 
-                // Cancel drag and drop if draggable is locked
-                if (draggableItem.isLocked) return;
+            if (!draggableItem.isNotSnapped)
+                draggableItem.parentAfterDrag = transform;
 
-                if (!draggableItem.isNotSnapped)
-                    draggableItem.parentAfterDrag = transform;
+            if (draggableItem.parentBeforeDrag != transform)
+                OnDropItem?.Invoke();
 
-                if (draggableItem.parentBeforeDrag != transform)
-                    OnDropItem?.Invoke();
-            }
         }
     }
 
