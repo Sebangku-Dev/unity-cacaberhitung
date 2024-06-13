@@ -173,6 +173,8 @@ public class KnowledgeManager : MonoBehaviour
 
             NewKnowledgeObject.transform.position = savedPosition;
             OnKnowledgeSpawned();
+
+            UserManager.Instance.Save();
         }
         else TransformNewKnowledge();
     }
