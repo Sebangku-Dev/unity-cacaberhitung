@@ -10,8 +10,7 @@ jobs:
       fail-fast: false
       matrix:
         targetPlatform:
-          - Android # Build an Android .apk standalone app.
-          - WebGL # WebGL.
+          - Android
     steps:
       - uses: actions/checkout@v4
         with:
