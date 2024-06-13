@@ -16,15 +16,17 @@ MonoBehaviour:
   title: Bagi-Bagi Kue
   type: 0
   isUnlocked: 1
-  description: 
-  hint: 
+  description: Wahh, kuenya sepertinya sangat lezat. Ay, kita bagi kue tersebut jadi
+    beberapa potong!
+  hint: Kue-kue di meja itu sudah siap dimakan. Sebelum dimakan, kita potong dulu
+    yok kuenya!
   levelSprite: {fileID: 21300000, guid: ecb6aaada46c4c94195aa021daa18e0a, type: 3}
   levelSceneName: Level3
   playCount: 1
   maxTimeDuration: 30
   isSolved: 1
   isRightInTime: 0
-  isNoMistake: 1
+  isNoMistake: 0
   isToBePlayed: 0
   cutsceneClip: {fileID: 32900000, guid: 376b7546cfaf9834dad37e11fdc9b356, type: 3}
   marker: {fileID: 3380624938650010670, guid: 5c45a8b152da992459bdc65a48d4b5fd, type: 3}

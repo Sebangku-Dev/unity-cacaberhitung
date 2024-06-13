@@ -27,5 +27,5 @@ MonoBehaviour:
   isNoMistake: 0
   isToBePlayed: 0
   cutsceneClip: {fileID: 32900000, guid: 376b7546cfaf9834dad37e11fdc9b356, type: 3}
-  marker: {fileID: 2312203865247211626, guid: a78e72a3d49e1eb4e8d04a2671bca03c, type: 3}
+  marker: {fileID: 1788678150984240018, guid: 0bc433149ed3b8d499b9317516ddabd1, type: 3}
   nextLevel: {fileID: 11400000, guid: 856b084fd9d9259489528d4eacff50b5, type: 2}
