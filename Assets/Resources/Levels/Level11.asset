@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Level11
   m_EditorClassIdentifier: 
   id: 11
-  title: 
+  title: Kalahkan Pencuri
   type: 2
   isUnlocked: 0
-  description: 
-  hint: 
+  description: '-'
+  hint: '-'
   levelSprite: {fileID: 21300000, guid: d93e4df17a12f2c4f87456ce2acc3402, type: 3}
-  levelSceneName: 
+  levelSceneName: Level11
   playCount: 0
   maxTimeDuration: 30
   isSolved: 0

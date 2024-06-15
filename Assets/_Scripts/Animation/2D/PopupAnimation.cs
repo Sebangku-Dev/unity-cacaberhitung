@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PopupAnimation : BaseAnimation, IAnimate
 {
-    private void Start()
+    private void OnEnable()
     {
         if (isAnimateOnLoad) Load();
     }
