@@ -1364,7 +1364,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 296315390269177406, guid: 46b7ad6a802dc464fb3a326624519a01, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 296315390269177406, guid: 46b7ad6a802dc464fb3a326624519a01, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2393,8 +2393,8 @@ GameObject:
   - component: {fileID: 379908514}
   - component: {fileID: 379908513}
   - component: {fileID: 379908516}
-  - component: {fileID: 379908517}
   - component: {fileID: 379908518}
+  - component: {fileID: 379908519}
   m_Layer: 0
   m_Name: Answer Panels
   m_TagString: Untagged
@@ -2504,24 +2504,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0.8679245, g: 0.8679245, b: 0.8679245, a: 1}
   m_EffectDistance: {x: 0, y: -18}
   m_UseGraphicAlpha: 1
---- !u!114 &379908517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 379908511}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 667967e8a2d39044ebb10edeb1b3c32f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  duration: 0.5
-  isAnimateOnLoad: 0
-  delay: 0
-  isAnimateOnClose: 0
-  delayAfterOnLoad: 2
-  delta: {x: 0, y: -600, z: 0}
 --- !u!114 &379908518
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2537,8 +2519,8 @@ MonoBehaviour:
   OnLoad:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 379908517}
-        m_TargetAssemblyTypeName: RevealAnimation, Assembly-CSharp
+      - m_Target: {fileID: 379908519}
+        m_TargetAssemblyTypeName: PopupAnimation, Assembly-CSharp
         m_MethodName: Load
         m_Mode: 1
         m_Arguments:
@@ -2552,8 +2534,8 @@ MonoBehaviour:
   OnClose:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 379908517}
-        m_TargetAssemblyTypeName: RevealAnimation, Assembly-CSharp
+      - m_Target: {fileID: 379908519}
+        m_TargetAssemblyTypeName: PopupAnimation, Assembly-CSharp
         m_MethodName: Close
         m_Mode: 1
         m_Arguments:
@@ -2564,6 +2546,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &379908519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379908511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f372df3d62aa34089c618deeb2a8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.3
+  isAnimateOnLoad: 0
+  delay: 0
+  isAnimateOnClose: 0
+  delayAfterOnLoad: 2
 --- !u!1 &380293886
 GameObject:
   m_ObjectHideFlags: 0
@@ -5307,7 +5306,7 @@ RectTransform:
   - {fileID: 794725639}
   - {fileID: 379908512}
   m_Father: {fileID: 841653251}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5968,8 +5967,8 @@ RectTransform:
   m_Children:
   - {fileID: 1306230534}
   - {fileID: 296792270}
-  - {fileID: 274111897}
   - {fileID: 722260535}
+  - {fileID: 274111897}
   - {fileID: 450599889}
   - {fileID: 903454967}
   - {fileID: 1144955485}
@@ -8329,8 +8328,8 @@ MonoBehaviour:
   OnReplay:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Level2Gameplay, Assembly-CSharp
+      - m_Target: {fileID: 2073214890}
+        m_TargetAssemblyTypeName: Level11Gameplay, Assembly-CSharp
         m_MethodName: OnReplayClick
         m_Mode: 1
         m_Arguments:

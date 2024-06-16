@@ -20,12 +20,12 @@ MonoBehaviour:
   hint: '-'
   levelSprite: {fileID: 21300000, guid: d93e4df17a12f2c4f87456ce2acc3402, type: 3}
   levelSceneName: Level11
-  playCount: 7
+  playCount: 0
   maxTimeDuration: 90
   isSolved: 0
-  isRightInTime: 1
-  isNoMistake: 1
-  isToBePlayed: 1
+  isRightInTime: 0
+  isNoMistake: 0
+  isToBePlayed: 0
   cutsceneClip: {fileID: 32900000, guid: 376b7546cfaf9834dad37e11fdc9b356, type: 3}
   marker: {fileID: 3928030919283135031, guid: bac453f0f6f3f0843ab76d1e8160c8f5, type: 3}
   nextLevel: {fileID: 11400000, guid: f5c0d6529a39d064fb0c89f81887fe9f, type: 2}

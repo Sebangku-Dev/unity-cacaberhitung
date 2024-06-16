@@ -9,9 +9,14 @@ public class CacaHintAnimation : BaseAnimation, IAnimate
 
     private void Awake()
     {
-        // Set initial state
         panelQuestion.transform.localScale = Vector3.zero;
         transform.LeanMoveLocalY(transform.localPosition.y + -500, 0f);
+    }
+
+    private void OnEnable()
+    {
+        // Set initial state
+        if (isAnimateOnLoad) Load();
     }
 
     public void Load()

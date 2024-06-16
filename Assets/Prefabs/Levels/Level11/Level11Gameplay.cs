@@ -306,13 +306,21 @@ public class Level11Gameplay : BaseGameplay
 
     public void OnReplayClick()
     {
+        // Reset all sprites and question
+        caca.Close();
+        enemy.Close();
+        HideSprite(currentQuestionShape);
+        HideSprite(questionPanel);
+        for (int i = 0; i < answerPanel.transform.childCount; i++)
+            answerPanel.transform.GetChild(i).GetComponent<IAnimate>().Close();
+        HideSprite(answerPanel);
+
         // Reset all state
         currentQuestionIndex = 0;
+        currentIndexPointToHit = 0;
         currentTime = 0;
         mistake = 0;
         isTimerActive = false;
-
-        ResetAllQuestionAndSprite();
 
         levelData.isSolved = starIsSolvedState;
         levelData.isRightInTime = starIsRightInTimeState;
@@ -339,6 +347,13 @@ public class Level11Gameplay : BaseGameplay
     {
         // Load the shape and the points
         ShowSprite(currentQuestionShape);
+
+        // Show all points
+        for (int i = 0; i < currentQuestionShape.transform.childCount; i++)
+        {
+            currentQuestionShape.transform.GetChild(i).gameObject.SetActive(true);
+        }
+
         SetShapeAlpha(0f);
 
         // Set active point which to be hit;
@@ -359,12 +374,10 @@ public class Level11Gameplay : BaseGameplay
         {
             var child = answerPanel.transform.GetChild(i);
 
-
             switch (currentAnswerType)
             {
                 // child.GetChild(0).gameObject -> Shape Placeholder
                 // child.GetChild(1).gameObject -> Text Placeholder
-
                 case AnswerType.Image:
                     child.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/Levels/Level11/{currentAnswers[i]}");
                     child.GetChild(0).gameObject.SetActive(true);
