@@ -7,7 +7,6 @@ public class LevelContainer : MonoBehaviour
 {
     [SerializeField] LevelTypes levelType;
     [SerializeField] LevelCard levelCardPrefab;
-    [SerializeField] Sprite fallbackSprite;
 
     private void Start()
     {

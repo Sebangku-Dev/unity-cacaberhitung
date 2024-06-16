@@ -269,9 +269,13 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected void ShowAndUnlockNextLevel()
     {
         levelData.isToBePlayed = false;
-        levelData.nextLevel.isToBePlayed = true;
-        levelData.nextLevel.isUnlocked = true;
-        levelData.nextLevel.isSolved = false;
+
+        if (levelData.nextLevel != null)
+        {
+            levelData.nextLevel.isToBePlayed = true;
+            levelData.nextLevel.isUnlocked = true;
+            levelData.nextLevel.isSolved = false;
+        }
     }
 
     #endregion

@@ -1,5 +1,6 @@
 
 
+using TMPro;
 using UnityEngine;
 
 public class ScoreSystem : SingletonPersistent<ScoreSystem>

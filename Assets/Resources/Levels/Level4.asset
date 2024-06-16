@@ -21,13 +21,14 @@ MonoBehaviour:
   hint: Waduh, sepertinya kue kita ada yang hilang! Apakah ada yang mencurinya? Ayo
     kita lihat di sekitar pintu!
   levelSprite: {fileID: 21300000, guid: 393eb756a2188ba4fbca3266ef28bf67, type: 3}
-  levelSceneName: 
+  levelSceneName: Level4
   playCount: 0
   maxTimeDuration: 120
-  isSolved: 1
+  isSolved: 0
   isRightInTime: 0
   isNoMistake: 0
-  isToBePlayed: 0
+  isToBePlayed: 1
   cutsceneClip: {fileID: 32900000, guid: 376b7546cfaf9834dad37e11fdc9b356, type: 3}
   marker: {fileID: 7886398287588192282, guid: 02cefdd595bccee4bba608bd4af3a861, type: 3}
+  location: {fileID: 11400000, guid: b389b8aef6e95484aa6550a708750313, type: 2}
   nextLevel: {fileID: 11400000, guid: 28be5ded22feb2040a44f607e8c1ab95, type: 2}

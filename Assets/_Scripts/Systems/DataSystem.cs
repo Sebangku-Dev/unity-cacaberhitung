@@ -19,5 +19,6 @@ public class DataSystem : SingletonPersistent<DataSystem>
     {
         Levels = Resources.LoadAll<Level>("Levels").ToList();
         Knowledge = Resources.LoadAll<Knowledge>("Knowledges").ToList();
+        Achievements = Resources.LoadAll<Achievement>("Achievements").ToList();
     }
 }
