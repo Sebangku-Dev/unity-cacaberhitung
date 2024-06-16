@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using TMPro;
@@ -8,38 +7,53 @@ using UnityEngine.UI;
 
 public class Register : MonoBehaviour
 {
-    [SerializeField] GameObject[] panels;
-    [SerializeField] Button asQuestButton;
-    [SerializeField] Button[] nextButton;
+
+    [Serializable]
+    public class Field
+    {
+        public Transform panel;
+        public TMP_InputField input;
+        public Button nextButton;
+    }
+
+    [SerializeField] List<Field> fields;
+    [SerializeField] Button asQuestButton, toHome;
     [SerializeField] TMP_InputField inputName, inputAge;
-    // Start is called before the first frame update
+
+    private int step = 0;
+
     void Start()
     {
         if (File.Exists(Application.persistentDataPath + "/game.save")) NavigationSystem.Instance.LoadScene("Home");
+
+        toHome.onClick.AddListener(() => NavigationSystem.Instance.LoadScene("Home"));
+
+        ShowPanel(step);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        nextButton[1].interactable = !string.IsNullOrEmpty(inputName.text);
-        nextButton[2].interactable = !string.IsNullOrEmpty(inputAge.text);
-    }
-
-    public void ToggleCreateState(int index)
-    {
-        int i = 0;
-        foreach (GameObject panel in panels)
+        // If input is empty then disable the correlated button
+        if (step > 0)
         {
-            panel.SetActive(i == index);
-            i++;
+            fields[step].nextButton.interactable = !string.IsNullOrEmpty(fields[step]?.input?.text);
         }
 
-        Debug.Log(inputName.text + " - " + inputAge.text);
+    }
+
+    private void ShowPanel(int index) => fields[index].panel.gameObject.SetActive(true);
+    private void HidePanel(int index) => fields[index].panel.gameObject.SetActive(false);
+
+    public void IncrementStep()
+    {
+        HidePanel(step);
+        step++;
+        ShowPanel(step);
     }
 
     public void SubmitRegister()
     {
-        UserManager.Instance.NewUser = new()
+        UserManager.Instance.NewUser = new User()
         {
             id = inputName.text + DateTime.Now.ToString("yyyy-MM-dd"),
             name = inputName.text,
@@ -47,12 +61,5 @@ public class Register : MonoBehaviour
         };
 
         UserManager.Instance.Save();
-
-        // Debug.Log( UserManager.Instance.User.name);
-    }
-
-    public void OnClickStart()
-    {
-        NavigationSystem.Instance.LoadScene("Home");
     }
 }
