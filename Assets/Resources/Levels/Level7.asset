@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 7
   title: Terowongan Raksasa
-  type: 0
+  type: 1
   isUnlocked: 1
-  description: 
-  hint: 
+  description: '-'
+  hint: '-'
   levelSprite: {fileID: 21300000, guid: 5ad54c31b3c41b74caf2c106e6af39a2, type: 3}
   levelSceneName: 
   playCount: 0

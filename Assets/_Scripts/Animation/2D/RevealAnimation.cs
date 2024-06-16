@@ -11,16 +11,13 @@ public class RevealAnimation : BaseAnimation, IAnimate
         transform.LeanMoveLocal(transform.localPosition + delta, 0f);
     }
 
-    private void Start()
+    private void OnEnable()
     {
-
         if (isAnimateOnLoad) Load();
-
     }
 
     public void Load()
     {
-
         gameObject.SetActive(true);
 
         transform.LeanMoveLocal(transform.localPosition - delta, duration).setEaseOutExpo().setDelay(delay);
@@ -33,7 +30,6 @@ public class RevealAnimation : BaseAnimation, IAnimate
 
     public void Close()
     {
-
         int id = transform.LeanMoveLocal(transform.localPosition + delta, duration).id;
         LTDescr d = LeanTween.descr(id);
 

@@ -171,14 +171,14 @@ public class Level8Gameplay : BaseGameplay
         // Increase play count
         levelData.playCount++;
 
-        // Add score to user current score based on true-ish boolean
-        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
-
         // Show and unlock next level   
         ShowAndUnlockNextLevel();
 
         // Show ended modal
         await ShowEndedModal();
+
+        // Add score to user current score based on true-ish boolean
+        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
     }
 
     private void OnBeforeStateChanged(LevelState changedState)

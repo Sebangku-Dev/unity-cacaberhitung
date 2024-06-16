@@ -172,13 +172,15 @@ public class Level3Gameplay : BaseGameplay
         OnEnded?.Invoke();
 
         CalculateStars();
+        
         levelData.playCount++;
+
+        ShowAndUnlockNextLevel();
+
+        await ShowEndedModal();
 
         // Add score to user current score based on true-ish boolean
         AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
-
-        ShowAndUnlockNextLevel();
-        await ShowEndedModal();
     }
 
     private void OnBeforeStateChanged(LevelState changedState)

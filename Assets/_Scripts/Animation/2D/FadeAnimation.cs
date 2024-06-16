@@ -7,7 +7,7 @@ public class FadeAnimation : BaseAnimation, IAnimate
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] float targetAlpha;
 
-    private void Start()
+    private void OnEnable()
     {
         if (isAnimateOnLoad) Load();
     }

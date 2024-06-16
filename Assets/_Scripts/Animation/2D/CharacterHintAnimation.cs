@@ -10,11 +10,13 @@ public class CharacterHintAnimation : BaseAnimation, IAnimate
 
     private void Awake()
     {
-        if (isAnimateOnLoad) Load();
-
-        // Set initial state
-        child.localScale = Vector3.zero;
         transform.LeanMoveLocal(transform.localPosition + delta, 0f);
+        child.localScale = Vector3.zero;
+    }
+
+    private void OnEnable()
+    {
+        if (isAnimateOnLoad) Load();
     }
 
     public void Load()
@@ -32,7 +34,7 @@ public class CharacterHintAnimation : BaseAnimation, IAnimate
     public void Close()
     {
         child.LeanScale(Vector3.zero, duration).setEaseInOutQuart();
-        
+
         int id = transform.LeanMoveLocal(transform.localPosition + delta, duration).setEaseInOutQuart().setDelay(duration).id;
         LTDescr d = LeanTween.descr(id);
 
