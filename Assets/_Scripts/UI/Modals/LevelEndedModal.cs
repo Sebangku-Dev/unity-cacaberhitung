@@ -9,7 +9,7 @@ public class LevelEndedModal : Modal
 
     // Overriding parent modal but with modified parameter from parent
     public void ActivateEndedModal(bool isSolved, bool isRightInTime, bool isNoMistake)
-    {
+    {        
         // Star result at the end
         starSolved.gameObject.SetActive(isSolved);
         starTime.gameObject.SetActive(isRightInTime);

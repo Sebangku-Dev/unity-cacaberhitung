@@ -185,13 +185,14 @@ public class Level10Gameplay : BaseGameplay
         OnEnded?.Invoke();
 
         CalculateStars();
-        levelData.playCount++;
 
-        // Add score to user current score based on true-ish boolean
-        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
+        levelData.playCount++;
 
         ShowAndUnlockNextLevel();
         await ShowEndedModal();
+
+        // Add score to user current score based on true-ish boolean
+        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
     }
 
     private void OnBeforeStateChanged(LevelState changedState)

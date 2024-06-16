@@ -10,13 +10,13 @@ using UnityEngine.UI;
 
 public class Level11Gameplay : BaseGameplay
 {
-    [System.Serializable]
+    [Serializable]
     public class Questions
     {
         public string question;
         public int validAnswerIndex;
         public AnswerType answerType;
-        public List<Sprite> answers;
+        public List<string> answers;
         public LevelSprite shape;
         public Transform[] pointToHits;
     }
@@ -37,7 +37,11 @@ public class Level11Gameplay : BaseGameplay
     [SerializeField] private DrawerController drawer;
 
     private string currentQuestion;
-    private List<Sprite> currentAnswers;
+
+    /// <summary>
+    /// If <see cref="AnswerType.Text"/> then it's the number text. If <see cref="AnswerType.Image"/> then it's the Resource path
+    /// </summary>
+    private List<string> currentAnswers;
     private int currentValidAnswerIndex;
     private AnswerType currentAnswerType;
     private LevelSprite currentQuestionShape;
@@ -211,14 +215,14 @@ public class Level11Gameplay : BaseGameplay
         // Increase play count
         levelData.playCount++;
 
-        // Add score to user current score based on true-ish boolean
-        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
-
         // Show and unlock next level   
         ShowAndUnlockNextLevel();
 
         // Show ended modal
         await ShowEndedModal();
+
+        // Add score to user current score based on true-ish boolean
+        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
     }
 
     private void OnBeforeStateChanged(LevelState changedState)
@@ -230,7 +234,6 @@ public class Level11Gameplay : BaseGameplay
 
     private void HandleDrawing()
     {
-        Debug.Log("Now Drawing");
         GenerateSprite();
 
         // Prepare the drawer and shape
@@ -240,8 +243,6 @@ public class Level11Gameplay : BaseGameplay
 
     private void HandleAnswering()
     {
-        Debug.Log("Now Answering");
-
         drawer.gameObject.SetActive(false);
         GenerateQuestion();
     }
@@ -259,8 +260,6 @@ public class Level11Gameplay : BaseGameplay
     private void OnDraw()
     {
         if (currentIndexPointToHit == currentPointToHits.Count()) return;
-
-        Debug.Log(Vector3.Distance(Input.mousePosition, (Vector3)RectTransformUtility.WorldToScreenPoint(cam, currentPointToHits[currentIndexPointToHit].position)));
 
         currentPointToHits[0].GetComponent<Image>().color = Color.cyan;
         SetShapeAlpha((float)currentIndexPointToHit / (float)(currentPointToHits.Count() - 1));
@@ -283,7 +282,7 @@ public class Level11Gameplay : BaseGameplay
         else
         {
             currentIndexPointToHit = 0;
-            
+
             for (int i = 0; i < currentPointToHits.Count(); i++)
             {
                 currentPointToHits[i].GetComponent<Image>().color = blueColor;
@@ -313,7 +312,7 @@ public class Level11Gameplay : BaseGameplay
         mistake = 0;
         isTimerActive = false;
 
-        // HideSprite(currentQuestionSprite);
+        ResetAllQuestionAndSprite();
 
         levelData.isSolved = starIsSolvedState;
         levelData.isRightInTime = starIsRightInTimeState;
@@ -359,7 +358,26 @@ public class Level11Gameplay : BaseGameplay
         for (int i = 0; i < answerPanel.transform.childCount; i++)
         {
             var child = answerPanel.transform.GetChild(i);
-            child.GetChild(0).GetComponent<Image>().sprite = currentAnswers[i];
+
+
+            switch (currentAnswerType)
+            {
+                // child.GetChild(0).gameObject -> Shape Placeholder
+                // child.GetChild(1).gameObject -> Text Placeholder
+
+                case AnswerType.Image:
+                    child.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>($"Sprites/Levels/Level11/{currentAnswers[i]}");
+                    child.GetChild(0).gameObject.SetActive(true);
+                    child.GetChild(1).gameObject.SetActive(false);
+                    break;
+                case AnswerType.Text:
+                    child.GetChild(1).GetComponent<TextMeshProUGUI>().text = currentAnswers[i];
+                    child.GetChild(1).gameObject.SetActive(true);
+                    child.GetChild(0).gameObject.SetActive(false);
+                    break;
+                default:
+                    break;
+            }
             child.GetComponent<IAnimate>().Load();
         }
     }
