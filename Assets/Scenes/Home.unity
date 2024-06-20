@@ -550,7 +550,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -398.1}
+  m_AnchoredPosition: {x: 0, y: -398.09998}
   m_SizeDelta: {x: 873, y: 456}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &373802027
@@ -602,7 +602,6 @@ GameObject:
   - component: {fileID: 390346775}
   - component: {fileID: 390346774}
   - component: {fileID: 390346773}
-  - component: {fileID: 390346776}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -660,19 +659,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &390346776
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 390346772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 462b3a3a19af67c4d98d0fc0088d9392, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playButton: {fileID: 209041629}
 --- !u!224 &413579868 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2154666823133302879, guid: 8b41115513fe123468026b64c01484cf, type: 3}
@@ -933,9 +919,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1618155247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a33a186fe2e0a624f9fbde4ebd0baafd, type: 3}
+  m_Script: {fileID: 11500000, guid: 462b3a3a19af67c4d98d0fc0088d9392, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playButton: {fileID: 209041629}
 --- !u!1 &1845760678
 GameObject:
   m_ObjectHideFlags: 0

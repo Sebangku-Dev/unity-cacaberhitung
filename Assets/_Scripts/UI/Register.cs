@@ -12,13 +12,15 @@ public class Register : MonoBehaviour
     public class Field
     {
         public Transform panel;
+        public Transform title;
+        public string text;
         public TMP_InputField input;
         public Button nextButton;
     }
 
     [SerializeField] List<Field> fields;
     [SerializeField] Button asQuestButton, toHome;
-    [SerializeField] TMP_InputField inputName, inputAge;
+    private string inputName, inputAge;
 
     private int step = 0;
 
@@ -34,15 +36,43 @@ public class Register : MonoBehaviour
     void Update()
     {
         // If input is empty then disable the correlated button
-        if (step > 0)
+        if (step > 0 && step < fields.Count)
         {
             fields[step].nextButton.interactable = !string.IsNullOrEmpty(fields[step]?.input?.text);
+            SaveState();
         }
 
     }
 
-    private void ShowPanel(int index) => fields[index].panel.gameObject.SetActive(true);
-    private void HidePanel(int index) => fields[index].panel.gameObject.SetActive(false);
+    private void ShowPanel(int index)
+    {
+        fields[index].panel.gameObject.SetActive(true);
+
+        if (fields[index].title.GetComponent<TextMeshProUGUI>() != null) fields[index].title.GetComponent<TextMeshProUGUI>().text = fields[index].text;
+        fields[index].title.gameObject.SetActive(true);
+    }
+
+    private void HidePanel(int index)
+    {
+        fields[index].panel.gameObject.SetActive(false);
+        fields[index].title.gameObject.SetActive(false);
+    }
+
+    public void ShowPanelByTransform(Transform panel)
+    {
+        panel.gameObject.SetActive(true);
+    }
+
+    public void HidePanelByTransform(Transform panel)
+    {
+        panel.gameObject.SetActive(true);
+    }
+
+    public void SaveState()
+    {
+        if (fields[step]?.input?.name == "Input Name") inputName = fields[step].input.text;
+        if (fields[step]?.input?.name == "Input Age") inputAge = fields[step].input.text;
+    }
 
     public void IncrementStep()
     {
@@ -51,13 +81,20 @@ public class Register : MonoBehaviour
         ShowPanel(step);
     }
 
+    public void DecrementStep()
+    {
+        HidePanel(step);
+        step--;
+        ShowPanel(step);
+    }
+
     public void SubmitRegister()
     {
         UserManager.Instance.NewUser = new User()
         {
-            id = inputName.text + DateTime.Now.ToString("yyyy-MM-dd"),
-            name = inputName.text,
-            age = Int32.Parse(inputAge.text)
+            id = inputName + DateTime.Now.ToString("yyyy-MM-dd"),
+            name = inputName,
+            age = Int32.Parse(inputAge)
         };
 
         UserManager.Instance.Save();
