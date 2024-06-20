@@ -19,7 +19,7 @@ public class ScoreSystem : SingletonPersistent<ScoreSystem>
 
     private void LoadFromUser()
     {
-        ScoreSystem.Instance.Score = UserManager.Instance.User.currentScore;
+        ScoreSystem.Instance.Score = UserManager.Instance.GetCurrentUser().currentScore;
     }
 
 }

@@ -2095,8 +2095,20 @@ PrefabInstance:
       value: User Manager
       objectReference: {fileID: 0}
     - target: {fileID: 5833862044516069317, guid: c32d805b21458ba40a75a2fe5230f0f8, type: 3}
+      propertyPath: NewUser.id
+      value: 0-newuser
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833862044516069317, guid: c32d805b21458ba40a75a2fe5230f0f8, type: 3}
       propertyPath: isLoadData
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833862044516069317, guid: c32d805b21458ba40a75a2fe5230f0f8, type: 3}
+      propertyPath: NewUser.age
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5833862044516069317, guid: c32d805b21458ba40a75a2fe5230f0f8, type: 3}
+      propertyPath: NewUser.name
+      value: New User
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c32d805b21458ba40a75a2fe5230f0f8, type: 3}

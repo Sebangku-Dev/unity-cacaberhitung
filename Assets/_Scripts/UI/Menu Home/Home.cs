@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class Home : MonoBehaviour
 {
     [SerializeField] private Button playButton;
-    // Start is called before the first frame update
+
     void Start()
     {
-        playButton.onClick.AddListener(()=>NavigationSystem.Instance.LoadScene("Main"));
+        playButton.onClick.AddListener(() => NavigationSystem.Instance.LoadScene("Main"));
     }
 }

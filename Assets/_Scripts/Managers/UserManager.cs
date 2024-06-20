@@ -4,13 +4,17 @@ using UnityEngine;
 using System;
 public class UserManager : Singleton<UserManager>
 {
-    [SerializeField] bool isLoadData;
-    public User User { get; set; }
-    public User NewUser;
+    [SerializeField] private bool isLoadData;
+
+    [Header("Login as Guest")]
+    [SerializeField] public User NewUser;
 
     private void Start()
     {
-        if (isLoadData) UserManager.Instance.Load();
+        if (File.Exists(Application.persistentDataPath + "/game.save"))
+        {
+            Load();
+        }
     }
 
     public User CreateUserFile()
@@ -43,9 +47,9 @@ public class UserManager : Singleton<UserManager>
 
     public void Save()
     {
-        User user = UserManager.Instance.User ?? CreateUserFile();
+        User user = DataSystem.Instance.User ?? CreateUserFile();
 
-        BinaryFormatter binaryFormatter = new();
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/game.save");
         binaryFormatter.Serialize(file, user);
         file.Close();
@@ -55,19 +59,16 @@ public class UserManager : Singleton<UserManager>
 
     public void Load()
     {
-        if (File.Exists(Application.persistentDataPath + "/game.save"))
-        {
-            Debug.Log("game save exist");
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/game.save", FileMode.Open);
-            User user = (User)binaryFormatter.Deserialize(file);
-            file.Close();
+        Debug.Log("Game Save is Exist");
 
-            UserManager.Instance.User = user;
-        }
-        else
-        {
-            Save();
-        }
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream file = File.Open(Application.persistentDataPath + "/game.save", FileMode.Open);
+        User user = (User)binaryFormatter.Deserialize(file);
+        file.Close();
+
+        DataSystem.Instance.User = user;
     }
+
+    public User GetCurrentUser() => DataSystem.Instance.User;
+
 }

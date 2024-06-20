@@ -15,7 +15,7 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (UserManager.Instance.User != null)
+        if (UserManager.Instance.GetCurrentUser() != null)
         {
             if (other.CompareTag("Player") && !relatedBarrier.activeSelf)
             {
