@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Level2Gameplay : BaseGameplay
@@ -181,12 +182,15 @@ public class Level2Gameplay : BaseGameplay
 
     public void OnReplayClick()
     {
+        // Unload all animation
+        HideSprite(currentQuestionSprite);
+
         // Reset all state
         currentQuestionIndex = 0;
         currentTime = 0;
         mistake = 0;
         isTimerActive = false;
-        HideSprite(currentQuestionSprite);
+
         levelData.isSolved = starIsSolvedState;
         levelData.isRightInTime = starIsRightInTimeState;
         levelData.isSolved = starIsNoMistakeState;

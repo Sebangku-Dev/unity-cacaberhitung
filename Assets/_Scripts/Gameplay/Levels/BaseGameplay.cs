@@ -19,8 +19,10 @@ public class BaseGameplay : Singleton<BaseGameplay>
     [SerializeField] protected UnityEvent OnPrepare;
     [Header("User Interaction")]
     [SerializeField] protected UnityEvent OnUserInteraction;
-    [Header("OnPaused")]
+    [Header("Paused")]
     [SerializeField] protected UnityEvent OnPaused;
+
+    [SerializeField] protected UnityEvent OnReplay;
     [Header("Passed")]
     [SerializeField] protected Star starIsSolved;
     [SerializeField] protected Star starIsRightInTime;

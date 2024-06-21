@@ -12,7 +12,6 @@ public class Level1Gameplay : BaseGameplay
     [SerializeField] GameObject CandleContainer, Candle;
     [SerializeField] int minCandles, maxCandles, state, maxState;
     [SerializeField] MeshRenderer DrawCanvas;
-    [SerializeField] UnityEvent OnReplay;
 
     #region MonoBehaviour
     protected override void Awake()
