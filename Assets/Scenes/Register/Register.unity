@@ -3686,7 +3686,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1893046460}
         m_TargetAssemblyTypeName: Register, Assembly-CSharp
-        m_MethodName: SubmitRegister
+        m_MethodName: OnRegisterSubmit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5388,7 +5388,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1552930221}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1893046460}
+        m_TargetAssemblyTypeName: Register, Assembly-CSharp
+        m_MethodName: OnRegisterSubmit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1893046460}
+        m_TargetAssemblyTypeName: Register, Assembly-CSharp
+        m_MethodName: ShowPanelByTransform
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 58351679}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1555067627
 GameObject:
   m_ObjectHideFlags: 0
@@ -7151,7 +7175,7 @@ GameObject:
   - component: {fileID: 1893046459}
   - component: {fileID: 1893046460}
   m_Layer: 0
-  m_Name: Register Manager
+  m_Name: Menu Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

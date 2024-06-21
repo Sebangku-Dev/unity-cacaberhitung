@@ -27,7 +27,7 @@ MonoBehaviour:
   isSolved: 0
   isRightInTime: 0
   isNoMistake: 0
-  isToBePlayed: 1
+  isToBePlayed: 0
   cutsceneClip: {fileID: 32900000, guid: 376b7546cfaf9834dad37e11fdc9b356, type: 3}
   marker: {fileID: 7886398287588192282, guid: 02cefdd595bccee4bba608bd4af3a861, type: 3}
   location: {fileID: 11400000, guid: b389b8aef6e95484aa6550a708750313, type: 2}

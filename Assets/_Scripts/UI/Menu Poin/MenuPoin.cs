@@ -15,7 +15,8 @@ public class MenuPoin : MonoBehaviour
 
     void Start()
     {
-        pointText.text = DataSystem.Instance.User.currentScore.ToString();
+        Debug.Log(UserManager.Instance.name);
+        pointText.text = UserManager.Instance.GetCurrentUser().currentScore.ToString();
         achievementButton.onClick.AddListener(() => NavigationSystem.Instance.LoadScene("MenuAchievements"));
         knowledgeButton.onClick.AddListener(() => NavigationSystem.Instance.LoadScene("MenuKnowledge"));
     }

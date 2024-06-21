@@ -111,7 +111,11 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// <summary>
     /// Invoked on very end state
     /// </summary>
-    protected virtual void HandleEnded() { }
+    protected virtual void HandleEnded()
+    {
+        UserManager.Instance.Save();
+
+    }
 
     /// <summary>
     /// Invoked if user give wrong answer

@@ -8,8 +8,10 @@ public class UserManager : Singleton<UserManager>
     [Header("Login as Guest")]
     [SerializeField] public User NewUser;
 
-    private void Start()
+    protected override void Awake()
     {
+        base.Awake();
+
         if (File.Exists(Application.persistentDataPath + "/game.save"))
         {
             Load();
@@ -79,7 +81,7 @@ public class UserManager : Singleton<UserManager>
             currentScore = 0
         };
 
-        UserManager.Instance.Save();
+        Save();
 
         Debug.Log(JsonUtility.ToJson(UserManager.Instance.GetCurrentUser()));
     }
