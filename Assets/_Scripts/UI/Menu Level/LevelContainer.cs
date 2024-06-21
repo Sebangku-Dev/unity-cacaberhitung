@@ -7,6 +7,7 @@ public class LevelContainer : MonoBehaviour
 {
     [SerializeField] LevelTypes levelType;
     [SerializeField] LevelCard levelCardPrefab;
+    [SerializeField] PlayLevelModal modal;
 
     private void Start()
     {
@@ -27,8 +28,10 @@ public class LevelContainer : MonoBehaviour
             foreach (Level level in levels)
             {
                 var instantiatedLevelCard = Instantiate(levelCardPrefab, transform);
+
                 instantiatedLevelCard.imagePlaceholder.sprite = level.levelSprite;
-                instantiatedLevelCard.button.onClick.AddListener(() => NavigationSystem.Instance.LoadScene(level.levelSceneName));
+                // instantiatedLevelCard.button.onClick.AddListener(() => NavigationSystem.Instance.LoadScene(level.levelSceneName));
+                instantiatedLevelCard.button.onClick.AddListener(() => modal.ActivatePlayLevelModal(level));
             }
         }
 

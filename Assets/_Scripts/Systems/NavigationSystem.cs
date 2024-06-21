@@ -17,6 +17,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
     private void ActivateLoaderCanvas() => Instantiate(loaderCanvas.gameObject);
     private void DeactivateLoaderCanvas() => loaderCanvas.gameObject.SetActive(false);
     private string lastScenesString = "";
+    private const int HOME_SCENE_INDEX = 1;
 
     public async void LoadScene(string targetScene)
     {
@@ -34,11 +35,8 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
 
         var scene = SceneManager.LoadSceneAsync(targetScene);
         scene.allowSceneActivation = false; // prevent screen for immediate load
-        ActivateLoaderCanvas();
 
-        /*
-            you can implement progress method here
-        */
+        ActivateLoaderCanvas();
 
         await Task.Delay(500); // same as WaitForSecond but in async await
         scene.allowSceneActivation = true;
@@ -51,22 +49,31 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
         if (PlayerPrefs.GetString("sceneStack") != null)
             lastScenesString = PlayerPrefs.GetString("sceneStack");
 
+        
         if (lastScenesString.Length > 1)
         {
+            // Get last scene string to be loaded
             latestSceneIndex = Int16.Parse(lastScenesString.Split(";").Last());
+
+            // Release last scene string
             lastScenesString = lastScenesString.Substring(0, lastScenesString.Length - 2);
         }
-        else
+        else if (lastScenesString.Length == 1)
+        {
             latestSceneIndex = Int16.Parse(lastScenesString);
+        }
+        else
+        {
+            latestSceneIndex = HOME_SCENE_INDEX;
+        }
 
         PlayerPrefs.SetString("sceneStack", lastScenesString);
 
         var scene = SceneManager.LoadSceneAsync(latestSceneIndex);
         scene.allowSceneActivation = false;
+
         ActivateLoaderCanvas();
-        /*
-            you can implement progress method here
-        */
+
         await Task.Delay(500); // same as WaitForSecond but in async await
         scene.allowSceneActivation = true;
     }

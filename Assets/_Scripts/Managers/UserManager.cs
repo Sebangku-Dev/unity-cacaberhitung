@@ -8,10 +8,8 @@ public class UserManager : Singleton<UserManager>
     [Header("Login as Guest")]
     [SerializeField] public User NewUser;
 
-    protected override void Awake()
+    protected void Start()
     {
-        base.Awake();
-
         if (File.Exists(Application.persistentDataPath + "/game.save"))
         {
             Load();
@@ -60,12 +58,14 @@ public class UserManager : Singleton<UserManager>
 
     public void Load()
     {
-        Debug.Log("Game Save is Exist");
 
         BinaryFormatter binaryFormatter = new BinaryFormatter();
         FileStream file = File.Open(Application.persistentDataPath + "/game.save", FileMode.Open);
         User user = (User)binaryFormatter.Deserialize(file);
         file.Close();
+
+        Debug.Log("Game Save is Exist");
+        Debug.Log("User: " + JsonUtility.ToJson(user));
 
         DataSystem.Instance.User = user;
     }
