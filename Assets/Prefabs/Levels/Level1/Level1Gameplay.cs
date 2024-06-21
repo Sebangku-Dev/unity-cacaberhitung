@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Level1Gameplay : BaseGameplay
 {
@@ -11,6 +12,7 @@ public class Level1Gameplay : BaseGameplay
     [SerializeField] GameObject CandleContainer, Candle;
     [SerializeField] int minCandles, maxCandles, state, maxState;
     [SerializeField] MeshRenderer DrawCanvas;
+    [SerializeField] UnityEvent OnReplay;
 
     #region MonoBehaviour
     protected override void Awake()
@@ -52,6 +54,8 @@ public class Level1Gameplay : BaseGameplay
     {
         base.HandlePrepare();
 
+        OnPrepare?.Invoke();
+
         GenerateCandles();
 
         DrawCanvas.enabled = true;
@@ -69,14 +73,16 @@ public class Level1Gameplay : BaseGameplay
     {
         base.HandleUserInteraction();
 
+        OnUserInteraction?.Invoke();
+
         if (!isTimerActive) StartTimer();
-
-
     }
 
     protected override void HandlePaused()
     {
         base.HandlePaused();
+
+        OnPaused?.Invoke();
 
         StopTimer();
     }
@@ -100,7 +106,7 @@ public class Level1Gameplay : BaseGameplay
         else
             ChangeState(LevelState.Ended);
     }
-    protected override void HandleFail()
+    protected override async void HandleFail()
     {
         base.HandleFail();
 
@@ -110,6 +116,9 @@ public class Level1Gameplay : BaseGameplay
 
         // Event to trigger something e.g. Caca popup animation
         OnFail?.Invoke();
+
+        // Wait for the animation
+        await Task.Delay(2000);
 
         // Reanswer user interaction
         ChangeState(LevelState.UserInteraction);
@@ -137,7 +146,7 @@ public class Level1Gameplay : BaseGameplay
 
         // Show ended modal
         await ShowEndedModal();
-        
+
         // Add score to user current score based on true-ish boolean
         AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
     }
@@ -163,6 +172,24 @@ public class Level1Gameplay : BaseGameplay
         int answer = CandleContainer.transform.childCount;
 
         ChangeState(model.prediction.predictedValue == answer ? LevelState.Passed : LevelState.Fail);
+    }
+
+    public void OnReplayClick()
+    {
+        // Unload all animation
+        OnReplay?.Invoke();
+
+        // Reset all state
+        state = 0;
+        currentTime = 0;
+        mistake = 0;
+        isTimerActive = false;
+
+        levelData.isSolved = starIsSolvedState;
+        levelData.isRightInTime = starIsRightInTimeState;
+        levelData.isSolved = starIsNoMistakeState;
+
+        ChangeState(LevelState.Initialization);
     }
 
     #endregion

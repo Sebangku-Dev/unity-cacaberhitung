@@ -4,7 +4,6 @@ using UnityEngine;
 using System;
 public class UserManager : Singleton<UserManager>
 {
-    [SerializeField] private bool isLoadData;
 
     [Header("Login as Guest")]
     [SerializeField] public User NewUser;
@@ -67,6 +66,22 @@ public class UserManager : Singleton<UserManager>
         file.Close();
 
         DataSystem.Instance.User = user;
+    }
+
+    public void Register(string name, string age)
+    {
+        UserManager.Instance.NewUser = new User()
+        {
+            id = name + DateTime.Now.ToString("yyyy-MM-dd"),
+            name = name,
+            age = Int32.Parse(age),
+            currentLevel = 1,
+            currentScore = 0
+        };
+
+        UserManager.Instance.Save();
+
+        Debug.Log(JsonUtility.ToJson(UserManager.Instance.GetCurrentUser()));
     }
 
     public User GetCurrentUser() => DataSystem.Instance.User;

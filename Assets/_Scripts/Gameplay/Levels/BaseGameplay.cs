@@ -17,6 +17,10 @@ public class BaseGameplay : Singleton<BaseGameplay>
     [SerializeField] protected VideoPlayer cutscenePlayer;
     [Header("Prepare")]
     [SerializeField] protected UnityEvent OnPrepare;
+    [Header("User Interaction")]
+    [SerializeField] protected UnityEvent OnUserInteraction;
+    [Header("OnPaused")]
+    [SerializeField] protected UnityEvent OnPaused;
     [Header("Passed")]
     [SerializeField] protected Star starIsSolved;
     [SerializeField] protected Star starIsRightInTime;
@@ -260,7 +264,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// <param name="addedScore">Added score in integer</param>
     protected void AddScore(int addedScore)
     {
-        ScoreSystem.Instance.AddScore(addedScore);
+        ScoreManager.Instance.AddScore(addedScore);
     }
 
     /// <summary>

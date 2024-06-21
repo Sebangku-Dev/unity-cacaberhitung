@@ -88,15 +88,12 @@ public class Register : MonoBehaviour
         ShowPanel(step);
     }
 
-    public void SubmitRegister()
+    public void OnRegisterSubmit()
     {
-        UserManager.Instance.NewUser = new User()
-        {
-            id = inputName + DateTime.Now.ToString("yyyy-MM-dd"),
-            name = inputName,
-            age = Int32.Parse(inputAge)
-        };
+        if (inputName != null && inputAge != null)
+            UserManager.Instance.Register(inputName, inputAge);
+        else
+            UserManager.Instance.Register("New User", "3");
 
-        UserManager.Instance.Save();
     }
 }

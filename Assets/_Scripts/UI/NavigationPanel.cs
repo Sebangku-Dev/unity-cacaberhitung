@@ -23,7 +23,7 @@ public class NavigationPanel : MonoBehaviour
 
     private void WatchScoreChange()
     {
-        scoreText.text = ScoreSystem.Instance.Score + "";
+        scoreText.text = DataSystem.Instance?.User?.currentScore + "" ?? "0";
     }
 
 }

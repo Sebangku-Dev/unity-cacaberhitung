@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 2
   title: Buka Hadiah
   type: 0
-  isUnlocked: 1
+  isUnlocked: 0
   description: Caca merayakan ulang tahun di rumahnya. Ia mendapatkan hadiah dari
     teman-temannya. Ia sangat senang dan membuka hadiah tersebut satu persatu
   hint: Kamu telah merayakan hari ulang tahunmu! Sekarang cari meja berisi kado untukmu!
@@ -23,7 +23,7 @@ MonoBehaviour:
   levelSceneName: Level2
   playCount: 0
   maxTimeDuration: 60
-  isSolved: 1
+  isSolved: 0
   isRightInTime: 0
   isNoMistake: 0
   isToBePlayed: 0

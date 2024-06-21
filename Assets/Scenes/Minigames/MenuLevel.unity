@@ -517,7 +517,7 @@ RectTransform:
   - {fileID: 2033431043}
   - {fileID: 10626240}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -715,7 +715,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &329964656
 GameObject:
@@ -890,6 +890,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362261742}
   m_CullTransparentMesh: 1
+--- !u!4 &684551373 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7953779499313705943, guid: 6cc7a0f82033529479bd03e55c127e8b, type: 3}
+  m_PrefabInstance: {fileID: 1761844170}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &869997932
 GameObject:
   m_ObjectHideFlags: 0
@@ -1159,7 +1164,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelType: 1
   levelCardPrefab: {fileID: 8343438846176623532, guid: 93f5ceb371a7ecf41851b07215e63956, type: 3}
-  fallbackSprite: {fileID: 21300000, guid: 1bc4c8b2ac6659a489b11f433360e0b8, type: 3}
 --- !u!1 &1237061111
 GameObject:
   m_ObjectHideFlags: 0
@@ -1619,7 +1623,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelType: 0
   levelCardPrefab: {fileID: 8343438846176623532, guid: 93f5ceb371a7ecf41851b07215e63956, type: 3}
-  fallbackSprite: {fileID: 21300000, guid: 1bc4c8b2ac6659a489b11f433360e0b8, type: 3}
 --- !u!1 &1546023024
 GameObject:
   m_ObjectHideFlags: 0
@@ -1873,15 +1876,15 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 2009166299}
     m_Modifications:
     - target: {fileID: 5513106205312586540, guid: 6cc7a0f82033529479bd03e55c127e8b, type: 3}
       propertyPath: m_Name
-      value: Score System
+      value: Score Manager
       objectReference: {fileID: 0}
     - target: {fileID: 7953779499313705943, guid: 6cc7a0f82033529479bd03e55c127e8b, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7953779499313705943, guid: 6cc7a0f82033529479bd03e55c127e8b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1901,15 +1904,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7953779499313705943, guid: 6cc7a0f82033529479bd03e55c127e8b, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7953779499313705943, guid: 6cc7a0f82033529479bd03e55c127e8b, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7953779499313705943, guid: 6cc7a0f82033529479bd03e55c127e8b, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 7953779499313705943, guid: 6cc7a0f82033529479bd03e55c127e8b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2525,6 +2528,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 925050381}
+  - {fileID: 684551373}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2659,7 +2663,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelType: 2
   levelCardPrefab: {fileID: 8343438846176623532, guid: 93f5ceb371a7ecf41851b07215e63956, type: 3}
-  fallbackSprite: {fileID: 21300000, guid: 1bc4c8b2ac6659a489b11f433360e0b8, type: 3}
 --- !u!1 &2033431042
 GameObject:
   m_ObjectHideFlags: 0
@@ -2832,7 +2835,7 @@ RectTransform:
   m_Children:
   - {fileID: 869997933}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}

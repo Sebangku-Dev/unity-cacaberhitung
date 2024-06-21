@@ -27,8 +27,6 @@ public class GetInferenceModel : MonoBehaviour
                 predictedValue = Array.IndexOf(predicted, predicted.Max());
             }
             else predictedValue = -1;
-
-            Debug.Log($"Predicted : {predictedValue}");
         }
     }
 

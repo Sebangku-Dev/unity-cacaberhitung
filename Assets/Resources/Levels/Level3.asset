@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 3
   title: Bagi-Bagi Kue
   type: 0
-  isUnlocked: 1
+  isUnlocked: 0
   description: Wahh, kuenya sepertinya sangat lezat. Ay, kita bagi kue tersebut jadi
     beberapa potong!
   hint: Kue-kue di meja itu sudah siap dimakan. Sebelum dimakan, kita potong dulu
@@ -24,7 +24,7 @@ MonoBehaviour:
   levelSceneName: Level3
   playCount: 0
   maxTimeDuration: 30
-  isSolved: 1
+  isSolved: 0
   isRightInTime: 0
   isNoMistake: 0
   isToBePlayed: 0
