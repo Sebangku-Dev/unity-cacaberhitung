@@ -29,8 +29,6 @@ public class MenuLevelModal : Modal
     public void Replay()
     {
         // No need to change state because it must be handled properly in level gameplay OnReplayClick
-        SendMessage("OnDisable", true);
-
         OnReplay?.Invoke();
     }
     public void Resume()
