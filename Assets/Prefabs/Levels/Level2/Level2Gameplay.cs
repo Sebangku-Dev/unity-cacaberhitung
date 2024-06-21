@@ -180,23 +180,6 @@ public class Level2Gameplay : BaseGameplay
             ChangeState(LevelState.Fail);
     }
 
-    public void OnReplayClick()
-    {
-        // Unload all animation
-        HideSprite(currentQuestionSprite);
-
-        // Reset all state
-        currentQuestionIndex = 0;
-        currentTime = 0;
-        mistake = 0;
-        isTimerActive = false;
-
-        levelData.isSolved = starIsSolvedState;
-        levelData.isRightInTime = starIsRightInTimeState;
-        levelData.isSolved = starIsNoMistakeState;
-
-        ChangeState(LevelState.Initialization);
-    }
     #endregion
 
     #region UI

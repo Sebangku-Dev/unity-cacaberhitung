@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class MenuLevelModal : Modal
 {
@@ -28,13 +29,13 @@ public class MenuLevelModal : Modal
     public void DeactivateMenuLevelModal() => base.DeactivateModal();
     public void Replay()
     {
-        // No need to change state because it must be handled properly in level gameplay OnReplayClick
         OnReplay?.Invoke();
+        NavigationSystem.Instance.LoadScene(SceneManager.GetActiveScene().name, false);
     }
     public void Resume()
     {
-        isResumeInvoked = true;
         OnResume?.Invoke();
+        isResumeInvoked = true;
     }
     public void Exit()
     {

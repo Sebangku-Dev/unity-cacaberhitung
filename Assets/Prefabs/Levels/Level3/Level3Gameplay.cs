@@ -36,7 +36,7 @@ public class Level3Gameplay : BaseGameplay
     /// <para>[2] Hint Text</para>
     /// </summary>
     private List<string> currentQuestion;
-    private int currentQuestionIndex = 7;
+    private int currentQuestionIndex = 0;
     private LevelSprite currentQuestionSprite;
     private float currentBigCakeFillAmount = 0f;
     private float currentSmallCakeFillAmount = 0f;
@@ -289,6 +289,8 @@ public class Level3Gameplay : BaseGameplay
         }
     }
 
+    #region UI
+
     private async Task LockDraggable(int delayMs)
     {
         currentSmallCake.GetComponent<Draggable>().isLocked = true;
@@ -322,6 +324,26 @@ public class Level3Gameplay : BaseGameplay
 
         temporaryCake.gameObject.SetActive(false);
     }
+
+    public void OnReplayClick()
+    {
+        // Unload all animation
+        HideSprite(currentQuestionSprite);
+
+        // Reset all state
+        currentQuestionIndex = 0;
+        currentTime = 0;
+        mistake = 0;
+        isTimerActive = false;
+
+        levelData.isSolved = starIsSolvedState;
+        levelData.isRightInTime = starIsRightInTimeState;
+        levelData.isSolved = starIsNoMistakeState;
+
+        ChangeState(LevelState.Initialization);
+    }
+
+    #endregion
 
     #endregion
 

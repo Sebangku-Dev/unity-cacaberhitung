@@ -181,23 +181,6 @@ public class Level1Gameplay : BaseGameplay
         ChangeState(model.prediction.predictedValue == answer ? LevelState.Passed : LevelState.Fail);
     }
 
-    public void OnReplayClick()
-    {
-        // Unload all animation
-        OnReplay?.Invoke();
-
-        // Reset all state
-        state = 0;
-        currentTime = 0;
-        mistake = 0;
-        isTimerActive = false;
-
-        levelData.isSolved = starIsSolvedState;
-        levelData.isRightInTime = starIsRightInTimeState;
-        levelData.isSolved = starIsNoMistakeState;
-
-        ChangeState(LevelState.Initialization);
-    }
 
     #endregion
 
