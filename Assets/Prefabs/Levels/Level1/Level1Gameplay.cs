@@ -19,6 +19,7 @@ public class Level1Gameplay : BaseGameplay
     {
         base.Awake();
         OnBeforeLevelStateChanged += OnBeforeStateChanged;
+        OnAfterLevelStateChanged += OnAfterStateChanged;
     }
 
     private void Start()
@@ -35,6 +36,7 @@ public class Level1Gameplay : BaseGameplay
     private void OnDestroy()
     {
         OnBeforeLevelStateChanged -= OnBeforeStateChanged;
+        OnAfterLevelStateChanged -= OnAfterStateChanged;
     }
     #endregion
 
@@ -61,7 +63,7 @@ public class Level1Gameplay : BaseGameplay
         DrawCanvas.enabled = true;
         texture.ResetTexture();
 
-        await DelayAnswer(2000f);
+        await DelayAnswer(500);
 
         // Prepare the timer
         StartTimer();
@@ -147,13 +149,19 @@ public class Level1Gameplay : BaseGameplay
 
         // Add score to user current score based on true-ish boolean
         AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
-        
+
         base.HandleEnded();
     }
 
     private void OnBeforeStateChanged(LevelState changedState)
     {
+        DrawCanvas.gameObject.SetActive(changedState == LevelState.UserInteraction);
     }
+
+    private void OnAfterStateChanged(LevelState changedState)
+    {
+    }
+
     #endregion
 
     private async Task DelayAnswer(float interStateDelay)
