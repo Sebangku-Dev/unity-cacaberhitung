@@ -210,7 +210,7 @@ public class Level9Gameplay : BaseGameplay
     void SubstractionQuestion()
     {
         firstNumber = UnityEngine.Random.Range(1, 21);
-        secondNumber = UnityEngine.Random.Range(1, 20);
+        secondNumber = UnityEngine.Random.Range(1, firstNumber);
         resultNumber = firstNumber - secondNumber;
 
         TextDialog.text = "kamu harus berjalan sebanyak " + firstNumber + " langkah. Kemudian kembali sebanyak " + secondNumber + " langkah!";
