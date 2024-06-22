@@ -91,6 +91,8 @@ public class Level9Gameplay : BaseGameplay
         // Wait for a sec and delay answer to prevent user to access it
         await Task.WhenAll(new Task[] { Task.Delay(1500), DelayAnswer(2000) });
 
+        OnClearAnswer();
+
         if (state < maxState)
         {
             // change gameplay index
