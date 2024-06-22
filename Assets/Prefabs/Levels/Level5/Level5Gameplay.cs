@@ -18,7 +18,8 @@ public class Level5Gameplay : BaseGameplay
     [SerializeField] private List<Questions> questions;
     [SerializeField] LevelSprite hint;
     [SerializeField] DraggableSlot hundredDraggableSlot, tenDraggabeSlot, oneDraggableSlot;
-    [SerializeField] CacaHintAnimation caca;
+    [SerializeField] CharacterHintAnimation caca;
+    [SerializeField] FadeAnimation overlay;
 
     /// <summary>
     /// Format:
@@ -84,7 +85,8 @@ public class Level5Gameplay : BaseGameplay
         if (currentQuestionIndex == 0)
         {
             caca.Load();
-            await LockNumberBlocks(8000);
+            overlay.Load();
+            await LockNumberBlocks(4000);
         }
         else
         {

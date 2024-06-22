@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 2213127217770168602}
   - component: {fileID: 2213127217770168596}
   - component: {fileID: 2213127217770168597}
-  - component: {fileID: 2213127217770168599}
   - component: {fileID: 2213127217770168593}
+  - component: {fileID: 2669395192865653379}
   m_Layer: 0
   m_Name: Small Cake
   m_TagString: Draggable
@@ -78,20 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 1
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2213127217770168599
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2213127217770168603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24c35fc9fdb4ea64c9c2ff111ab371eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDestroyable: 1
-  parentAfterDrag: {fileID: 0}
 --- !u!114 &2213127217770168593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,3 +90,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f1f4028f4cec234f9c85ee702e77997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2669395192865653379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2213127217770168603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24c35fc9fdb4ea64c9c2ff111ab371eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isNotSnapped: 0
+  isDestroyable: 0
+  isLocked: 0
+  parentAfterDrag: {fileID: 0}
+  parentBeforeDrag: {fileID: 0}

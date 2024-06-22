@@ -38,7 +38,6 @@ public class CharacterHintAnimation : BaseAnimation, IAnimate
         int id = transform.LeanMoveLocal(transform.localPosition + delta, duration).setEaseInOutQuart().setDelay(duration).id;
         LTDescr d = LeanTween.descr(id);
 
-
         if (d != null)
         {
             d.setOnComplete(() => gameObject.SetActive(false)).setEase(LeanTweenType.easeInOutQuart);

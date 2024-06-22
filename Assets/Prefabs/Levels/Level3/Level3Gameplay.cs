@@ -23,9 +23,8 @@ public class Level3Gameplay : BaseGameplay
 
     [Header("Level3")]
     [SerializeField] private List<Questions> questions;
-    [SerializeField] private Cake currentBigCake;
-    [SerializeField] private Cake currentSmallCake;
-    [SerializeField] private Cake temporaryCake;
+    [SerializeField] private Plate smallPlate, bigPlate;
+    [SerializeField] private Cake currentBigCake, currentSmallCake, temporaryCake;
     [SerializeField] private TextMeshProUGUI hintText;
 
 
@@ -214,9 +213,14 @@ public class Level3Gameplay : BaseGameplay
     public void AddCakeFraction(Cake cake)
     {
         if (cake == currentBigCake)
+        {
             currentBigCakeFillAmount += float.Parse(currentQuestion[0]);
+        }
         else if (cake == currentSmallCake)
+        {
             currentSmallCakeFillAmount += float.Parse(currentQuestion[0]);
+
+        }
     }
 
     public void SubstractCakeFraction(Cake cake)
