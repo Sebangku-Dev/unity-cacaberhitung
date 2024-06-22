@@ -39,6 +39,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         transform.SetParent(canvas.transform);
         transform.SetAsLastSibling();
+
         image.raycastTarget = false;
 
         if (GetComponent<CanvasGroup>() != null)
@@ -59,7 +60,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (isLocked) return;
 
-
         transform.SetParent(parentAfterDrag);
 
         image.raycastTarget = true;
@@ -68,7 +68,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             GetComponent<CanvasGroup>().blocksRaycasts = true;
 
         OnItemEndDrag?.Invoke();
-        
+
         if (isDestroyable && transform.parent != parentBeforeDrag && !isLocked)
         {
             Destroy(gameObject);

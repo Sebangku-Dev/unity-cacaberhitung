@@ -4,54 +4,35 @@ using UnityEngine;
 public class Plate : BaseAnimation, IAnimate
 {
     [Header("Main")]
-    [SerializeField] Direction animationDirection;
-    [SerializeField] Vector3 initialLocalPosition;
+    [SerializeField] Vector3 delta;
 
-    private int distanceFromInitialPosition = 1200;
+    private void Start()
+    {
+        if (isAnimateOnLoad) Load();
+
+        transform.LeanMoveLocal(transform.localPosition + delta, 0f);
+    }
 
     public void Load()
     {
-        initialLocalPosition = transform.localPosition;
+        gameObject.SetActive(true);
 
-        switch (animationDirection)
+        transform.LeanMoveLocal(transform.localPosition - delta, duration).setEaseOutExpo().setDelay(delay);
+
+        if (isAnimateOnClose)
         {
-            case Direction.Right:
-                transform.localPosition += Vector3.right * distanceFromInitialPosition;
-                LeanTween.moveLocalX(gameObject, initialLocalPosition.x, duration).setEaseInOutQuart().setDelay(delay);
-                break;
-            case Direction.Left:
-                transform.localPosition += Vector3.left * distanceFromInitialPosition;
-                LeanTween.moveLocalX(gameObject, initialLocalPosition.x, duration).setEaseInOutQuart().setDelay(delay);
-                break;
-            default:
-                break;
+            Invoke("Close", delayAfterOnLoad);
         }
     }
 
     public void Close()
     {
-        int id = 0;
-
-        switch (animationDirection)
-        {
-            case Direction.Right:
-                id = LeanTween.moveLocalX(gameObject, distanceFromInitialPosition, duration).id;
-                break;
-            case Direction.Left:
-                id = LeanTween.moveLocalX(gameObject, -distanceFromInitialPosition, duration).id;
-                break;
-            default:
-                break;
-        }
-
+        int id = transform.LeanMoveLocal(transform.localPosition + delta, duration).id;
         LTDescr d = LeanTween.descr(id);
 
         if (d != null)
         {
-            d.setEase(LeanTweenType.easeInOutQuart).setOnComplete(() =>
-            {
-                transform.parent.gameObject.SetActive(false);
-            });
+            d.setOnComplete(() => gameObject.SetActive(false)).setEase(LeanTweenType.easeInOutQuart).setDelay(delay);
         }
     }
 }

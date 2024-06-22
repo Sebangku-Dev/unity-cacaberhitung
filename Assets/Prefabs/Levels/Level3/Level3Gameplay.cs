@@ -11,7 +11,6 @@ public class Level3Gameplay : BaseGameplay
     public class Questions
     {
         public string questionString;
-        public LevelSprite questionSprite;
         public Sprite cakeSprite;
     }
 
@@ -36,7 +35,6 @@ public class Level3Gameplay : BaseGameplay
     /// </summary>
     private List<string> currentQuestion;
     private int currentQuestionIndex = 0;
-    private LevelSprite currentQuestionSprite;
     private float currentBigCakeFillAmount = 0f;
     private float currentSmallCakeFillAmount = 0f;
 
@@ -46,6 +44,7 @@ public class Level3Gameplay : BaseGameplay
         base.Awake();
         OnBeforeLevelStateChanged += OnBeforeStateChanged;
         OnAfterLevelStateChanged += OnAfterStateChanged;
+
         Draggable.OnItemBeginDrag += OnCakeBeginDrag;
         Draggable.OnItemEndDrag += OnCakeEndDrag;
     }
@@ -65,6 +64,7 @@ public class Level3Gameplay : BaseGameplay
     {
         OnBeforeLevelStateChanged -= OnBeforeStateChanged;
         OnAfterLevelStateChanged -= OnAfterStateChanged;
+
         Draggable.OnItemBeginDrag -= OnCakeBeginDrag;
         Draggable.OnItemEndDrag -= OnCakeEndDrag;
     }
@@ -87,17 +87,14 @@ public class Level3Gameplay : BaseGameplay
         base.HandlePrepare();
 
         GenerateQuestion();
-        ShowSprite(currentQuestionSprite);
-
-
-        await Task.WhenAll(new Task[] {
-            Task.Delay(2000),
-            LockDraggable(2000)
-            }
-        );
 
         // Invoke OnPrepare
         OnPrepare?.Invoke();
+
+        bigPlate.Load();
+        smallPlate.Load();
+
+        await Task.Delay(2000);
 
         // Prepare Timer
         StartTimer();
@@ -124,15 +121,16 @@ public class Level3Gameplay : BaseGameplay
     {
         base.HandlePassed();
 
-        HideSprite(currentQuestionSprite);
-
         OnPassed?.Invoke();
 
         // Wait for passed animation
-        int duration = 1000;
-        await Task.WhenAll(
-            new Task[] { Task.Delay(duration), LockDraggable(duration * 3) }
-        );
+        await Task.Delay(1000);
+
+        bigPlate.Close();
+        smallPlate.Close();
+
+        // Wait for plate animation
+        await Task.Delay(1000);
 
         // Next question
         if (currentQuestionIndex < questions.Count() - 1)
@@ -201,7 +199,6 @@ public class Level3Gameplay : BaseGameplay
     private void GenerateQuestion()
     {
         currentQuestion = questions[currentQuestionIndex].questionString.Split(";").ToList();
-        currentQuestionSprite = questions[currentQuestionIndex].questionSprite;
 
         SetBigCake();
         SetSmallCake();
@@ -240,14 +237,14 @@ public class Level3Gameplay : BaseGameplay
         {
             currentSmallCakeFillAmount = float.Parse(currentQuestion[0]);
             currentSmallCake.gameObject.GetComponent<Image>().fillAmount = currentSmallCakeFillAmount;
-            currentSmallCake.GetComponent<Draggable>().isLocked = false;
+            currentSmallCake.gameObject.GetComponent<Draggable>().isLocked = false;
         }
         else
         {
             // Change bottom cake as answer
             currentSmallCakeFillAmount = 0f;
             currentSmallCake.gameObject.GetComponent<Image>().fillAmount = currentSmallCakeFillAmount;
-            currentSmallCake.GetComponent<Draggable>().isLocked = true;
+            currentSmallCake.gameObject.GetComponent<Draggable>().isLocked = true;
         }
     }
 
@@ -261,14 +258,14 @@ public class Level3Gameplay : BaseGameplay
         {
             currentBigCakeFillAmount = 0f;
             currentBigCake.gameObject.GetComponent<Image>().fillAmount = currentBigCakeFillAmount;
-            currentBigCake.GetComponent<Draggable>().isLocked = true;
+            currentBigCake.gameObject.GetComponent<Draggable>().isLocked = true;
         }
         else
         {
             // Change top cake as question
             currentBigCakeFillAmount = 1f;
             currentBigCake.gameObject.GetComponent<Image>().fillAmount = currentBigCakeFillAmount;
-            currentBigCake.GetComponent<Draggable>().isLocked = false;
+            currentBigCake.gameObject.GetComponent<Draggable>().isLocked = false;
         }
     }
 
@@ -276,7 +273,7 @@ public class Level3Gameplay : BaseGameplay
     /// <summary>
     /// If true, change to passed level state
     /// </summary>
-    public void CheckAnswer()
+    private void CheckAnswer()
     {
 
         if (currentQuestionIndex < 4 && Mathf.Approximately(currentBigCakeFillAmount, float.Parse(currentQuestion[1])))
@@ -293,21 +290,9 @@ public class Level3Gameplay : BaseGameplay
         }
     }
 
-    #region UI
-
-    private async Task LockDraggable(int delayMs)
-    {
-        currentSmallCake.GetComponent<Draggable>().isLocked = true;
-        currentBigCake.GetComponent<Draggable>().isLocked = true;
-
-        await Task.Delay(delayMs);
-
-        currentSmallCake.GetComponent<Draggable>().isLocked = false;
-        currentBigCake.GetComponent<Draggable>().isLocked = false;
-    }
-
     public void OnCakeBeginDrag()
     {
+        // For 4+ currentQuestionIndex
         if (!(currentQuestionIndex < 4) && CurrentLevelState != LevelState.Passed)
         {
             // Prepare and save latest state
@@ -323,31 +308,14 @@ public class Level3Gameplay : BaseGameplay
 
     public void OnCakeEndDrag()
     {
+        // Set cake fraction based on saved fill amount state
         currentSmallCake.gameObject.GetComponent<Image>().fillAmount = currentSmallCakeFillAmount;
         currentBigCake.gameObject.GetComponent<Image>().fillAmount = currentBigCakeFillAmount;
 
         temporaryCake.gameObject.SetActive(false);
+
+        CheckAnswer();
     }
-
-    public void OnReplayClick()
-    {
-        // Unload all animation
-        HideSprite(currentQuestionSprite);
-
-        // Reset all state
-        currentQuestionIndex = 0;
-        currentTime = 0;
-        mistake = 0;
-        isTimerActive = false;
-
-        levelData.isSolved = starIsSolvedState;
-        levelData.isRightInTime = starIsRightInTimeState;
-        levelData.isSolved = starIsNoMistakeState;
-
-        ChangeState(LevelState.Initialization);
-    }
-
-    #endregion
 
     #endregion
 

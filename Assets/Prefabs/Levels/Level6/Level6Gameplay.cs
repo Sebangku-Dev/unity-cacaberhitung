@@ -210,7 +210,7 @@ public class Level6Gameplay : BaseGameplay
         Dragable.GetComponent<Draggable>().isLocked = false;
 
         BasePlane.GetComponent<CanvasGroup>().alpha = 0.0f;
-        BasePlane.GetComponent<DraggableSlot>().isDisabled = false;
+        BasePlane.GetComponent<DraggableSlot>().Lock();
         BasePlane.GetComponent<DraggableSlot>().relatedDraggable = Dragable.GetComponent<Draggable>();
         BasePlane.GetComponent<DraggableSlot>().OnDropItem.AddListener(() => OnDraggableDropped(BasePlane, Dragable));
     }
