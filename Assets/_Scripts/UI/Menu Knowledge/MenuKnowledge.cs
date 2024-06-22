@@ -25,7 +25,7 @@ public class MenuKnowledge : MonoBehaviour
         int index = 0;
         foreach (Knowledge knowledge in DataSystem.Instance.Knowledge)
         {
-            if (UserManager.Instance.GetCurrentUser().listOfSaveKnowledge[index].isCollected)
+            if (UserManager.Instance.GetCurrentUser().savedKnowledge[index].isCollected)
             {
                 GameObject card = Instantiate(KnowledgeCard, KnowledgeContent.transform);
                 CardKnowledge cardKnowledge = card.GetComponent<CardKnowledge>();

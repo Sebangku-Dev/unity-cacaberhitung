@@ -44,3 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02b1999e1479b664eb8729645e6cf7c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isEvaluateOnStart: 0
+  achievementToastPrefab: {fileID: -5428277143300786339, guid: 8e1db75761ed24342ab43a6602eab595, type: 3}

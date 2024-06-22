@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using UnityEngine.Video;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using System.Linq;
 
 /// <summary>
 /// Parent class for all level gameplay class which can be inherited from
@@ -31,6 +32,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     [Header("Ended")]
     [SerializeField] protected UnityEvent OnEnded;
     [SerializeField] protected LevelEndedModal modalEnded;
+
 
     public static event Action<LevelState> OnBeforeLevelStateChanged;
     public static event Action<LevelState> OnAfterLevelStateChanged;
@@ -111,10 +113,35 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// <summary>
     /// Invoked on very end state
     /// </summary>
-    protected virtual void HandleEnded()
+    protected virtual async void HandleEnded()
     {
         Debug.Log(LevelState.Ended);
+
+        // No need to trigger hidesprites again because it overrided by its animation
+        StopTimer();
+
+        OnEnded?.Invoke();
+
+        // Calculate the stars
+        CalculateStars();
+
+        // Increase play count
+        levelData.playCount++;
+
+        // Show and unlock next level   
+        ShowAndUnlockNextLevel();
+
+        // Show ended modal
+        await ShowEndedModal();
+
+        // Add score to user current score based on true-ish boolean
+        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
+
+        AchievementManager.Instance.EvaluatePossibleAchievement();
+
+        // Save user data -> score, etc
         UserManager.Instance.Save();
+
     }
 
     /// <summary>

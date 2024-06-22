@@ -2387,6 +2387,28 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3458213047919513449, guid: c176532aadaa2054e873e525db618203, type: 3}
   m_PrefabInstance: {fileID: 661442252}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &661442254 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3458213047919513445, guid: c176532aadaa2054e873e525db618203, type: 3}
+  m_PrefabInstance: {fileID: 661442252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f372df3d62aa34089c618deeb2a8c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &661442255 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3458213047919513444, guid: c176532aadaa2054e873e525db618203, type: 3}
+  m_PrefabInstance: {fileID: 661442252}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d911139dfc530b043be22cfe9d461384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &688701813
 GameObject:
   m_ObjectHideFlags: 0
@@ -3477,7 +3499,7 @@ MonoBehaviour:
   OnFail:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1667437363}
         m_TargetAssemblyTypeName: FadeAnimation, Assembly-CSharp
         m_MethodName: Load
         m_Mode: 1
@@ -3489,8 +3511,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: CacaHintAnimation, Assembly-CSharp
+      - m_Target: {fileID: 1458021464}
+        m_TargetAssemblyTypeName: CharacterHintAnimation, Assembly-CSharp
         m_MethodName: Load
         m_Mode: 1
         m_Arguments:
@@ -3541,7 +3563,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 1047874556}
-        m_TargetAssemblyTypeName: CacaHintAnimation, Assembly-CSharp
+        m_TargetAssemblyTypeName: CharacterHintAnimation, Assembly-CSharp
         m_MethodName: Load
         m_Mode: 1
         m_Arguments:
@@ -3564,7 +3586,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 661442254}
         m_TargetAssemblyTypeName: PopupAnimation, Assembly-CSharp
         m_MethodName: Load
         m_Mode: 1
@@ -3576,7 +3598,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  modalEnded: {fileID: 0}
+  modalEnded: {fileID: 661442255}
   questions:
   - questionString: 1;5;3;4;5;6
   - questionString: 2;2;2;4;8;6
@@ -4342,15 +4364,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1047874554}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbc60dabd7badd245aae571d5fce7efe, type: 3}
+  m_Script: {fileID: 11500000, guid: b007d28f12ecc83429d4227160df1cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 1
+  duration: 0.3
   isAnimateOnLoad: 0
-  delay: 0.2
+  delay: 0
   isAnimateOnClose: 1
-  delayAfterOnLoad: 6
-  panelQuestion: {fileID: 1354061596}
+  delayAfterOnLoad: 2
+  child: {fileID: 1354061597}
+  delta: {x: 0, y: -500, z: 0}
 --- !u!114 &1047874557
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4626,6 +4649,7 @@ MonoBehaviour:
   delayAfterOnLoad: 5
   canvasGroup: {fileID: 1103546322}
   targetAlpha: 0
+  isPulsing: 0
 --- !u!225 &1103546322
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5378,6 +5402,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1158926379}
   targetAlpha: 0
+  isPulsing: 0
 --- !u!1 &1162416351
 GameObject:
   m_ObjectHideFlags: 0
@@ -5962,6 +5987,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1262808486}
   targetAlpha: 0
+  isPulsing: 0
 --- !u!225 &1262808486
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7537,6 +7563,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1667437364}
   targetAlpha: 0.6
+  isPulsing: 0
 --- !u!225 &1667437364
 CanvasGroup:
   m_ObjectHideFlags: 0

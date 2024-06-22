@@ -117,28 +117,8 @@ public class Level6Gameplay : BaseGameplay
         ChangeState(LevelState.UserInteraction);
     }
 
-    protected override async void HandleEnded()
+    protected override void HandleEnded()
     {
-        // No need to trigger hidesprites again because it overrided by its animation
-        StopTimer();
-
-        OnEnded?.Invoke();
-
-        // Calculate the stars
-        CalculateStars();
-
-        // Increase play count
-        levelData.playCount++;
-
-        // Show and unlock next level   
-        ShowAndUnlockNextLevel();
-
-        // Show ended modal
-        await ShowEndedModal();
-
-        // Add score to user current score based on true-ish boolean
-        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
-
         base.HandleEnded();
     }
 
@@ -314,15 +294,15 @@ public class Level6Gameplay : BaseGameplay
     {
         int fib = 0, FirstNumber = 0, SecondNumber = initNumber;
         if (count == 0) return FirstNumber;
-        else if(count==1) return SecondNumber;
+        else if (count == 1) return SecondNumber;
         else
         {
-             for(int i = 2; i <= count; i++)
-                {
-                    fib = FirstNumber + SecondNumber;
-                    FirstNumber = SecondNumber;
-                    SecondNumber = fib;
-                }
+            for (int i = 2; i <= count; i++)
+            {
+                fib = FirstNumber + SecondNumber;
+                FirstNumber = SecondNumber;
+                SecondNumber = fib;
+            }
         }
         return fib;
     }

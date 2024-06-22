@@ -156,28 +156,8 @@ public class Level8Gameplay : BaseGameplay
         ChangeState(LevelState.UserInteraction);
     }
 
-    protected override async void HandleEnded()
+    protected override void HandleEnded()
     {
-        // No need to trigger hidesprites again because it overrided by its animation
-        StopTimer();
-
-        OnEnded?.Invoke();
-
-        // Calculate the stars
-        CalculateStars();
-
-        // Increase play count
-        levelData.playCount++;
-
-        // Show and unlock next level   
-        ShowAndUnlockNextLevel();
-
-        // Show ended modal
-        await ShowEndedModal();
-
-        // Add score to user current score based on true-ish boolean
-        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
-
         base.HandleEnded();
     }
 
@@ -195,22 +175,6 @@ public class Level8Gameplay : BaseGameplay
             ChangeState(LevelState.Fail);
     }
 
-    public void OnReplayClick()
-    {
-        // Reset all state
-        currentQuestionIndex = 0;
-        currentTime = 0;
-        mistake = 0;
-        isTimerActive = false;
-
-        // HideSprite(currentQuestionSprite);
-
-        levelData.isSolved = starIsSolvedState;
-        levelData.isRightInTime = starIsRightInTimeState;
-        levelData.isSolved = starIsNoMistakeState;
-
-        ChangeState(LevelState.Initialization);
-    }
     #endregion
 
     #region UI

@@ -38,8 +38,8 @@ public class User
     public int age;
     public int currentLevel;
     public int currentScore;
-    public List<SaveLevel> listOfSaveLevel = new List<SaveLevel>();
-    public List<SaveKnowledge> listOfSaveKnowledge = new List<SaveKnowledge>();
+    public List<SaveLevel> savedLevels = new List<SaveLevel>();
+    public List<SaveKnowledge> savedKnowledge = new List<SaveKnowledge>();
     public bool knowledgeHasSpawn;
     public TodaysKnowledge currentKnowledge;
 }

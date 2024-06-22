@@ -923,7 +923,7 @@ PrefabInstance:
     - target: {fileID: 6313532264859565263, guid: 2e18131635f50fe4fa797fc30336ee10, type: 3}
       propertyPath: OnEnded.m_PersistentCalls.m_Calls.Array.data[6].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 530089772}
     - target: {fileID: 6313532264859565263, guid: 2e18131635f50fe4fa797fc30336ee10, type: 3}
       propertyPath: OnPrepare.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -2286,6 +2286,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d911139dfc530b043be22cfe9d461384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &530089772 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3458213047919513445, guid: c176532aadaa2054e873e525db618203, type: 3}
+  m_PrefabInstance: {fileID: 530089769}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f372df3d62aa34089c618deeb2a8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &599298744
@@ -4401,7 +4412,6 @@ MonoBehaviour:
   LockAtFirst: 1
   maximumChildCount: 1
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -4718,6 +4728,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1158926379}
   targetAlpha: 0
+  isPulsing: 0
 --- !u!1 &1162416351
 GameObject:
   m_ObjectHideFlags: 0
@@ -5165,6 +5176,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1195112988}
   targetAlpha: 0.6
+  isPulsing: 0
 --- !u!225 &1195112988
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5419,6 +5431,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1262808486}
   targetAlpha: 0
+  isPulsing: 0
 --- !u!225 &1262808486
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -7099,6 +7112,7 @@ MonoBehaviour:
   delayAfterOnLoad: 4
   canvasGroup: {fileID: 1498325461}
   targetAlpha: 0.6
+  isPulsing: 0
 --- !u!225 &1498325461
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -8377,7 +8391,6 @@ MonoBehaviour:
   LockAtFirst: 1
   maximumChildCount: 1
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -8784,7 +8797,6 @@ MonoBehaviour:
   LockAtFirst: 0
   maximumChildCount: 5
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -9055,7 +9067,6 @@ MonoBehaviour:
   LockAtFirst: 0
   maximumChildCount: 5
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -10536,7 +10547,6 @@ MonoBehaviour:
   LockAtFirst: 1
   maximumChildCount: 1
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []

@@ -415,7 +415,6 @@ MonoBehaviour:
   LockAtFirst: 0
   maximumChildCount: 1
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -592,6 +591,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d911139dfc530b043be22cfe9d461384, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &176512108 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3458213047919513445, guid: c176532aadaa2054e873e525db618203, type: 3}
+  m_PrefabInstance: {fileID: 176512105}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1f372df3d62aa34089c618deeb2a8c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &211933144
@@ -999,15 +1009,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 288439957}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbc60dabd7badd245aae571d5fce7efe, type: 3}
+  m_Script: {fileID: 11500000, guid: b007d28f12ecc83429d4227160df1cd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0.5
+  duration: 0.3
   isAnimateOnLoad: 0
-  delay: 0.2
+  delay: 0
   isAnimateOnClose: 1
-  delayAfterOnLoad: 1.5
-  panelQuestion: {fileID: 1201625279}
+  delayAfterOnLoad: 2
+  child: {fileID: 1201625280}
+  delta: {x: 0, y: -500, z: 0}
 --- !u!114 &288439960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1721,6 +1732,7 @@ MonoBehaviour:
   delayAfterOnLoad: 1.5
   canvasGroup: {fileID: 435615566}
   targetAlpha: 0.6
+  isPulsing: 0
 --- !u!225 &435615566
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2244,7 +2256,6 @@ MonoBehaviour:
   LockAtFirst: 0
   maximumChildCount: 1
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -2611,7 +2622,6 @@ MonoBehaviour:
   LockAtFirst: 0
   maximumChildCount: 1
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -4275,6 +4285,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1158926379}
   targetAlpha: 0
+  isPulsing: 0
 --- !u!1 &1162416351
 GameObject:
   m_ObjectHideFlags: 0
@@ -5194,6 +5205,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1262808486}
   targetAlpha: 0
+  isPulsing: 0
 --- !u!225 &1262808486
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -6031,7 +6043,6 @@ MonoBehaviour:
   LockAtFirst: 0
   maximumChildCount: 5
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -7764,7 +7775,6 @@ MonoBehaviour:
   LockAtFirst: 0
   maximumChildCount: 1
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -8080,7 +8090,7 @@ PrefabInstance:
     - target: {fileID: -3263229768541552129, guid: 1c07b0bf544b01b4e8b96bbbf442d3e3, type: 3}
       propertyPath: OnEnded.m_PersistentCalls.m_Calls.Array.data[5].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 176512108}
     - target: {fileID: -3263229768541552129, guid: 1c07b0bf544b01b4e8b96bbbf442d3e3, type: 3}
       propertyPath: OnPassed.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -8163,7 +8173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -3263229768541552129, guid: 1c07b0bf544b01b4e8b96bbbf442d3e3, type: 3}
       propertyPath: OnFail.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: CacaHintAnimation, Assembly-CSharp
+      value: CharacterHintAnimation, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: -3263229768541552129, guid: 1c07b0bf544b01b4e8b96bbbf442d3e3, type: 3}
       propertyPath: OnEnded.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -8793,7 +8803,6 @@ MonoBehaviour:
   LockAtFirst: 0
   maximumChildCount: 1
   relatedDraggable: {fileID: 0}
-  isDisabled: 0
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []

@@ -27,7 +27,7 @@ public class UserManager : Singleton<UserManager>
                 id = level.id,
             };
 
-            user.listOfSaveLevel.Add(saved);
+            user.savedLevels.Add(saved);
         }
 
         foreach (Knowledge knowledge in DataSystem.Instance.Knowledge)
@@ -38,7 +38,7 @@ public class UserManager : Singleton<UserManager>
                 isCollected = false
             };
 
-            user.listOfSaveKnowledge.Add(saved);
+            user.savedKnowledge.Add(saved);
         }
 
         return user;

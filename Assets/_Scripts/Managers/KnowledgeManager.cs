@@ -326,17 +326,17 @@ public class KnowledgeManager : MonoBehaviour
 
         int index = -1;
 
-        if (UserManager.Instance.GetCurrentUser() != null && DataSystem.Instance.Knowledge != null) index = UserManager.Instance.GetCurrentUser().listOfSaveKnowledge.FindIndex(knowledge => knowledge.id == newSaved.id);
+        if (UserManager.Instance.GetCurrentUser() != null && DataSystem.Instance.Knowledge != null) index = UserManager.Instance.GetCurrentUser().savedKnowledge.FindIndex(knowledge => knowledge.id == newSaved.id);
 
         if (index != -1)
         {
             UserManager.Instance.GetCurrentUser().currentKnowledge.isAnswered = true;
 
-            bool check = UserManager.Instance.GetCurrentUser().listOfSaveKnowledge[index].isCollected;
+            bool check = UserManager.Instance.GetCurrentUser().savedKnowledge[index].isCollected;
 
             if (!check)
             {
-                UserManager.Instance.GetCurrentUser().listOfSaveKnowledge[index] = newSaved;
+                UserManager.Instance.GetCurrentUser().savedKnowledge[index] = newSaved;
                 UserManager.Instance.Save();
             }
         }
