@@ -24,6 +24,7 @@ public class Level3Gameplay : BaseGameplay
     [SerializeField] private List<Questions> questions;
     [SerializeField] private Plate smallPlate, bigPlate;
     [SerializeField] private Cake currentBigCake, currentSmallCake, temporaryCake;
+    [SerializeField] private FadeAnimation smallPlateHint, bigPlateHint;
     [SerializeField] private TextMeshProUGUI hintText;
 
 
@@ -108,6 +109,15 @@ public class Level3Gameplay : BaseGameplay
 
         // Start timer if not active
         if (!isTimerActive) StartTimer();
+
+        if (currentQuestionIndex < 4)
+        {
+            bigPlateHint.Load();
+        }
+        else
+        {
+            smallPlateHint.Load();
+        }
     }
 
     protected override void HandlePaused()
@@ -292,6 +302,10 @@ public class Level3Gameplay : BaseGameplay
 
     public void OnCakeBeginDrag()
     {
+        // Hide plate hint when cake is dragged
+        smallPlateHint.Close();
+        bigPlateHint.Close();
+
         // For 4+ currentQuestionIndex
         if (!(currentQuestionIndex < 4) && CurrentLevelState != LevelState.Passed)
         {
