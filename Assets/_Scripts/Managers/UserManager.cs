@@ -2,23 +2,22 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine;
 using System;
+using System.Linq;
 public class UserManager : Singleton<UserManager>
 {
 
     [Header("Login as Guest")]
     [SerializeField] public User NewUser;
 
-    protected void Start()
+    public void Register(string name, string age)
     {
-        if (File.Exists(Application.persistentDataPath + "/game.save"))
+        UserManager.Instance.NewUser = new User()
         {
-            Load();
-        }
-    }
-
-    public User CreateUserFile()
-    {
-        User user = UserManager.Instance.NewUser ?? new User();
+            id = name + DateTime.Now.ToString("yyyy-MM-dd"),
+            name = name,
+            age = Int32.Parse(age),
+            currentScore = 0,
+        };
 
         foreach (Level level in DataSystem.Instance.Levels)
         {
@@ -27,7 +26,7 @@ public class UserManager : Singleton<UserManager>
                 id = level.id,
             };
 
-            user.savedLevels.Add(saved);
+            UserManager.Instance.NewUser.savedLevels.Add(saved);
         }
 
         foreach (Knowledge knowledge in DataSystem.Instance.Knowledge)
@@ -38,54 +37,63 @@ public class UserManager : Singleton<UserManager>
                 isCollected = false
             };
 
-            user.savedKnowledge.Add(saved);
+            UserManager.Instance.NewUser.savedKnowledge.Add(saved);
         }
 
-        return user;
-    }
-
-    public void Save()
-    {
-        User user = DataSystem.Instance.User ?? CreateUserFile();
-
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/game.save");
-        binaryFormatter.Serialize(file, user);
-        file.Close();
-
-        Load();
-    }
-
-    public void Load()
-    {
-
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
-        FileStream file = File.Open(Application.persistentDataPath + "/game.save", FileMode.Open);
-        User user = (User)binaryFormatter.Deserialize(file);
-        file.Close();
-
-        Debug.Log("Game Save is Exist");
-        Debug.Log("User: " + JsonUtility.ToJson(user));
-
-        DataSystem.Instance.User = user;
-    }
-
-    public void Register(string name, string age)
-    {
-        UserManager.Instance.NewUser = new User()
+        foreach (Achievement a in DataSystem.Instance.Achievements)
         {
-            id = name + DateTime.Now.ToString("yyyy-MM-dd"),
-            name = name,
-            age = Int32.Parse(age),
-            currentLevel = 1,
-            currentScore = 0
-        };
+            SaveAchievement saved = new()
+            {
+                id = a.id,
+                isUnlocked = false
+            };
 
-        Save();
+            UserManager.Instance.NewUser.savedAchievement.Add(saved);
+        }
+
+        // Save New User to game.save
+        DataSystem.Instance.Save(NewUser);
 
         Debug.Log(JsonUtility.ToJson(UserManager.Instance.GetCurrentUser()));
     }
 
     public User GetCurrentUser() => DataSystem.Instance.User;
+
+    /// <summary>
+    /// Add to Data System
+    /// </summary>
+    /// <param name="level">Which level</param>
+    public void AddSavedLevel(Level level)
+    {
+        int levelListIndex = DataSystem.Instance.User.savedLevels.FindIndex(l => l.id == level.id);
+
+        DataSystem.Instance.User.savedLevels[levelListIndex] = new SaveLevel()
+        {
+            id = level.id,
+            isUnlocked = level.isUnlocked,
+            isSolved = level.isSolved,
+            isRightInTime = level.isRightInTime,
+            isNoMistake = level.isNoMistake,
+            isToBePlayed = level.isToBePlayed,
+            playCount = level.playCount
+        };
+    }
+
+    /// <summary>
+    /// Add to Data System
+    /// </summary>
+    /// <param name="level">Which achievement</param>
+    public void AddSavedAchievement(Achievement achievement)
+    {
+        int achievementLevelIndex = DataSystem.Instance.User.savedAchievement.FindIndex(a => a.id == achievement.id);
+
+        DataSystem.Instance.User.savedAchievement[achievementLevelIndex] = new SaveAchievement()
+        {
+            id = achievement.id,
+            isUnlocked = achievement.isUnlocked
+        };
+    }
+
+    
 
 }

@@ -4727,6 +4727,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1158926379}
   targetAlpha: 0
+  isPulsing: 0
 --- !u!1 &1162416351
 GameObject:
   m_ObjectHideFlags: 0
@@ -5374,6 +5375,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1262808486}
   targetAlpha: 0
+  isPulsing: 0
 --- !u!225 &1262808486
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -5699,6 +5701,68 @@ MonoBehaviour:
   m_EffectColor: {r: 0.8, g: 0.8352941, b: 0.88235295, a: 1}
   m_EffectDistance: {x: 0, y: -18}
   m_UseGraphicAlpha: 1
+--- !u!1001 &1360128339
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1888151707}
+    m_Modifications:
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 68.31097
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.523798
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1156.5687
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3500161097107653001, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+      propertyPath: m_Name
+      value: Achievement Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+--- !u!4 &1360128340 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3500161097107653000, guid: a0c4bb2a930d9ad4ebba1ed27f38931f, type: 3}
+  m_PrefabInstance: {fileID: 1360128339}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1366579246 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1463277253, guid: 9b99a5bb2bce53343ba9cae4df67ff3b, type: 3}
@@ -7544,6 +7608,7 @@ Transform:
   m_Children:
   - {fileID: 1247692315}
   - {fileID: 1300130678}
+  - {fileID: 1360128340}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7606,6 +7671,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1889526052}
   targetAlpha: 0.6
+  isPulsing: 0
 --- !u!225 &1889526052
 CanvasGroup:
   m_ObjectHideFlags: 0

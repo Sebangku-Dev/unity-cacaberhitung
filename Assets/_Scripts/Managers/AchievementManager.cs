@@ -47,15 +47,25 @@ public class AchievementManager : Singleton<AchievementManager>
         instantiatedToast.GetComponent<IAnimate>().Load();
     }
 
+    /// <summary>
+    /// For debug only
+    /// </summary>
+    private void LockAllAchievement()
+    {
+        foreach (var a in DataSystem.Instance.Achievements)
+            a.isUnlocked = false;
+
+    }
+
     public void EvaluatePossibleAchievement()
     {
         isAnyUnlocked = false;
 
         EvaluateAchievement1();
         EvaluateAchievement2();
-        EvaluateAchievement3();
+        // EvaluateAchievement3(); 
         EvaluateAchievement4();
-        EvaluateAchievement5();
+        // EvaluateAchievement5();
         EvaluateAchievement6();
         EvaluateAchievement7();
         EvaluateAchievement8();
@@ -81,7 +91,7 @@ public class AchievementManager : Singleton<AchievementManager>
     }
     private void EvaluateAchievement3()
     {
-        if (DataSystem.Instance.Levels.Where(level => level.location.region == "Thirdema Island").All(level => level.isSolved) && false)
+        if (DataSystem.Instance.Levels.Where(level => level.location.region == "Thirdema Island").All(level => level.isSolved))
         {
             UnlockAchievement(DataSystem.Instance.Achievements.Find(achievement => achievement.id == 3));
         }

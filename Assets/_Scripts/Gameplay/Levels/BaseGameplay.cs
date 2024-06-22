@@ -134,13 +134,17 @@ public class BaseGameplay : Singleton<BaseGameplay>
         // Show ended modal
         await ShowEndedModal();
 
-        // Add score to user current score based on true-ish boolean
-        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
-
+        // Evaluate possibly unlocked achievement
         AchievementManager.Instance.EvaluatePossibleAchievement();
 
-        // Save user data -> score, etc
-        UserManager.Instance.Save();
+        // Add score, saved level, and achievement (if exist) to Data System
+        AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
+        AddSavedLevel(levelData);
+        foreach (var a in DataSystem.Instance.Achievements)
+            AddSavedAchievement(a);
+
+        // Save current user data -> score, etc
+        DataSystem.Instance.Save(UserManager.Instance.GetCurrentUser());
 
     }
 
@@ -290,12 +294,30 @@ public class BaseGameplay : Singleton<BaseGameplay>
     }
 
     /// <summary>
-    /// <see cref="ScoreSystem.AddScore(int)"/> wrapper 
+    /// <see cref="ScoreManager.Instance.AddScore(addedScore)"/> wrapper 
     /// </summary>
     /// <param name="addedScore">Added score in integer</param>
     protected void AddScore(int addedScore)
     {
         ScoreManager.Instance.AddScore(addedScore);
+    }
+
+    /// <summary>
+    /// <see cref="UserManager.Instance.AddSavedLevel(addedLevel)"/> wrapper 
+    /// </summary>
+    /// <param name="addedLevel">Added level in Level</param>
+    protected void AddSavedLevel(Level addedLevel)
+    {
+        UserManager.Instance.AddSavedLevel(addedLevel);
+    }
+
+    /// <summary>
+    /// <see cref="UserManager.Instance.AddSavedAchievement(addedAchievement)"/> wrapper 
+    /// </summary>
+    /// <param name="addedAchievement">Added achievement in Achievement</param>
+    protected void AddSavedAchievement(Achievement addedAchievement)
+    {
+        UserManager.Instance.AddSavedAchievement(addedAchievement);
     }
 
     /// <summary>

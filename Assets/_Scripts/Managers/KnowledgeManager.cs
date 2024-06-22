@@ -147,7 +147,7 @@ public class KnowledgeManager : MonoBehaviour
 
             UserManager.Instance.GetCurrentUser().knowledgeHasSpawn = true;
 
-            UserManager.Instance.Save();
+            DataSystem.Instance.Save(UserManager.Instance.GetCurrentUser());
 
             currentKnowledge = DataSystem.Instance.Knowledge[randomIndex];
 
@@ -174,7 +174,7 @@ public class KnowledgeManager : MonoBehaviour
             NewKnowledgeObject.transform.position = savedPosition;
             OnKnowledgeSpawned();
 
-            UserManager.Instance.Save();
+            DataSystem.Instance.Save(UserManager.Instance.GetCurrentUser());
         }
         else TransformNewKnowledge();
     }
@@ -337,7 +337,7 @@ public class KnowledgeManager : MonoBehaviour
             if (!check)
             {
                 UserManager.Instance.GetCurrentUser().savedKnowledge[index] = newSaved;
-                UserManager.Instance.Save();
+                DataSystem.Instance.Save(UserManager.Instance.GetCurrentUser());
             }
         }
 
