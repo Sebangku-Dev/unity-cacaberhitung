@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 
 public class DrawAstexture : MonoBehaviour
 {
@@ -29,6 +31,7 @@ public class DrawAstexture : MonoBehaviour
         // Is the mouse being pressed?
         if (!Input.GetMouseButton(0) && !Input.GetMouseButton(1)) return;
         // Cast a ray into the scene from screenspace where the mouse is.
+
         Ray mouseRay = camera.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
@@ -57,8 +60,8 @@ public class DrawAstexture : MonoBehaviour
                 double distance = Math.Sqrt((i - radius) * (i - radius) + (j - radius) * (j - radius));
                 if (distance <= radius)
                 {
-                    int newX = x + i-radius;
-                    int newY = y + j-radius;
+                    int newX = x + i - radius;
+                    int newY = y + j - radius;
 
                     if (newX >= 0 && newX < baseTexture.width && newY >= 0 && newY < baseTexture.height)
                     {

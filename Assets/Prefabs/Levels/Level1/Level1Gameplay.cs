@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Level1Gameplay : BaseGameplay
 {
@@ -17,6 +18,7 @@ public class Level1Gameplay : BaseGameplay
     {
         base.Awake();
         OnBeforeLevelStateChanged += OnBeforeStateChanged;
+        OnAfterLevelStateChanged += OnAfterStateChanged;
     }
 
     private void Start()
@@ -33,6 +35,7 @@ public class Level1Gameplay : BaseGameplay
     private void OnDestroy()
     {
         OnBeforeLevelStateChanged -= OnBeforeStateChanged;
+        OnAfterLevelStateChanged -= OnAfterStateChanged;
     }
     #endregion
 
@@ -52,12 +55,14 @@ public class Level1Gameplay : BaseGameplay
     {
         base.HandlePrepare();
 
+        OnPrepare?.Invoke();
+
         GenerateCandles();
 
         DrawCanvas.enabled = true;
         texture.ResetTexture();
 
-        await DelayAnswer(2000f);
+        await DelayAnswer(500);
 
         // Prepare the timer
         StartTimer();
@@ -69,14 +74,16 @@ public class Level1Gameplay : BaseGameplay
     {
         base.HandleUserInteraction();
 
+        OnUserInteraction?.Invoke();
+
         if (!isTimerActive) StartTimer();
-
-
     }
 
     protected override void HandlePaused()
     {
         base.HandlePaused();
+
+        OnPaused?.Invoke();
 
         StopTimer();
     }
@@ -100,7 +107,7 @@ public class Level1Gameplay : BaseGameplay
         else
             ChangeState(LevelState.Ended);
     }
-    protected override void HandleFail()
+    protected override async void HandleFail()
     {
         base.HandleFail();
 
@@ -111,14 +118,15 @@ public class Level1Gameplay : BaseGameplay
         // Event to trigger something e.g. Caca popup animation
         OnFail?.Invoke();
 
+        // Wait for the animation
+        await Task.Delay(2000);
+
         // Reanswer user interaction
         ChangeState(LevelState.UserInteraction);
     }
 
     protected override async void HandleEnded()
     {
-        base.HandleEnded();
-
         DrawCanvas.enabled = false;
 
         // No need to trigger hidesprites again because it overrided by its animation
@@ -137,14 +145,22 @@ public class Level1Gameplay : BaseGameplay
 
         // Show ended modal
         await ShowEndedModal();
-        
+
         // Add score to user current score based on true-ish boolean
         AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
+
+        base.HandleEnded();
     }
 
     private void OnBeforeStateChanged(LevelState changedState)
     {
+        DrawCanvas.gameObject.SetActive(changedState == LevelState.UserInteraction);
     }
+
+    private void OnAfterStateChanged(LevelState changedState)
+    {
+    }
+
     #endregion
 
     private async Task DelayAnswer(float interStateDelay)
@@ -164,6 +180,7 @@ public class Level1Gameplay : BaseGameplay
 
         ChangeState(model.prediction.predictedValue == answer ? LevelState.Passed : LevelState.Fail);
     }
+
 
     #endregion
 

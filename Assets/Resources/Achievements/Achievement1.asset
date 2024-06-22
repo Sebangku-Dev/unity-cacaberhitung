@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838fa95d7a4d5834c97cc004cc2b3a81, type: 3}
   m_Name: Achievement1
   m_EditorClassIdentifier: 
-  title: 
-  badge: {fileID: 0}
-  type: 0
-  description: 
+  id: 1
+  title: Firstaria Wanderer
+  badge: {fileID: 21300000, guid: b65d54a1b6d18a540b7ed6fb75dd33c1, type: 3}
+  description: Menyelesaikan region Firstaria
+  isUnlocked: 0
+  pointReward: 0
+  energyReward: 2

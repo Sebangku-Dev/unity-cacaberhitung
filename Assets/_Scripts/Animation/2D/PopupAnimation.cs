@@ -7,10 +7,8 @@ public class PopupAnimation : BaseAnimation, IAnimate
         if (isAnimateOnLoad) Load();
     }
 
-
     public void Load()
     {
-
         gameObject.SetActive(true);
 
         transform.localScale = Vector3.zero;

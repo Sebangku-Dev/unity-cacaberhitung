@@ -138,8 +138,6 @@ public class Level4Gameplay : BaseGameplay
 
     protected override async void HandleEnded()
     {
-        base.HandleEnded();
-
         // No need to trigger hidesprites again because it overrided by its animation
         StopTimer();
 
@@ -159,6 +157,8 @@ public class Level4Gameplay : BaseGameplay
 
         // Add score to user current score based on true-ish boolean
         AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
+
+        base.HandleEnded();
     }
 
     private void OnBeforeStateChanged(LevelState changedState)

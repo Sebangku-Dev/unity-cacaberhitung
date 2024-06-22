@@ -17,6 +17,10 @@ public class BaseGameplay : Singleton<BaseGameplay>
     [SerializeField] protected VideoPlayer cutscenePlayer;
     [Header("Prepare")]
     [SerializeField] protected UnityEvent OnPrepare;
+    [Header("User Interaction")]
+    [SerializeField] protected UnityEvent OnUserInteraction;
+    [Header("Paused")]
+    [SerializeField] protected UnityEvent OnPaused;
     [Header("Passed")]
     [SerializeField] protected Star starIsSolved;
     [SerializeField] protected Star starIsRightInTime;
@@ -97,37 +101,41 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// <summary>
     /// Invoked on start to init everything before prepare
     /// </summary>
-    protected virtual void HandleInitialization() { }
+    protected virtual void HandleInitialization() { Debug.Log(LevelState.Initialization); }
 
     /// <summary>
     /// Invoked when on paused state
     /// </summary>
-    protected virtual void HandlePaused() { }
+    protected virtual void HandlePaused() { Debug.Log(LevelState.Paused); }
 
     /// <summary>
     /// Invoked on very end state
     /// </summary>
-    protected virtual void HandleEnded() { }
+    protected virtual void HandleEnded()
+    {
+        Debug.Log(LevelState.Ended);
+        UserManager.Instance.Save();
+    }
 
     /// <summary>
     /// Invoked if user give wrong answer
     /// </summary>
-    protected virtual void HandleFail() { }
+    protected virtual void HandleFail() { Debug.Log(LevelState.Fail); }
 
     /// <summary>
     /// Invoked if user give correct answer
     /// </summary>
-    protected virtual void HandlePassed() { }
+    protected virtual void HandlePassed() { Debug.Log(LevelState.Passed); }
 
     /// <summary>
     /// Invoked after HandlePrepare()
     /// </summary>
-    protected virtual void HandleUserInteraction() { }
+    protected virtual void HandleUserInteraction() { Debug.Log(LevelState.UserInteraction); }
 
     /// <summary>
     /// Invoked on first level load and after passed or fail state
     /// </summary>
-    protected virtual void HandlePrepare() { }
+    protected virtual void HandlePrepare() { Debug.Log(LevelState.Prepare); }
     #endregion
 
     #region UI
@@ -260,7 +268,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// <param name="addedScore">Added score in integer</param>
     protected void AddScore(int addedScore)
     {
-        ScoreSystem.Instance.AddScore(addedScore);
+        ScoreManager.Instance.AddScore(addedScore);
     }
 
     /// <summary>
@@ -269,9 +277,13 @@ public class BaseGameplay : Singleton<BaseGameplay>
     protected void ShowAndUnlockNextLevel()
     {
         levelData.isToBePlayed = false;
-        levelData.nextLevel.isToBePlayed = true;
-        levelData.nextLevel.isUnlocked = true;
-        levelData.nextLevel.isSolved = false;
+
+        if (levelData.nextLevel != null)
+        {
+            levelData.nextLevel.isToBePlayed = true;
+            levelData.nextLevel.isUnlocked = true;
+            levelData.nextLevel.isSolved = false;
+        }
     }
 
     #endregion

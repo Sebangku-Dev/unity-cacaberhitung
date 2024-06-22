@@ -30,5 +30,6 @@ public class Level : ScriptableObject
     public bool isToBePlayed = false;
     public VideoClip cutsceneClip;
     public Transform marker;
+    public Location location;
     public Level nextLevel;
 }

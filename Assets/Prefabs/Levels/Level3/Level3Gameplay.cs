@@ -23,9 +23,8 @@ public class Level3Gameplay : BaseGameplay
 
     [Header("Level3")]
     [SerializeField] private List<Questions> questions;
-    [SerializeField] private Cake currentBigCake;
-    [SerializeField] private Cake currentSmallCake;
-    [SerializeField] private Cake temporaryCake;
+    [SerializeField] private Plate smallPlate, bigPlate;
+    [SerializeField] private Cake currentBigCake, currentSmallCake, temporaryCake;
     [SerializeField] private TextMeshProUGUI hintText;
 
 
@@ -36,7 +35,7 @@ public class Level3Gameplay : BaseGameplay
     /// <para>[2] Hint Text</para>
     /// </summary>
     private List<string> currentQuestion;
-    private int currentQuestionIndex = 7;
+    private int currentQuestionIndex = 0;
     private LevelSprite currentQuestionSprite;
     private float currentBigCakeFillAmount = 0f;
     private float currentSmallCakeFillAmount = 0f;
@@ -164,23 +163,27 @@ public class Level3Gameplay : BaseGameplay
 
     protected override async void HandleEnded()
     {
-        base.HandleEnded();
-
         // No need to trigger hidesprites again because it overrided by its animation
         StopTimer();
 
         OnEnded?.Invoke();
 
+        // Calculate the stars
         CalculateStars();
-        
+
+        // Increase play count
         levelData.playCount++;
 
+        // Show and unlock next level   
         ShowAndUnlockNextLevel();
 
+        // Show ended modal
         await ShowEndedModal();
 
         // Add score to user current score based on true-ish boolean
         AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
+
+        base.HandleEnded();
     }
 
     private void OnBeforeStateChanged(LevelState changedState)
@@ -210,9 +213,14 @@ public class Level3Gameplay : BaseGameplay
     public void AddCakeFraction(Cake cake)
     {
         if (cake == currentBigCake)
+        {
             currentBigCakeFillAmount += float.Parse(currentQuestion[0]);
+        }
         else if (cake == currentSmallCake)
+        {
             currentSmallCakeFillAmount += float.Parse(currentQuestion[0]);
+
+        }
     }
 
     public void SubstractCakeFraction(Cake cake)
@@ -285,6 +293,8 @@ public class Level3Gameplay : BaseGameplay
         }
     }
 
+    #region UI
+
     private async Task LockDraggable(int delayMs)
     {
         currentSmallCake.GetComponent<Draggable>().isLocked = true;
@@ -318,6 +328,26 @@ public class Level3Gameplay : BaseGameplay
 
         temporaryCake.gameObject.SetActive(false);
     }
+
+    public void OnReplayClick()
+    {
+        // Unload all animation
+        HideSprite(currentQuestionSprite);
+
+        // Reset all state
+        currentQuestionIndex = 0;
+        currentTime = 0;
+        mistake = 0;
+        isTimerActive = false;
+
+        levelData.isSolved = starIsSolvedState;
+        levelData.isRightInTime = starIsRightInTimeState;
+        levelData.isSolved = starIsNoMistakeState;
+
+        ChangeState(LevelState.Initialization);
+    }
+
+    #endregion
 
     #endregion
 

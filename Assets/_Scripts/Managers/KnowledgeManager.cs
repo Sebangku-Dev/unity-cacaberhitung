@@ -48,7 +48,7 @@ public class KnowledgeManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (UserManager.Instance.User != null)
+        if (UserManager.Instance.GetCurrentUser() != null)
         {
             if (isCheckKnowledge)
             {
@@ -58,7 +58,7 @@ public class KnowledgeManager : MonoBehaviour
 
             else
             {
-                if (UserManager.Instance.User.knowledgeHasSpawn)
+                if (UserManager.Instance.GetCurrentUser().knowledgeHasSpawn)
                 {
                     if (IsMoreThanAnHour() && !isStartReset)
                     {
@@ -74,7 +74,7 @@ public class KnowledgeManager : MonoBehaviour
     void CheckKnowledge()
     {
         Debug.Log("Is checking knowledge now...");
-        if (UserManager.Instance.User.knowledgeHasSpawn)
+        if (UserManager.Instance.GetCurrentUser().knowledgeHasSpawn)
         {
             Debug.Log("Knowledge is found...");
 
@@ -86,11 +86,11 @@ public class KnowledgeManager : MonoBehaviour
             }
             else
             {
-                currentKnowledge = DataSystem.Instance.Knowledge[UserManager.Instance.User.currentKnowledge.id];
-                selectedArea = spawnLocations[UserManager.Instance.User.currentKnowledge.areaId];
+                currentKnowledge = DataSystem.Instance.Knowledge[UserManager.Instance.GetCurrentUser().currentKnowledge.id];
+                selectedArea = spawnLocations[UserManager.Instance.GetCurrentUser().currentKnowledge.areaId];
                 lm = selectedArea.GetComponent<LocationManager>();
 
-                if (UserManager.Instance.User.currentKnowledge.isAnswered)
+                if (UserManager.Instance.GetCurrentUser().currentKnowledge.isAnswered)
                 {
                     Debug.Log("Current knowledge has answered...");
 
@@ -118,7 +118,7 @@ public class KnowledgeManager : MonoBehaviour
     {
         DateTime now = DateTime.Now;
 
-        TimeSpan timeSpan = now - UserManager.Instance.User.currentKnowledge.startingAt;
+        TimeSpan timeSpan = now - UserManager.Instance.GetCurrentUser().currentKnowledge.startingAt;
 
         TextTimer.text = "Timer: " + timeSpan.ToString(@"mm\:ss");
 
@@ -138,14 +138,14 @@ public class KnowledgeManager : MonoBehaviour
             selectedArea = spawnLocations[areaId];
             lm = selectedArea.GetComponent<LocationManager>();
 
-            UserManager.Instance.User.currentKnowledge = new()
+            UserManager.Instance.GetCurrentUser().currentKnowledge = new()
             {
                 id = DataSystem.Instance.Knowledge[randomIndex].id,
                 areaId = areaId,
                 startingAt = DateTime.Now
             };
 
-            UserManager.Instance.User.knowledgeHasSpawn = true;
+            UserManager.Instance.GetCurrentUser().knowledgeHasSpawn = true;
 
             UserManager.Instance.Save();
 
@@ -166,9 +166,9 @@ public class KnowledgeManager : MonoBehaviour
         if (!isNew)
         {
             Vector3 savedPosition = new Vector3(
-                UserManager.Instance.User.currentKnowledge.x,
-                UserManager.Instance.User.currentKnowledge.y,
-                UserManager.Instance.User.currentKnowledge.z
+                UserManager.Instance.GetCurrentUser().currentKnowledge.x,
+                UserManager.Instance.GetCurrentUser().currentKnowledge.y,
+                UserManager.Instance.GetCurrentUser().currentKnowledge.z
             );
 
             NewKnowledgeObject.transform.position = savedPosition;
@@ -211,9 +211,9 @@ public class KnowledgeManager : MonoBehaviour
                 NewKnowledgeObject.transform.position = new Vector3(randomPosition.x, groundPosition.y + maxDistanceAboveGround, randomPosition.z);
             }
 
-            UserManager.Instance.User.currentKnowledge.x = NewKnowledgeObject.transform.position.x;
-            UserManager.Instance.User.currentKnowledge.y = NewKnowledgeObject.transform.position.y;
-            UserManager.Instance.User.currentKnowledge.z = NewKnowledgeObject.transform.position.z;
+            UserManager.Instance.GetCurrentUser().currentKnowledge.x = NewKnowledgeObject.transform.position.x;
+            UserManager.Instance.GetCurrentUser().currentKnowledge.y = NewKnowledgeObject.transform.position.y;
+            UserManager.Instance.GetCurrentUser().currentKnowledge.z = NewKnowledgeObject.transform.position.z;
 
             OnKnowledgeSpawned();
         }
@@ -298,7 +298,7 @@ public class KnowledgeManager : MonoBehaviour
 
     public void OnClickOption(int index)
     {
-        if (UserManager.Instance.User.currentKnowledge != null)
+        if (UserManager.Instance.GetCurrentUser().currentKnowledge != null)
         {
             foreach (GameObject panel in Panels) panel.SetActive(false);
             // Debug.Log(currentKnowledge.question.option[index] == currentKnowledge.question.answer);
@@ -326,17 +326,17 @@ public class KnowledgeManager : MonoBehaviour
 
         int index = -1;
 
-        if (UserManager.Instance.User != null && DataSystem.Instance.Knowledge != null) index = UserManager.Instance.User.listOfSaveKnowledge.FindIndex(knowledge => knowledge.id == newSaved.id);
+        if (UserManager.Instance.GetCurrentUser() != null && DataSystem.Instance.Knowledge != null) index = UserManager.Instance.GetCurrentUser().listOfSaveKnowledge.FindIndex(knowledge => knowledge.id == newSaved.id);
 
         if (index != -1)
         {
-            UserManager.Instance.User.currentKnowledge.isAnswered = true;
+            UserManager.Instance.GetCurrentUser().currentKnowledge.isAnswered = true;
 
-            bool check = UserManager.Instance.User.listOfSaveKnowledge[index].isCollected;
+            bool check = UserManager.Instance.GetCurrentUser().listOfSaveKnowledge[index].isCollected;
 
             if (!check)
             {
-                UserManager.Instance.User.listOfSaveKnowledge[index] = newSaved;
+                UserManager.Instance.GetCurrentUser().listOfSaveKnowledge[index] = newSaved;
                 UserManager.Instance.Save();
             }
         }

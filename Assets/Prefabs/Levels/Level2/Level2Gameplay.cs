@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class Level2Gameplay : BaseGameplay
@@ -142,8 +143,6 @@ public class Level2Gameplay : BaseGameplay
 
     protected override async void HandleEnded()
     {
-        base.HandleEnded();
-
         // No need to trigger hidesprites again because it overrided by its animation
         StopTimer();
 
@@ -163,6 +162,8 @@ public class Level2Gameplay : BaseGameplay
 
         // Add score to user current score based on true-ish boolean
         AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
+
+        base.HandleEnded();
     }
 
     private void OnBeforeStateChanged(LevelState changedState)
@@ -179,20 +180,6 @@ public class Level2Gameplay : BaseGameplay
             ChangeState(LevelState.Fail);
     }
 
-    public void OnReplayClick()
-    {
-        // Reset all state
-        currentQuestionIndex = 0;
-        currentTime = 0;
-        mistake = 0;
-        isTimerActive = false;
-        HideSprite(currentQuestionSprite);
-        levelData.isSolved = starIsSolvedState;
-        levelData.isRightInTime = starIsRightInTimeState;
-        levelData.isSolved = starIsNoMistakeState;
-
-        ChangeState(LevelState.Initialization);
-    }
     #endregion
 
     #region UI

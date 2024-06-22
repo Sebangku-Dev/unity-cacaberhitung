@@ -47,6 +47,15 @@ MonoBehaviour:
   levelData: {fileID: 11400000, guid: 4affcfb487156f3498d4e3326cac0300, type: 2}
   whiteOverlay: {fileID: 0}
   cutscenePlayer: {fileID: 0}
+  OnPrepare:
+    m_PersistentCalls:
+      m_Calls: []
+  OnUserInteraction:
+    m_PersistentCalls:
+      m_Calls: []
+  OnPaused:
+    m_PersistentCalls:
+      m_Calls: []
   starIsSolved: {fileID: 0}
   starIsRightInTime: {fileID: 0}
   starIsNoMistake: {fileID: 0}
@@ -60,3 +69,15 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   modalEnded: {fileID: 0}
+  Planes: []
+  PlaneContainer: {fileID: 0}
+  DragablePlaneContainer: {fileID: 0}
+  BasicPlane: {fileID: 0}
+  Dot: {fileID: 0}
+  CompareFinishAtState: 0
+  DotFinishAtState: 0
+  BasicSeqFinishAtState: 0
+  OddSeqFinishAtState: 0
+  EvenSeqFinishAtState: 0
+  AddSeqFinishAtState: 0
+  FibSeqFinishAtState: 0

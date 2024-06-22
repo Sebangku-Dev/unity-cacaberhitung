@@ -34,8 +34,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (isLocked) return;
 
-        if (isLocked) return;
-
         parentAfterDrag = transform.parent;
         parentBeforeDrag = transform.parent;
 

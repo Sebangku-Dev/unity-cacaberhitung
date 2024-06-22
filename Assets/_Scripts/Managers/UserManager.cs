@@ -4,13 +4,16 @@ using UnityEngine;
 using System;
 public class UserManager : Singleton<UserManager>
 {
-    [SerializeField] bool isLoadData;
-    public User User { get; set; }
-    public User NewUser;
 
-    private void Start()
+    [Header("Login as Guest")]
+    [SerializeField] public User NewUser;
+
+    protected void Start()
     {
-        if (isLoadData) UserManager.Instance.Load();
+        if (File.Exists(Application.persistentDataPath + "/game.save"))
+        {
+            Load();
+        }
     }
 
     public User CreateUserFile()
@@ -43,9 +46,9 @@ public class UserManager : Singleton<UserManager>
 
     public void Save()
     {
-        User user = UserManager.Instance.User ?? CreateUserFile();
+        User user = DataSystem.Instance.User ?? CreateUserFile();
 
-        BinaryFormatter binaryFormatter = new();
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
         FileStream file = File.Create(Application.persistentDataPath + "/game.save");
         binaryFormatter.Serialize(file, user);
         file.Close();
@@ -55,19 +58,34 @@ public class UserManager : Singleton<UserManager>
 
     public void Load()
     {
-        if (File.Exists(Application.persistentDataPath + "/game.save"))
-        {
-            Debug.Log("game save exist");
-            BinaryFormatter binaryFormatter = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/game.save", FileMode.Open);
-            User user = (User)binaryFormatter.Deserialize(file);
-            file.Close();
 
-            UserManager.Instance.User = user;
-        }
-        else
-        {
-            Save();
-        }
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream file = File.Open(Application.persistentDataPath + "/game.save", FileMode.Open);
+        User user = (User)binaryFormatter.Deserialize(file);
+        file.Close();
+
+        Debug.Log("Game Save is Exist");
+        Debug.Log("User: " + JsonUtility.ToJson(user));
+
+        DataSystem.Instance.User = user;
     }
+
+    public void Register(string name, string age)
+    {
+        UserManager.Instance.NewUser = new User()
+        {
+            id = name + DateTime.Now.ToString("yyyy-MM-dd"),
+            name = name,
+            age = Int32.Parse(age),
+            currentLevel = 1,
+            currentScore = 0
+        };
+
+        Save();
+
+        Debug.Log(JsonUtility.ToJson(UserManager.Instance.GetCurrentUser()));
+    }
+
+    public User GetCurrentUser() => DataSystem.Instance.User;
+
 }

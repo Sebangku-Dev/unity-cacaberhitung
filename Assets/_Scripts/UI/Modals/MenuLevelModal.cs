@@ -1,6 +1,8 @@
 
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class MenuLevelModal : Modal
 {
@@ -8,14 +10,19 @@ public class MenuLevelModal : Modal
     [SerializeField] private UnityEvent OnReplay;
     [SerializeField] private UnityEvent OnResume;
 
+    private bool isResumeInvoked;
+
     private void OnEnable()
     {
         BaseGameplay.Instance.ChangeState(BaseGameplay.LevelState.Paused);
     }
-
     private void OnDisable()
     {
-        BaseGameplay.Instance.ChangeState(BaseGameplay.LevelState.UserInteraction);
+        if (isResumeInvoked)
+        {
+            BaseGameplay.Instance.ChangeState(BaseGameplay.LevelState.UserInteraction);
+            isResumeInvoked = false;
+        }
     }
 
     public void ActivateMenuLevelModal() => base.ActivateModal();
@@ -23,10 +30,12 @@ public class MenuLevelModal : Modal
     public void Replay()
     {
         OnReplay?.Invoke();
+        NavigationSystem.Instance.LoadScene(SceneManager.GetActiveScene().name, false);
     }
     public void Resume()
     {
         OnResume?.Invoke();
+        isResumeInvoked = true;
     }
     public void Exit()
     {
