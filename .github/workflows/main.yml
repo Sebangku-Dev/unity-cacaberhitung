@@ -35,6 +35,7 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           versioning: Semantic
+          buildName: " Caca Berhitung ${{ github.ref_name }}"
           androidExportType: 'androidPackage'
           androidKeystoreName: berhitung.keystore
           androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
