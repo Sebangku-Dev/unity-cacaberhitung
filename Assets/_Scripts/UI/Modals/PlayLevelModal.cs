@@ -27,6 +27,4 @@ public class PlayLevelModal : Modal
     {
         base.DeactivateModal();
     }
-
-
 }
