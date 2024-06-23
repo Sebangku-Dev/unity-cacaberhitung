@@ -226,6 +226,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
     {
         cutscenePlayer.clip = levelData.cutsceneClip;
         cutscenePlayer.transform.parent.gameObject.SetActive(true);
+        cutscenePlayer.Play();
 
         // yield return new WaitForSeconds(cutsceneDuration); // put your video here
         await Task.Delay(Mathf.RoundToInt(cutsceneDuration * 1000));

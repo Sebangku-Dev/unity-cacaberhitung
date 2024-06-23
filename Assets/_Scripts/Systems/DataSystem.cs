@@ -2,7 +2,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DataSystem : SingletonPersistent<DataSystem>
 {
@@ -15,18 +17,17 @@ public class DataSystem : SingletonPersistent<DataSystem>
     {
         base.Awake();
         AssembleResources();
-    }
 
-    private void Start()
-    {
         if (File.Exists(Application.persistentDataPath + "/game.save"))
         {
             Load();
         }
+    }
 
+    private void Start()
+    {
         if (User == null) return;
 
-        // Load from Saved User Data
         MapSavedToSO(User.savedLevels);
         MapSavedToSO(User.savedAchievement);
     }

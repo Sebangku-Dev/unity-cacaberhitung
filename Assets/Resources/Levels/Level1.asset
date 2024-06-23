@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 1
   title: Selamat Ulang Tahun!
   type: 0
-  isUnlocked: 1
+  isUnlocked: 0
   description: Caca berulang tahun yang ke-x tahun. Ayo bantu Caca menulis umurnya
     di kue!
   hint: Lihatlah meja di rumahmu. Ada kejutan yang lezat untukmu!
@@ -26,7 +26,7 @@ MonoBehaviour:
   isSolved: 0
   isRightInTime: 0
   isNoMistake: 0
-  isToBePlayed: 1
+  isToBePlayed: 0
   cutsceneClip: {fileID: 32900000, guid: 64005833e3815054cb3effea209e79a1, type: 3}
   marker: {fileID: 1118229066796248763, guid: 618cffbbf9c6a8f45ac2f186df750834, type: 3}
   location: {fileID: 11400000, guid: a24eaa066c580474aae78dc64271021e, type: 2}

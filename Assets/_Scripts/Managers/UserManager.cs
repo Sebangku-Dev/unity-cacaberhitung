@@ -24,6 +24,8 @@ public class UserManager : Singleton<UserManager>
             SaveLevel saved = new()
             {
                 id = level.id,
+                isUnlocked = level.id == 1,
+                isToBePlayed = level.id == 1,
             };
 
             UserManager.Instance.NewUser.savedLevels.Add(saved);
