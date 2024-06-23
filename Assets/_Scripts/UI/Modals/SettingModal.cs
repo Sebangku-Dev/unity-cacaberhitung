@@ -8,7 +8,6 @@ public class SettingModal : Modal
 {
     [SerializeField] private Button toggleMusic;
 
-    private bool isChecked = true;
     private Transform checkmark;
 
 
@@ -17,13 +16,13 @@ public class SettingModal : Modal
         checkmark = toggleMusic.transform.GetChild(0);
 
         // Set based on current mute state
-        isChecked = !AudioSystem.Instance.IsMute;
-        checkmark.gameObject.SetActive(isChecked);
+        checkmark.gameObject.SetActive(!AudioSystem.Instance.IsMute);
+        
+        toggleMusic.onClick.AddListener(() => ToggleCheckmark());
     }
 
     public void ActivateSettingModal()
     {
-        toggleMusic.onClick.AddListener(() => Toggle(checkmark));
 
         base.ActivateModal();
     }
@@ -33,11 +32,12 @@ public class SettingModal : Modal
         base.DeactivateModal();
     }
 
-    private void Toggle(Transform checkmark)
+    private void ToggleCheckmark()
     {
-        checkmark.gameObject.SetActive(!isChecked);
-        isChecked = checkmark.gameObject.activeSelf;
+        bool activeSelf = checkmark.gameObject.activeSelf;
 
-        AudioSystem.Instance.SetMute(!isChecked);
+        checkmark.gameObject.SetActive(!activeSelf);
+
+        AudioSystem.Instance.SetMute(!checkmark.gameObject.activeSelf);
     }
 }
