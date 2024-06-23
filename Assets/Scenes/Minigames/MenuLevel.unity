@@ -3236,6 +3236,7 @@ MonoBehaviour:
   delayAfterOnLoad: 2
   canvasGroup: {fileID: 1504964051}
   targetAlpha: 0.5
+  isPulsing: 0
 --- !u!225 &1504964051
 CanvasGroup:
   m_ObjectHideFlags: 0

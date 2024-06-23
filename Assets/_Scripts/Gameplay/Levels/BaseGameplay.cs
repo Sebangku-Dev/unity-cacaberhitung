@@ -140,6 +140,7 @@ public class BaseGameplay : Singleton<BaseGameplay>
         // Add score, saved level, and achievement (if exist) to Data System
         AddScore((new bool[] { levelData.isSolved, levelData.isRightInTime, levelData.isNoMistake }).Where(c => c).Count());
         AddSavedLevel(levelData);
+        AddSavedLevel(levelData.nextLevel);
         foreach (var a in DataSystem.Instance.Achievements)
             AddSavedAchievement(a);
 
