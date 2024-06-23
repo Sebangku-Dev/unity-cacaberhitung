@@ -2,9 +2,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
-using UnityEditor.SearchService;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DataSystem : SingletonPersistent<DataSystem>
 {
