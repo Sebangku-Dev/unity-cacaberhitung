@@ -1,13 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class Caca : MonoBehaviour
 {
     [SerializeField] Animator animator;
-    void Start()
+
+    async void Start()
     {
-        animator.SetBool("isWalking", true);
+        while (true)
+        {
+            int randNum = Random.Range(0, 2);
+            animator.SetTrigger(randNum == 0 ? "Jump" : "Confuse");
+            await Task.Delay(6000);
+        }
     }
+
 
 }
