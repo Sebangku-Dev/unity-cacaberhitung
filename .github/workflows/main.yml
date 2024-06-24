@@ -59,11 +59,14 @@ jobs:
         run: |
           latest_tag=$(curl -s https://api.github.com/repos/${{ github.repository }}/tags | jq -r '.[0].name')
           echo "LATEST_TAG=$latest_tag" >> $GITHUB_ENV
+          
+      - name: Display Latest Tag
+        run: echo "The latest tag is ${{ env.LATEST_TAG }}"
 
       - name: Release Artifact Based on Latest Tag
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.LATEST-TAG }} 
+          tag_name: ${{ env.LATEST_TAG }} 
           files: build/${{ matrix.targetPlatform }}/*.apk
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
