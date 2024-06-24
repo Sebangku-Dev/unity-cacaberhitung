@@ -69,4 +69,4 @@ jobs:
           tag_name: ${{ env.LATEST_TAG }} 
           files: build/${{ matrix.targetPlatform }}/*.apk
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
