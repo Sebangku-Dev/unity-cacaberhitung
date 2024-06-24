@@ -14,20 +14,25 @@ jobs:
         unityVersion:
           - 2021.3.38f1
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           lfs: true
 
-      - uses: actions/cache@v4
+      - name: Caching
+        uses: actions/cache@v4
         with:
           path: Library
           key: Library-${{ matrix.targetPlatform }}
           restore-keys: Library-
-      - if: matrix.targetPlatform == 'Android'
+
+      - name: Freeing Disk
+        if: matrix.targetPlatform == 'Android'
         uses: jlumbroso/free-disk-space@v1.3.1
 
-      - uses: game-ci/unity-builder@v4
+      - name: Build the Game
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -35,14 +40,28 @@ jobs:
         with:
           targetPlatform: ${{ matrix.targetPlatform }}
           versioning: Semantic
-          buildName: " Caca Berhitung ${{ github.ref_name }}"
+          buildName: "Caca Berhitung"
           androidExportType: 'androidPackage'
           androidKeystoreName: berhitung.keystore
           androidKeystoreBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
           androidKeystorePass: ${{ secrets.ANDROID_KEYSTORE_PASS }}
           androidKeyaliasName: ${{ secrets.ANDROID_KEYALIAS_NAME }}
           androidKeyaliasPass: ${{ secrets.ANDROID_KEYALIAS_PASS }}
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload the Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: CacaBerhitung-${{ github.ref_name }}
           path: build/${{ matrix.targetPlatform }}
+
+      - name: Get Latest Tag
+        uses: actions-ecosystem/action-get-latest-tag@v1
+        id: get-latest-tag
+
+      - name: Release Artifact Based on Latest Tag
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.get-latest-tag.outputs.tag }} 
+          files: build/${{ matrix.targetPlatform }}/*.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

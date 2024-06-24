@@ -17,7 +17,7 @@ MonoBehaviour:
   type: 1
   isUnlocked: 0
   description: '-'
-  hint: '-'
+  hint: Aduh jalannya tertutup batu! Bantu Caca untuk menggeser batu-batu itu!
   levelSprite: {fileID: 21300000, guid: 5ad54c31b3c41b74caf2c106e6af39a2, type: 3}
   levelSceneName: Level7
   playCount: 0

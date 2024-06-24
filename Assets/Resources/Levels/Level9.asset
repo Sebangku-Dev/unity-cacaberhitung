@@ -16,8 +16,8 @@ MonoBehaviour:
   title: Tersesat di Hutan
   type: 1
   isUnlocked: 0
-  description: 
-  hint: 
+  description: '-'
+  hint: Gawat tersesat lagi! Oh syukurlah ada orang yang bisa ditanyai!
   levelSprite: {fileID: 21300000, guid: 3222f221f334ea7439822e621cd1b26d, type: 3}
   levelSceneName: Level9
   playCount: 0

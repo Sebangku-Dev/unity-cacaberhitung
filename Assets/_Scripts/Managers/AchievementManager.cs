@@ -48,7 +48,7 @@ public class AchievementManager : Singleton<AchievementManager>
     }
 
     /// <summary>
-    /// For debug only
+    /// FOR DEBUG
     /// </summary>
     private void LockAllAchievement()
     {
@@ -63,9 +63,9 @@ public class AchievementManager : Singleton<AchievementManager>
 
         EvaluateAchievement1();
         EvaluateAchievement2();
-        // EvaluateAchievement3(); 
+        EvaluateAchievement3(); 
         EvaluateAchievement4();
-        // EvaluateAchievement5();
+        EvaluateAchievement5();
         EvaluateAchievement6();
         EvaluateAchievement7();
         EvaluateAchievement8();

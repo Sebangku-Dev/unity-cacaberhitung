@@ -17,7 +17,7 @@ MonoBehaviour:
   type: 1
   isUnlocked: 0
   description: '-'
-  hint: '-'
+  hint: Waduh arahnya ke mana ya? Sepertinya jalan yang ini deh..
   levelSprite: {fileID: 21300000, guid: b8f408b220959f14281e63bb80a40fcc, type: 3}
   levelSceneName: Level8
   playCount: 0

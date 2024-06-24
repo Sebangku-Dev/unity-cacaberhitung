@@ -17,7 +17,7 @@ MonoBehaviour:
   type: 1
   isUnlocked: 0
   description: '-'
-  hint: '-'
+  hint: Kita telah sampai! Tunggu dulu, ada penjaga yang harus kita lewati..
   levelSprite: {fileID: 21300000, guid: 5662d45c2d067bc4cb9df2d3f6882c67, type: 3}
   levelSceneName: Level10
   playCount: 0
