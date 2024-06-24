@@ -26,6 +26,7 @@ public class UserManager : Singleton<UserManager>
                 id = level.id,
                 isUnlocked = level.id == 1,
                 isToBePlayed = level.id == 1,
+                playCount = 0
             };
 
             UserManager.Instance.NewUser.savedLevels.Add(saved);
@@ -96,6 +97,6 @@ public class UserManager : Singleton<UserManager>
         };
     }
 
-    
+
 
 }

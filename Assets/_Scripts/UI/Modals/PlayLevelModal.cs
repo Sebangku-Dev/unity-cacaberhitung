@@ -25,6 +25,9 @@ public class PlayLevelModal : Modal
 
     public void DeactivatePlayLevelModal()
     {
+        // Prevent for duplicated level scene load 
+        buttonStart.onClick.RemoveAllListeners();
+
         base.DeactivateModal();
     }
 }

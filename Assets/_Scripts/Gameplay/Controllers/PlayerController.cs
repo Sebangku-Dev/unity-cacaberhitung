@@ -29,12 +29,11 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
+        // Load latest position and rotation
         if (PlayerPrefs.HasKey("PlayerX") && PlayerPrefs.HasKey("PlayerY") && PlayerPrefs.HasKey("PlayerZ"))
         {
-            float x = PlayerPrefs.GetFloat("PlayerX");
-            float y = PlayerPrefs.GetFloat("PlayerY");
-            float z = PlayerPrefs.GetFloat("PlayerZ");
-            transform.position = new Vector3(x, y, z);
+            transform.position = new Vector3(PlayerPrefs.GetFloat("PlayerX"), PlayerPrefs.GetFloat("PlayerY"), PlayerPrefs.GetFloat("PlayerZ"));
+            transform.rotation = new Quaternion(PlayerPrefs.GetFloat("PlayerRotX"), PlayerPrefs.GetFloat("PlayerRotY"), PlayerPrefs.GetFloat("PlayerRotZ"), PlayerPrefs.GetFloat("PlayerRotW"));
         }
     }
 
@@ -54,8 +53,13 @@ public class PlayerController : MonoBehaviour
 
             // Move and rotate player based on input
             MovePlayerFree(joystickHorizontalInput, joystickVerticalInput);
-        }
 
+            if (!isWalking)
+            {
+                SavePosition();
+                SaveRotation();
+            }
+        }
     }
 
     private void MovePlayerFree(float hInput, float vInput)
@@ -124,6 +128,15 @@ public class PlayerController : MonoBehaviour
         PlayerPrefs.SetFloat("PlayerX", transform.position.x);
         PlayerPrefs.SetFloat("PlayerY", transform.position.y);
         PlayerPrefs.SetFloat("PlayerZ", transform.position.z);
+        PlayerPrefs.Save();
+    }
+
+    public void SaveRotation()
+    {
+        PlayerPrefs.SetFloat("PlayerRotX", transform.rotation.x);
+        PlayerPrefs.SetFloat("PlayerRotY", transform.rotation.y);
+        PlayerPrefs.SetFloat("PlayerRotZ", transform.rotation.z);
+        PlayerPrefs.SetFloat("PlayerRotW", transform.rotation.w);
         PlayerPrefs.Save();
     }
 }

@@ -62,15 +62,9 @@ public class Level8Gameplay : BaseGameplay
     #endregion
 
     #region Level State
-    protected override async void HandleInitialization()
+    protected override void HandleInitialization()
     {
         base.HandleInitialization();
-
-        await PlayCutscene();
-
-        StopTimer();
-        CheckIsFirstPlay();
-        SaveScoreState();
     }
 
     protected override async void HandlePrepare()

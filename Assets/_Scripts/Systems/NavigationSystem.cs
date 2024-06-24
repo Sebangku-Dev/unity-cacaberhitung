@@ -19,6 +19,11 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
     private string lastScenesString = "";
     private const int HOME_SCENE_INDEX = 1;
 
+    private void Update()
+    {
+        Debug.Log(lastScenesString);
+    }
+
     public async void LoadScene(string targetScene, bool isSaveToStack = true)
     {
         // Get build scene index
@@ -27,7 +32,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
         if (PlayerPrefs.GetString("sceneStack") == null)
             return;
 
-        lastScenesString = PlayerPrefs.GetString("sceneStack");
+        // lastScenesString = PlayerPrefs.GetString("sceneStack");
 
         // Condition to push build indesx to lastSceneString
         if (isSaveToStack)
@@ -40,10 +45,9 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
             {
                 lastScenesString += $"{lastSceneIndex}";
             }
-
         }
 
-        PlayerPrefs.SetString("sceneStack", lastScenesString);
+        // PlayerPrefs.SetString("sceneStack", lastScenesString);
 
         var scene = SceneManager.LoadSceneAsync(targetScene);
         scene.allowSceneActivation = false; // prevent screen for immediate load
@@ -58,8 +62,8 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
     {
         int latestSceneIndex = 0;
 
-        if (PlayerPrefs.GetString("sceneStack") != null)
-            lastScenesString = PlayerPrefs.GetString("sceneStack");
+        // if (PlayerPrefs.GetString("sceneStack") != null)
+        //     lastScenesString = PlayerPrefs.GetString("sceneStack");
 
 
         if (lastScenesString.Length > 1)
@@ -80,7 +84,8 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
             latestSceneIndex = HOME_SCENE_INDEX;
         }
 
-        PlayerPrefs.SetString("sceneStack", lastScenesString);
+
+        // PlayerPrefs.SetString("sceneStack", lastScenesString);
 
         var scene = SceneManager.LoadSceneAsync(latestSceneIndex);
         scene.allowSceneActivation = false;

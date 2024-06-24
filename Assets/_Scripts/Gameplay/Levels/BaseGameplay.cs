@@ -5,6 +5,7 @@ using UnityEngine.Video;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 using System.Linq;
+using System.Collections.Generic;
 
 /// <summary>
 /// Parent class for all level gameplay class which can be inherited from
@@ -103,7 +104,18 @@ public class BaseGameplay : Singleton<BaseGameplay>
     /// <summary>
     /// Invoked on start to init everything before prepare
     /// </summary>
-    protected virtual void HandleInitialization() { Debug.Log(LevelState.Initialization); }
+    protected virtual async void HandleInitialization()
+    {
+        Debug.Log(LevelState.Initialization);
+
+        LoadScoreState();
+
+        await PlayCutscene();
+
+        StopTimer();
+        CheckIsFirstPlay();
+        SaveScoreState();
+    }
 
     /// <summary>
     /// Invoked when on paused state
@@ -239,11 +251,6 @@ public class BaseGameplay : Singleton<BaseGameplay>
     }
 
     /// <summary>
-    /// Variable that holds temporary star state. Strongly related to <see cref="SaveScoreState"/>
-    /// </summary>
-    protected bool starIsSolvedState, starIsNoMistakeState, starIsRightInTimeState;
-
-    /// <summary>
     /// If first play, then set all the stars to true. Related to stars panel
     /// </summary>
     protected void CheckIsFirstPlay()
@@ -257,14 +264,29 @@ public class BaseGameplay : Singleton<BaseGameplay>
     }
 
     /// <summary>
-    /// Used for OnReplay in Paused Modal to preserve the early star state before playing
-    /// <para>Strongly related to <see cref="starIsSolvedState"/>, <see cref="starIsNoMistakeState"/>, <see cref="starIsRightInTimeState"/></para>
+    /// To save score state in initialization
     /// </summary>
     protected void SaveScoreState()
     {
-        starIsSolvedState = levelData.isSolved;
-        starIsRightInTimeState = levelData.isRightInTime;
-        starIsNoMistakeState = levelData.isNoMistake;
+        string starValuesString = $"{(levelData.isSolved ? 1 : 0)};{(levelData.isSolved ? 1 : 0)};{(levelData.isSolved ? 1 : 0)}";
+        PlayerPrefs.SetString("starValuesString", starValuesString);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadScoreState()
+    {
+        // Set fallback on first play
+        if(levelData.playCount < 1) PlayerPrefs.SetString("starValuesString", "0;0;0");
+
+        bool[] starValues = PlayerPrefs.GetString("starValuesString")?.Split(";").Select(v => v == "1").ToArray();
+
+        levelData.isSolved = starValues[0];
+        levelData.isRightInTime = starValues[1];
+        levelData.isNoMistake = starValues[2];
+
+        // Clear player pref
+        PlayerPrefs.DeleteKey("starValuesString");
+
     }
 
     /// <summary>

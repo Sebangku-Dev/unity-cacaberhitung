@@ -2634,7 +2634,7 @@ RectTransform:
   - {fileID: 1162416352}
   - {fileID: 1650542205}
   m_Father: {fileID: 841653251}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4171,7 +4171,7 @@ RectTransform:
   - {fileID: 1810805067}
   - {fileID: 1699687229}
   m_Father: {fileID: 841653251}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -5596,8 +5596,8 @@ RectTransform:
   - {fileID: 450599889}
   - {fileID: 1144955485}
   - {fileID: 549789751}
-  - {fileID: 380293887}
   - {fileID: 684843772}
+  - {fileID: 380293887}
   - {fileID: 934958467}
   - {fileID: 688701814}
   m_Father: {fileID: 1045282416}
@@ -8671,6 +8671,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1162416355}
         m_TargetAssemblyTypeName: MenuLevelModal, Assembly-CSharp
         m_MethodName: Back
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2073214890}
+        m_TargetAssemblyTypeName: BaseGameplay, Assembly-CSharp
+        m_MethodName: LoadScoreState
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
