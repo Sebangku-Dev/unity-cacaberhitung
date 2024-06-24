@@ -125,7 +125,6 @@ MonoBehaviour:
   LockAtFirst: 0
   maximumChildCount: 4
   relatedDraggable: {fileID: 0}
-  isDisabled: 1
   OnDropItem:
     m_PersistentCalls:
       m_Calls: []
@@ -205,7 +204,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281029766
-  m_fontColor: {r: 0.5254902, g: 0.32941177, b: 0.16862746, a: 1}
+  m_fontColor: {r: 0.23921569, g: 0.13333334, b: 0.047058824, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

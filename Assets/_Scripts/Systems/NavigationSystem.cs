@@ -137,7 +137,7 @@ public class NavigationSystem : SingletonPersistent<NavigationSystem>
             if (subs[1] != null) TextNotifMessage.text = subs[1];
         }
 
-        PopupAnimation animation = Notification.GetComponent<PopupAnimation>();
+        IAnimate animation = Notification.GetComponent<IAnimate>();
         animation.Load();
     }
 }

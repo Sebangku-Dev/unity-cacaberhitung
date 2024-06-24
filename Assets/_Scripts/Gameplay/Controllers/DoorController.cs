@@ -15,12 +15,9 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (UserManager.Instance.GetCurrentUser() != null)
+        if (other.CompareTag("Player") && !relatedBarrier.activeSelf)
         {
-            if (other.CompareTag("Player") && !relatedBarrier.activeSelf)
-            {
-                OpenDoor();
-            }
+            OpenDoor();
         }
 
     }
@@ -33,11 +30,11 @@ public class DoorController : MonoBehaviour
 
     private void OpenDoor()
     {
-        doorAnimator.SetTrigger("open");
+        doorAnimator.SetBool("isOpen", true);
     }
 
     private void CloseDoor()
     {
-        doorAnimator.SetTrigger("close");
+        doorAnimator.SetBool("isOpen", false);
     }
 }
