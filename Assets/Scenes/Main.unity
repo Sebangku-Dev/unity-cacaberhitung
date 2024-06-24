@@ -37253,6 +37253,10 @@ PrefabInstance:
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1055696601234238, guid: 95fe2533720aeb743ade98ad01dc2812, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055696601234238, guid: 95fe2533720aeb743ade98ad01dc2812, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -59518,6 +59522,10 @@ PrefabInstance:
     - target: {fileID: 1999252206553506, guid: f5e82a095a05b2449a438057d976f9cf, type: 3}
       propertyPath: m_Name
       value: platform_B_03 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1999252206553506, guid: f5e82a095a05b2449a438057d976f9cf, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1999252206553506, guid: f5e82a095a05b2449a438057d976f9cf, type: 3}
       propertyPath: m_StaticEditorFlags
